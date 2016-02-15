@@ -50,4 +50,6 @@ end
 gem 'owlcarousel-rails'
 # fgm - importar dados de arquivi csv para o model http://csv-mapper.rubyforge.org/
 gem 'csv-mapper'
+# hmal - easy pages HTML =)
+gem 'haml'
 
