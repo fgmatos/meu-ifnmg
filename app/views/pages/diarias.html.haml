@@ -1,0 +1,24 @@
+.content
+  .row
+    = pie_chart Diaria.group(:nome_unidade).count, |
+                library: { | 
+                    title: 'Diárias por Unidade (2011-2015)', is3D: true | 
+                } |
+  -# .row
+    -# = pie_chart Diaria.where(:id_unidade => "158121", :data => '01/2015'..'12/2015'). |
+                        -# group(:nome).order(:count_all, :DESC).limit(20).count, |
+                 -# library: { | 
+                     -# title: 'Diárias Reitoria (2011-2015)', is3D: true | 
+                 -# } |
+  
+  .row
+    = pie_chart Diaria.select(:valor).where(:data => '01/2015'..'12/2015'). |
+                        group(:nome).order('sum_valor DESC').limit(10).sum(:valor), |
+                 library: { | 
+                     title: 'Diárias IFNMG (2015) - TOP 10', is3D: true | 
+                 } |
+  .row
+    = column_chart Diaria.where(:data => '01/2015'..'12/2015').group(:nome_unidade).sum(:valor), |
+                    library: { | 
+                       title: 'Diárias IFNMG (2015)', is3D: true | 
+                   } |
