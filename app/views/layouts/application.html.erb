@@ -5,6 +5,8 @@
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
     
+    <%= javascript_include_tag 'chartkick', 'data-turbolinks-track' => true %>
+    
     <%= stylesheet_link_tag 'login', media: 'all', 'data-turbolinks-track' => true  %>
     <%= javascript_include_tag 'login', 'data-turbolinks-track' => true %>
     
@@ -13,6 +15,8 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    
+    <%= javascript_include_tag "//www.google.com/jsapi", "chartkick" %>
 
 </head>
 
@@ -34,6 +38,7 @@
         <%= render 'shared/modal' %>
         
         <%= yield :header %> <!-- js files --->
+        <%= yield :charts_js %> 
     </div>
 </body>
 </html>
