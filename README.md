@@ -16,7 +16,7 @@ acesse o site (se mudou a porta alterar aqui)
 > http://localhost:3000
 
 se estiver instalado em outra máquina informe o IP
-> http://<ip-servidor><porta>
+> http://[ip-servidor]:[porta]
 
 Para mais informações registre uma issue.
 
