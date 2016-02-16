@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  id_unidade: 1
+  nome_unidade: MyString
+  cpf: MyString
+  nome: MyString
+
+two:
+  id_unidade: 1
+  nome_unidade: MyString
+  cpf: MyString
+  nome: MyString
