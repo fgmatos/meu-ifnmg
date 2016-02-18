@@ -1,24 +1,91 @@
-.content
+.container
   .row
-    = pie_chart Diaria.group(:nome_unidade).count, |
-                library: { | 
-                    title: 'Diárias por Unidade (2011-2015)', is3D: true | 
-                } |
-  -# .row
-    -# = pie_chart Diaria.where(:id_unidade => "158121", :data => '01/2015'..'12/2015'). |
-                        -# group(:nome).order(:count_all, :DESC).limit(20).count, |
-                 -# library: { | 
-                     -# title: 'Diárias Reitoria (2011-2015)', is3D: true | 
-                 -# } |
-  
+    .col-md-12
+      %h2 Diárias
+      %hr
   .row
-    = pie_chart Diaria.select(:valor).where(:data => '01/2015'..'12/2015'). |
-                        group(:nome).order('sum_valor DESC').limit(10).sum(:valor), |
-                 library: { | 
-                     title: 'Diárias IFNMG (2015) - TOP 10', is3D: true | 
-                 } |
-  .row
-    = column_chart Diaria.where(:data => '01/2015'..'12/2015').group(:nome_unidade).sum(:valor), |
-                    library: { | 
-                       title: 'Diárias IFNMG (2015)', is3D: true | 
-                   } |
+    .col-md-12
+      .content
+        %h4 1. A que se destinam as diárias pagas na administração federal?
+        %p
+          As diárias destinam-se a indenizar o agente público ou colaborador eventual pelas despesas |
+          extraordinárias com hospedagem, alimentação e locomoção urbana, durante o período |
+          de deslocamento, em objeto de serviço de interesse da administração pública, do |
+          servidor fora da localidade onde tem exercício e do colaborador eventual. |
+        %p 
+          A concessão de diárias deve estar consignada à informação consubstanciada de eventos |
+          motivadores do deslocamento.
+        
+      .container
+        %ul.nav.nav-tabs
+          / Nav tabs
+          %li.active
+            = link_to "Todos os anos (2011-2015)", "#all", :data=> {:toggle => "tab"}
+          %li
+            = link_to "2015", "#2015", :data=> {:toggle => "tab"}          %li  
+            = link_to "2014", "#2014", :data=> {:toggle => "tab"}
+            
+        / Conteudo dos paineis - graficos
+        .tab-content
+          #all.tab-pane.fade.in.active
+            %h3 Todos os Anos
+            %p
+            = pie_chart Diaria.group(:nome_unidade).order('count_all DESC').count, |               
+                      library: {   |
+                          title: { |
+                            text: 'Diárias por Unidade (2011-2015)' |
+                          }, | 
+                          tooltip: {  |
+                            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>' |
+                          },  |
+                          plotOptions: {  |
+                              pie: {  |
+                                allowPointSelect: true, |
+                                cursor: 'pointer',  |
+                                dataLabels: { |
+                                    enabled: true,  |
+                                    format: '<b>{point.name}</b>: {point.y} ({point.percentage:.1f} %)',  |
+                                } |
+                              } |
+                          } |
+                      } |
+                        
+                        
+          #2015.tab-pane.fade.in
+          
+            %h3 2015
+            
+            = pie_chart Diaria.select(:valor).where(:data => '01/2015'..'12/2015'). |
+                            group(:nome).order('sum_valor DESC').limit(10).sum(:valor), |
+                            
+                     library: {   |
+                          title: { |
+                            text: 'Diárias IFNMG (2015) - TOP 10' |
+                          }, | 
+                          tooltip: {  |
+                            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>' |
+                          },  |
+                          plotOptions: {  |
+                              pie: {  |
+                                allowPointSelect: true, |
+                                cursor: 'pointer',  |
+                                dataLabels: { |
+                                    enabled: true,  |
+                                    format: '<b>{point.name}</b>: R$ {point.y:.2f} ({point.percentage:.1f} %)',  |
+                                } |
+                              } |
+                          } |
+                      } |
+                         
+                         
+                         
+          #2014.tab-pane.fade.in
+          
+            %h3 2014
+            
+            %p
+              = column_chart Diaria.where(:data => '01/2015'..'12/2015').group(:nome_unidade).sum(:valor), |
+                            library: { | 
+                               title: 'Diárias IFNMG (2015)', is3D: true | 
+                           } |
+                           
