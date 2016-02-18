@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160216180535) do
+ActiveRecord::Schema.define(version: 20160217174654) do
 
   create_table "contatos", force: :cascade do |t|
     t.string   "nome"
@@ -31,6 +31,30 @@ ActiveRecord::Schema.define(version: 20160216180535) do
     t.float    "valor"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
+  end
+
+  create_table "servidors", force: :cascade do |t|
+    t.integer  "id_servidor_portal"
+    t.string   "nome"
+    t.string   "cpf"
+    t.string   "matricula"
+    t.string   "descricao_cargo"
+    t.string   "classe_cargo"
+    t.string   "padrao_cargo"
+    t.string   "nivel_cargo"
+    t.string   "sigla_funcao"
+    t.string   "nivel_funcao"
+    t.string   "cod_org_lotacao"
+    t.string   "cod_org_exercicio"
+    t.string   "situacao_vinculo"
+    t.string   "jornada_de_trabalho"
+    t.string   "data_ingresso_cargofuncao"
+    t.string   "data_ingresso_orgao"
+    t.string   "documento_ingresso_servicopublico"
+    t.string   "data_diploma_ingresso_servicopublico"
+    t.string   "diploma_ingresso_orgao"
+    t.datetime "created_at",                           null: false
+    t.datetime "updated_at",                           null: false
   end
 
 end
