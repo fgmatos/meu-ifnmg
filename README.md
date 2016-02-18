@@ -12,6 +12,12 @@ Crie o banco:
 Inicie o servidor (utilize a opção '-p' para informar a porta desejada, por default é porta 3000)
 > rails s 
 
+Crie o banco de dados
+> rake db:migrate
+
+Caso deseje, realize a importação dos dados (diarias, servidores, etc)
+> rake db:seed
+
 acesse o site (se mudou a porta alterar aqui)
 > http://localhost:3000
 
