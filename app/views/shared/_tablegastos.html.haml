@@ -1,0 +1,36 @@
+
+- @top10 = Diaria.select(:valor).where(:data => '01/2015'..'12/2015').group(:nome).order('sum_valor DESC').limit(10).sum(:valor)
+
+.panel.panel-default
+  .panel-heading
+    %b TOP diárias 2015
+  .panel-body
+    %table.table.table-striped.table-bordered.table-hover
+      %thead
+        %tr
+          %th Nº
+          %th Nome
+          -# %th Campus
+          %th Equivalente à R$ / dia
+          %th Diarias Recebidas
+        %tbody
+          - total_ano = 0
+          - num = 0
+          - @top10.each do |nome, valor|
+            - num = num + 1
+            %tr
+              %td= num
+              %td= nome
+              -# # %td
+              %td= number_to_currency(valor/365, unit: "R$ ", separator: ",", delimiter: ".").to_s
+              %td= number_to_currency(valor, unit: "R$ ", separator: ",", delimiter: ".").to_s
+              - total_ano = total_ano + valor
+          %tr
+            %td{ :colspan=> "3"} 
+              %b
+                %center 
+                  Total acumulado
+            %td
+              %b=  number_to_currency(total_ano, unit: "R$ ", separator: ",", delimiter: ".").to_s
+                
+            

@@ -1,0 +1,17 @@
+.panel.panel-default
+  .panel-heading
+    MENU
+  .panel-body
+    %ul.list-group
+      %li.list-group-item
+        %a{ :href => root_url}
+          Home
+      %li.list-group-item
+        Unidades
+      %li.list-group-item
+        %a{ :href => root_url + "servidores"}
+          Servidores
+          %span.badge
+            = Servidor.all.count
+
+ 

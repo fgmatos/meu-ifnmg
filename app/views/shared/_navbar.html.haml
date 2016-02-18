@@ -9,20 +9,29 @@
         %span.icon-bar
         %span.icon-bar
         %span.icon-bar
-      = link_to( image_tag("logo.png", size: "160x90", alt: "meu IFNMG"), root_path, :method => :get,class: "navbar-brand" )
+      = link_to( image_tag("logo.png", size: "50x30", alt: "meu IFNMG"), root_path, :method => :get,class: "navbar-brand" )
       
     .collapse.navbar-collapse#bs-example-navbar-collapse-1
       %ul.nav.navbar-nav
         %li 
           = link_to t('home'), root_url, :method => :get, class: "active"
+        %li
+          = link_to "Unidades", "#", class: "active"
+        %li
+          = link_to "Orçamento", "#", class: "active"
+        %li
+          %a{ :href => root_url + "servidores", :class => "active" }
+            Servidores
+            %span.badge
+              = Servidor.all.count
         %li 
           = link_to "Diarias", root_url+"diarias", class: "active"
         %li
-          = link_to "Contato", "#modalContacts", :data => {:toggle => "modal", :target => "#modalContacts"}
+          = link_to "Contratos", "#", class: "active"
         %li
-          = link_to "Meu Perfil", "#", class: "active"
+          = link_to "Fale Conosco", "#modalContacts", :data => {:toggle => "modal", :target => "#modalContacts"}
         %li 
-          = link_to "Sair", "#", :method => :delete, :class => "active"
+          = link_to "Sobre", root_url+"sobre", :class => "active"
       
       %form{ :class => "navbar-form navbar-right",  :role => "search" }
         

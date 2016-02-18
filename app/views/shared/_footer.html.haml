@@ -1,30 +1,31 @@
 %footer.footer-distributed
   .content
     .row
-      .col-md-4
+      .col-md-4.col-sm-4
         %ul
-          %h2 Quem Somos
+          %p Quem Somos
           %li 
             %a{:href => root_path } Home
           %li 
-            %a{:href => root_url+"pages/sobre"} Sobre o meuIFNMG.com
+            %a{:href => root_url+"sobre"} Sobre o meuIFNMG.com
           %li
-            %a{:href => root_url+"pages/termos"} Termo de uso
-      .col-md-4
+            %a{:href => root_url+"termos"} Termo de uso
+      .col-md-4.col-sm-4
         %ul
-          %h2 Serviços
+          %p Informações
           %li 
-            %a{:href => "#"} Diarias
+            %a{:href => root_url + "diarias"} Diarias
           %li
             %a{:href => "#"} Diarias por Unidade
               
-      .col-md-4
+      .col-md-4.col-sm-4
         %ul
-          %h2 Ajuda
+          %p Ajuda
           %li 
             %a{:href => "<%= root_url%>pages/como-funciona"} Como Funciona
           %li
             %a{:href => "#modalContacts", :data => {:toggle => "modal", :target => "#modalContacts"} } Contato
-    %br
-    %hr
-    %p.text-center © 2016 Portal Meu IFNMG.com -  Todos os direitos reservados.
+      
+      .col-md-12.col-sm-12
+        %hr
+        %p.text-center © 2016 Portal Meu IFNMG.com -  Todos os direitos reservados.
