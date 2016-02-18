@@ -1,0 +1,11 @@
+.container
+  .row
+    .col-md-12
+      %h2 Servidores
+      %hr
+  .row
+    .col-md-3.col-sm-4
+      - @servidores.each do |s|
+        %a{ :href => root_url + "servidor/" + s.id.to_s} 
+          = s.nome 
+          %br
