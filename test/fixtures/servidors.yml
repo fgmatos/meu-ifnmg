@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  id_servidor_portal: 1
+  nome: MyString
+  cpf: MyString
+  matricula: MyString
+  descricao_cargo: MyString
+
+two:
+  id_servidor_portal: 1
+  nome: MyString
+  cpf: MyString
+  matricula: MyString
+  descricao_cargo: MyString
