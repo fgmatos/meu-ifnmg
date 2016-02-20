@@ -12,4 +12,14 @@ class PagesController < ApplicationController
     @servidores = Servidor.all.order(:nome)
   end
   
+  def show_servidor
+    if Servidor.exists?(params[:id])
+       @servidor = Servidor.find(params[:id])
+       render "pages/servidores/show"
+    else
+      flash[:danger] = "Atenção: servidor id(#{params[:id]}) não existe."
+      redirect_to root_url
+    end
+  end
+  
 end
