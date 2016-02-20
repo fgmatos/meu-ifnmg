@@ -1,3 +1,19 @@
+# development:
+  # adapter: postgresql
+  # encoding: unicode
+  # database: myapp_development
+  # pool: 5
+  # username: myapp
+  # password: password1
+# 
+# test:
+  # adapter: postgresql
+  # encoding: unicode
+  # database: myapp_test
+  # pool: 5
+  # username: myapp
+  # password: password1
+
 # SQLite version 3.x
 #   gem install sqlite3
 #
