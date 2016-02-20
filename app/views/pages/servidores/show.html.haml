@@ -1,0 +1,28 @@
+.container
+  .row
+    .col-md-12
+      %h2 
+        = @servidor.nome
+      %hr
+  .row
+    .col-md-4
+      .panel.panel-default
+        .panel-heading
+          %b
+            Informações
+        .panel-body
+          %b
+            CPF:
+          = @servidor.cpf
+          %br
+          %b
+            Matrícula: 
+          = @servidor.matricula
+          %br
+          %b
+            Cargo: 
+          = @servidor.descricao_cargo
+          %br
+          %b
+            Jornada de trabalho: 
+          = @servidor.jornada_de_trabalho

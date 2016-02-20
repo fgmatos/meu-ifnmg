@@ -3,7 +3,11 @@ Rails.application.routes.draw do
   root 'pages#index'
   
   get 'diarias' => 'pages#diarias' 
+  
   get 'servidores' => 'pages#servidores'
+  
+  get 'servidor/:id' => 'pages#show_servidor'
+  
   get 'sobre' =>  'pages#sobre'
   
   # Example of regular route:
