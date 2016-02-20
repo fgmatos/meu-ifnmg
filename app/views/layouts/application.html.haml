@@ -25,11 +25,10 @@
           -#.col-md-2
             -#= render file: 'shared/left'
           
-          .col-md-6
-            .content#messages
+          .col-md-12
+            .container#messages
               - flash.each do |name, msg|
-                .alert.alert-info
-                  = msg
+                = content_tag :div, msg, class: "alert alert-" + name
               = yield
       
       = render 'shared/footer'
