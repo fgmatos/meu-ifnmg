@@ -54,4 +54,5 @@ gem 'csv-mapper'
 gem 'haml'
 # fgm: chartkick - criar gráficos
 gem "chartkick"
-
+# fgm: postgres
+# gem "pg"
