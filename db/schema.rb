@@ -22,7 +22,7 @@ ActiveRecord::Schema.define(version: 20160217174654) do
   end
 
   create_table "diaria", force: :cascade do |t|
-    t.integer  "id_unidade"
+    t.string   "id_unidade"
     t.string   "nome_unidade"
     t.string   "cpf"
     t.string   "nome"
@@ -34,7 +34,7 @@ ActiveRecord::Schema.define(version: 20160217174654) do
   end
 
   create_table "servidors", force: :cascade do |t|
-    t.integer  "id_servidor_portal"
+    t.string   "id_servidor_portal"
     t.string   "nome"
     t.string   "cpf"
     t.string   "matricula"
@@ -44,6 +44,7 @@ ActiveRecord::Schema.define(version: 20160217174654) do
     t.string   "nivel_cargo"
     t.string   "sigla_funcao"
     t.string   "nivel_funcao"
+    t.string   "uorg_lotacao"
     t.string   "cod_org_lotacao"
     t.string   "cod_org_exercicio"
     t.string   "situacao_vinculo"
