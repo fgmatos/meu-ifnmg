@@ -27,7 +27,7 @@ ActiveRecord::Schema.define(version: 20160217174654) do
     t.string   "cpf"
     t.string   "nome"
     t.string   "num_doc"
-    t.string   "data"
+    t.date     "data"
     t.float    "valor"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
@@ -49,10 +49,10 @@ ActiveRecord::Schema.define(version: 20160217174654) do
     t.string   "cod_org_exercicio"
     t.string   "situacao_vinculo"
     t.string   "jornada_de_trabalho"
-    t.string   "data_ingresso_cargofuncao"
-    t.string   "data_ingresso_orgao"
+    t.date     "data_ingresso_cargofuncao"
+    t.date     "data_ingresso_orgao"
     t.string   "documento_ingresso_servicopublico"
-    t.string   "data_diploma_ingresso_servicopublico"
+    t.date     "data_diploma_ingresso_servicopublico"
     t.string   "diploma_ingresso_orgao"
     t.datetime "created_at",                           null: false
     t.datetime "updated_at",                           null: false

@@ -16,10 +16,10 @@ class CreateServidors < ActiveRecord::Migration
       t.string :cod_org_exercicio
       t.string :situacao_vinculo
       t.string :jornada_de_trabalho
-      t.string :data_ingresso_cargofuncao
-      t.string :data_ingresso_orgao
+      t.date :data_ingresso_cargofuncao
+      t.date :data_ingresso_orgao
       t.string :documento_ingresso_servicopublico
-      t.string :data_diploma_ingresso_servicopublico
+      t.date :data_diploma_ingresso_servicopublico
       t.string :diploma_ingresso_orgao
       
       t.timestamps null: false

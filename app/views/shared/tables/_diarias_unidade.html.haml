@@ -1,5 +1,5 @@
 
-- @top10 = FACADE.Diaria.select(:valor).where(:data => '01/2015'..'12/2015').group(:nome_unidade).order('sum_valor DESC').limit(3).sum(:valor)
+- @top10 = FACADE.Diaria.select(:valor).where(:data => '2015-01-01'..'2015-12-31').group(:nome_unidade).order('sum_valor DESC').limit(3).sum(:valor)
 
 .panel.panel-default
   .panel-heading

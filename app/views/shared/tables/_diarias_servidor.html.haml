@@ -1,5 +1,5 @@
 
-- @top10 = FACADE.Diaria.select(:valor).where(:data => "01/2015".."12/2015").group(:nome).order('sum_valor DESC').limit(10).sum(:valor)
+- @top10 = FACADE.Diaria.select(:valor).where(:data => "2015-01-01".."2015-12-31").group(:nome).order('sum_valor DESC').limit(10).sum(:valor)
 
 .panel.panel-default
   .panel-heading
@@ -22,8 +22,13 @@
               %td= num
               %td
                 - @s = FACADE.Servidor.where("nome = ?", nome)
-                %a{:href=> root_url + "servidor/" + (@s[0].id.to_s || @s ) }
-                  = nome
+                - if @s.nil?
+                  %a{:href=> root_url + "servidor" }
+                    = nome
+                - else
+                  %a{:href=> root_url + "servidor/" + @s[0].id.to_s }
+                    = nome
+                
               -# # %td
               %td= number_to_currency(valor/365, unit: "R$ ", separator: ",", delimiter: ".").to_s
               %td= number_to_currency(valor, unit: "R$ ", separator: ",", delimiter: ".").to_s
