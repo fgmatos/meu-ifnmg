@@ -2,14 +2,49 @@
 @import "owl.theme";
 
 
-// *= require owl.carousel
-// *= require owl.theme
+// = require owl.carousel
+// = require owl.theme
 
 // bootstrap customized color panel-heading
 // .panel-heading {
     // background-image: linear-gradient(to bottom,#f5f5f5 0,#91D492 100%) !important;
 // }
 
+
+// containers for info and alert
+.note-alert {
+    background: #fff9d8 url("../images/tab_note.gif") no-repeat left top;
+    border: none;
+    padding: 1em 1em 0.25em 48px;
+    margin: 0.25em 0 1.5em 0;
+}
+.note-code {
+    background: #EEE url(../images/tab_grey.gif) no-repeat left top;
+    padding: 0.25em 1em 0.5em 48px;
+}
+.note-error {
+    background: #f9d9d8 url(../images/tab_red.gif) no-repeat left top;
+    border: none;
+    padding: 1.25em 1.25em 0.25em 48px;
+    margin-left: 0;
+    margin-top: 0.25em;
+}
+.note-info {
+    background: #d5e9f6 url(../images/tab_info.gif) no-repeat left top;
+    border: none;
+    padding: 1em 1em 0.25em 48px;
+    margin: 0.25em 0 1.5em 0;
+}
+// end containers info
+
+#banners .item owl-item img{
+  display: block;
+  width: 100%;
+  height: auto;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+}
 
 .centered {
     text-align: center;
