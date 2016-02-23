@@ -7,7 +7,7 @@ class CreateDiaria < ActiveRecord::Migration
       t.string :nome
       t.string :num_doc
       t.date :data
-      t.float :valor
+      t.string :valor
 
       t.timestamps null: false
     end

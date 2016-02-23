@@ -28,7 +28,7 @@ ActiveRecord::Schema.define(version: 20160217174654) do
     t.string   "nome"
     t.string   "num_doc"
     t.date     "data"
-    t.float    "valor"
+    t.string   "valor"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
   end
