@@ -14,3 +14,17 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require_tree .
+//= require owl.carousel
+
+$(document).ready(function() {
+    $(".owl-carousel").owlCarousel({
+        autoPlay: true,
+        slideSpeed : 300,
+        paginationSpeed : 400,
+        paginationNumbers: true,
+        singleItem:true,
+        autoHeight : true,
+    	transitionStyle:"fade"
+    }),
+    $('[data-toggle="popover"]').popover();
+});
