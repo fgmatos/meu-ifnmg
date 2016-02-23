@@ -23,11 +23,11 @@
           %a{ :href => root_url + "servidores", :class => "active" }
             Servidores
             %span.badge
-              = Servidor.all.count
+              = FACADE.Servidor.all.count
         %li 
           = link_to "Diarias", root_url+"diarias", class: "active"
         %li
-          = link_to "Contratos", "#", class: "active"
+          = link_to "Contratos", root_url + "contratos", class: "active"
         %li
           = link_to "Fale Conosco", "#modalContacts", :data => {:toggle => "modal", :target => "#modalContacts"}
         %li 
