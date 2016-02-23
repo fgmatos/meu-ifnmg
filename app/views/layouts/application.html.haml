@@ -29,12 +29,13 @@
             .container#messages
               - flash.each do |name, msg|
                 = content_tag :div, msg, class: "alert alert-" + name
-              = yield
+            = yield
       
       = render 'shared/footer'
       = render 'shared/modal'
       
       = yield :header
       = yield :chart_js
+
           
       
