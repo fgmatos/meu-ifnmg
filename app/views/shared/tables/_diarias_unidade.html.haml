@@ -22,9 +22,9 @@
               %td= num
               %td= nome
               -# # %td
-              %td= number_to_currency(valor/365, unit: "R$ ", separator: ",", delimiter: ".").to_s
-              %td= number_to_currency(valor, unit: "R$ ", separator: ",", delimiter: ".").to_s
-              - total_ano = total_ano + valor
+              %td= number_to_currency(valor.to_f/365, unit: "R$ ", separator: ",", delimiter: ".").to_s
+              %td= number_to_currency(valor.to_f, unit: "R$ ", separator: ",", delimiter: ".").to_s
+              - total_ano = total_ano + valor.to_f
           %tr
             %td{ :colspan=> "3"} 
               %b

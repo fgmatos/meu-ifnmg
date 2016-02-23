@@ -24,5 +24,69 @@
           = @servidor.descricao_cargo
           %br
           %b
+            Classe: 
+          = @servidor.classe_cargo
+          %br
+          %b
+            Nivel: 
+          = @servidor.nivel_cargo
+          %br
+          %b
+            Padrão: 
+          = @servidor.padrao_cargo
+          %br
+          %b
+            Unidade: 
+          = @servidor.uorg_lotacao
+          %br
+          %b
             Jornada de trabalho: 
           = @servidor.jornada_de_trabalho
+          %br
+          %b
+            Data ingresso (função): 
+          = @servidor.data_ingresso_cargofuncao
+          %br
+          %b
+            Data ingresso (órgão): 
+          = @servidor.data_ingresso_orgao
+          
+          
+    .col-md-8
+      .panel.panel-default
+        .panel-heading
+          %b
+            Diarias
+            %span.badge
+              = @minhas_diarias.all.count
+              
+        .panel-body
+        
+          %ul.nav.nav-tabs
+            - anos = []
+            - @minhas_diarias.each do |diaria|
+              -# nav tabs creation
+              - ano = diaria.data.year
+              - if !anos.include?(ano)
+                - anos.push(ano)
+                %li
+                  %a{:data => {:toggle=>"tab"}, :href=>"#tb#{ano}"}
+                    = ano.to_s
+                    %span.badge
+                      = @minhas_diarias.where("data BETWEEN ? AND ? ", ano.to_s + "-01-01", ano.to_s + "-12-31").count
+        
+          
+          .tab-content
+            - anos.each do |ano|
+              %div{ :id => "tb#{ano}", :class=>"tab-pane fade" }
+                - @minhas_diarias.each do |diaria|
+                  - if (diaria.data.year == ano)
+                    %a{ :href => "#", :data => {:toggle => "popover", :trigger =>"hover", :content => "#{diaria.nome_unidade}", :placement =>"right" }, :title => "nº #{diaria.num_doc}" }  
+                      = diaria.data.strftime("%d/%m/%Y") + " - " 
+                      = number_to_currency(diaria.valor, unit: "R$ ", separator: ",", delimiter: ".").to_s 
+                      -# "R$ #{'%.2f' % diaria.valor}"
+                    %br
+
+  %script{:type=>"text/javascript"}
+    $('[data-toggle="popover"]').popover();
+  
