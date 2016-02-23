@@ -4,9 +4,29 @@
       %h2 Diárias
       %hr
   .row
-    .col-md-12
+    .col-md-6
+      %p
+        Acompanhe aqui as despesas com Diárias realizadas pelo IFNMG ao longo dos últimos cinco anos. 
+        .row
+          .col-md-12
+            .note-info
+              %p
+                Todos os dados foram obtidos no 
+                %b Porta da Transparência
+                através do link:
+                %a{:href => "http://www.transparencia.gov.br/downloads/mensal.asp?c=Diarias", :target =>"_blank"}
+                  http://www.transparencia.gov.br/downloads/mensal.asp?c=Diarias
+            -# .row
+              -# .col-md-6
+                -# .note-alert
+                  -# %p
+                    -# Foram utilzados 
+                    -# %b apenas dados entre 2011 e 2015
+                    -# que são disponibilizados com as informações do favorecido!                 
+    .col-md-6
+      -# # %h3 F.A.Q
     
-    
+
       .panel-group#accordion
       
         .panel.panel-success
@@ -14,15 +34,13 @@
             %h4.panel-title
               %a{ :href=>"#faq1", :data =>{:toggle=>"collapse", :parent=>"#accordion"}}
                 1. A que se destinam as diárias pagas na administração federal?
-          #faq1.panel-collapse.collapse.in
-            .panel-body
+          #faq1.panel-collapse.collapse
+            .panel-body.justify
               As diárias destinam-se a indenizar o agente público ou colaborador eventual pelas despesas |
               extraordinárias com hospedagem, alimentação e locomoção urbana, durante o período |
               de deslocamento, em objeto de serviço de interesse da administração pública, do |
               servidor fora da localidade onde tem exercício e do colaborador eventual. |
-              %p 
-                A concessão de diárias deve estar consignada à informação consubstanciada de eventos |
-                motivadores do deslocamento.
+
 
         .panel.panel-warning
           .panel-heading
@@ -30,7 +48,7 @@
               %a{ :href=>"#faq2", :data =>{:toggle=>"collapse", :parent=>"#accordion"}}
                 2. Quem faz jus à percepção de diárias?
           #faq2.panel-collapse.collapse
-            .panel-body
+            .panel-body.justify
               Fará jus à percepção de diárias o servidor civil da administração federal direta, autárquica
               e fundacional que se deslocar, a serviço, da localidade onde tem exercício para outro
               ponto do território nacional, ou para o exterior. Fará jus também o colaborador eventual
@@ -38,9 +56,7 @@
               ou entidades da Administração Pública Federal. Terá direito ainda à percepção de diárias
               o servidor ou colaborador eventual que acompanhar servidor com deficiência em deslocamento
               a serviço, autorizado por meio de resultado de perícia oficial.
-              %p 
-                A concessão de diárias deve estar consignada à informação consubstanciada de eventos |
-                motivadores do deslocamento.   
+
                              
         .panel.panel-danger
           .panel-heading
@@ -49,7 +65,7 @@
                 3. Quais as situações de deslocamento em que o servidor não faz jus à diária?
           #faq3.panel-collapse.collapse
             .panel-body
-              %ul
+              %ul.justify
                 %li
                   Quando o deslocamento da sede for exigência permanente do cargo;
                 %li
@@ -59,9 +75,10 @@
                 %li
                   Quando governo estrangeiro ou organismo internacional de que o Brasil participe ou
                   com o qual coopere custear as despesas com pousada, alimentação e locomoção urbana
-        
-        
-      .container
+    
+  .row    
+    .col-md-12
+      #charts{ :style=> "min-width: 900px; height: 600px; max-width: auto; margin: 0 auto"}
         %ul.nav.nav-tabs
           / Nav tabs
           %li.active
@@ -75,7 +92,7 @@
           #all.tab-pane.fade.in.active
             %h3 Últimos anos
             %p
-            = pie_chart FACADE.Diaria.group(:nome_unidade).order('count_all DESC').count, |               
+            = pie_chart @quantidade_diarias_unidade, |               
                       library: {   |
                           title: { |
                             text: 'Diárias por Unidade (2011-2015)' |
@@ -96,12 +113,11 @@
                       } |
                         
                         
-          #2015.tab-pane.fade.in
+          #2015.tab-pane.fade
           
             %h3 2015
             
-            = pie_chart FACADE.Diaria.select(:valor).where(:data => '01/2015'..'12/2015'). |
-                            group(:nome).order('sum_valor DESC').limit(10).sum(:valor), |
+            = pie_chart @valor_diarias_servidor_2015, |
                             
                      library: {   |
                           title: { |
@@ -124,12 +140,12 @@
                          
                          
                          
-          #2014.tab-pane.fade.in
+          #2014.tab-pane.fade
           
             %h3 2014
             
             %p
-              = column_chart FACADE.Diaria.where(:data => '01/2015'..'12/2015').group(:nome_unidade).sum(:valor), |
+              = column_chart @valor_diarias_unidade_2015, |
                             library: { | 
                                title: 'Diárias IFNMG (2015)', is3D: true | 
                            } |
