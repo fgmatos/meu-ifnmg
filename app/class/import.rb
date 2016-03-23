@@ -11,18 +11,20 @@ require "csv"
 class DataImport 
   
   UORG = 26410
+  # unidades gestoras do IFNMG [reitoria, salinas, januaria, montes-claros, arinos, almenara, pirapora, aracuai]
   UGS =  ["158121", "158377", "158378", "158437", "158438", "158439", "158440", "158441"]
   
   # if TRUE show report  
   DEBUG = TRUE
   
-  @@count = 0
+  @@instances = 0
     
   
   def initialize(type, year_range, month_range, options = nil)
     
     @records_processed = 0
     @records_imported = 0
+    @test_mode = FALSE
     
     @records_each_file = 0
     @files = Hash.new
@@ -46,7 +48,7 @@ class DataImport
       @options = options          
     end
     
-    @@count += 1
+    @@instances += 1
   end
   
   def execute
@@ -63,7 +65,12 @@ class DataImport
   end
   
   def to_s
-    "DataImport: " + @@count.to_s
+    "DataImport: " + @@instances.to_s
+  end
+  
+  def run_test
+    @test_mode = TRUE
+    execute
   end
     
   private
@@ -71,19 +78,35 @@ class DataImport
   def process(file)
     @records_each_file = 0
     
-    if (DEBUG)
-      puts "importing: " + file.to_s
-    end
-    
-    CSV.foreach(file, @options) do |row|
-      data = row.to_hash
-      @records_processed +=  1
-      if doFilter(data)
-        import(data)   
-        #puts "nº " + @records_imported.to_s + ": " + data[:nome_favorecido].to_s     
+    if File.exist?(file)
+      
+      if (DEBUG)
+        puts "importing: " + file.to_s
       end
-    end
-    @files[ @filename.to_sym ] = @records_each_file 
+      
+      begin
+        CSV.foreach(file, @options) do |row|
+          data = row.to_hash
+          @records_processed +=  1
+          if doFilter(data)
+            if !@test_mode
+              # puts "nº " + @records_imported.to_s + ": " + data[:nome_favorecido].to_s        else
+              import(data)         
+            end
+            @records_each_file += 1
+            @records_imported +=  1     
+          end
+        end # end foreach
+      rescue => ex
+        puts "Erro na leitrua do arquivo: " + file.to_s + " - " + ex.message
+      end
+      @files[ @filename.to_sym ] = @records_each_file 
+      
+    else # file not exits
+      puts "Error on importing: " + file.to_s + "!. File no found."
+      exit
+    end # if file.exist?
+    
   end
   
   def doFilter(data)
@@ -136,9 +159,6 @@ class DataImport
     # obj.valor = data[:valor_pagamento].to_f
     
     obj.save!
-    
-    @records_each_file += 1
-    @records_imported +=  1
   end
   
   def print_debug_info
@@ -153,13 +173,19 @@ class DataImport
   end
   
   def getFilename(mes, ano)
-    @diretorio + ano.to_s + mes.to_s.rjust(2,'0') + @name
+    dias = Time.days_in_month(mes, ano)
+    case @type
+    when :diarias
+      then @diretorio + ano.to_s + mes.to_s.rjust(2,'0') + @name
+    when :servidores
+      then @diretorio + ano.to_s + mes.to_s.rjust(2,'0') + dias.to_s + @name
+    end
   end
   
   def getGOV_file_str
     case @type.to_s
       when "diarias" then "_Diarias.csv"
-      when "servidores" then "31_Cadastro.csv"
+      when "servidores" then "_Cadastro.csv"
       else "unknow"
     end
   end
@@ -174,7 +200,7 @@ class DataImport
       then
         data.extract!(:id_servidor_portal, :nome, :cpf, :matricula, :descricao_cargo, 
                       :classe_cargo, :padrao_cargo, :nivel_cargo, :sigla_funcao, :nivel_funcao,
-                      :cod_org_lotacao, :cod_org_exercicio, :situacao_vinculo, :jornada_de_trabalho,
+                      :uorg_lotacao, :cod_org_lotacao, :cod_org_exercicio, :situacao_vinculo, :jornada_de_trabalho,
                       :data_ingresso_cargofuncao, :data_ingresso_orgao, :data_ingresso_servicopublico,
                       :data_diploma_ingresso_servicopublico, :diploma_ingresso_orgao)
     else {}
@@ -192,6 +218,8 @@ class DataImport
           data[:num_doc] = data.delete :documento_pagamento
           data[:data] = data.delete :data_pagamento
           data[:valor] = data.delete :valor_pagamento
+          
+          data[:valor] = data[:valor].gsub! "," , "." # convertendo formato numerico. Ex: '1,50' para '1.50'
           return data   
       when :servidores
         then data
