@@ -20,12 +20,29 @@ class PagesController < ApplicationController
     @valor_diarias_unidade_2015 = FACADE.Diaria.where(:data => '2015-01-01'..'2015-12-31').
                                       group(:nome_unidade).sum(:valor)
     
-    render "pages/diarias"
+    @diarias = FACADE.Diaria.all.order("data DESC")
+    
+    respond_to do |format|
+       format.html { render "pages/diarias" }
+       format.json { render json: JSON.pretty_generate( JSON.parse @diarias.to_json ) }
+       format.csv  { render text: @diarias.to_csv }
+       format.xml  { render xml: @diarias }
+    end
+    
+    # render "pages/diarias"
   end
   
   def servidores
     @servidores = FACADE.Servidor.all.order(:nome)
-    render "pages/servidores"
+    
+    respond_to do |format|
+       format.html { render "pages/servidores" }
+       format.json { render json: JSON.pretty_generate( JSON.parse @servidores.to_json ) }
+       format.csv  { render text: @servidores.to_csv }
+       format.xml  { render xml: @servidores }
+    end
+    
+    
   end
   
   def show_servidor
@@ -34,6 +51,7 @@ class PagesController < ApplicationController
        @minhas_diarias = FACADE.Diaria.where("NOME = ?", @servidor.nome)
        render "pages/servidores/show"
     else
+      # flash msg's use :danger, :alert or :info       
       flash[:danger] = "Atenção: servidor id(#{params[:id]}) não existe."
       redirect_to root_url
     end
