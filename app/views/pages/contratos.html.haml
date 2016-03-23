@@ -1,0 +1,48 @@
+- require 'contratos.gov.rb' 
+
+- @contratos = getContratos
+
+.container
+  .row
+    .col-md-12
+      %h2 Contratos
+      %hr
+  .row
+    .col-md-12.col-sm-3
+      %table#dados-contratos.table.table-hover
+        %thead
+          %tr
+            %td 
+              %b Nº 
+            %td 
+              %b Nº Contrato
+            %td 
+              %b Modalidade
+            %td 
+              %b Situação
+            %td 
+              %b Contratado
+            %td 
+              %b Unidade
+            %td 
+              %b Objeto
+        %tbody
+          - i = 0
+          - @contratos.each do | num, valores |
+            - i += 1
+            %tr
+              %td 
+                = i
+              %td 
+                = num
+              %td 
+                = valores[:modalidade]
+              %td 
+                = valores[:situacao]
+              %td 
+                = valores[:contratado]
+              %td 
+                = valores[:unidade]
+              %td 
+                = valores[:objeto]
+      

@@ -27,7 +27,9 @@
         %li 
           = link_to "Diarias", root_url+"diarias", class: "active"
         %li
-          = link_to "Contratos", root_url + "contratos", class: "active"
+          %a{ :href => root_url + "contratos", :class => "active" }
+            Contratos
+            = image_tag "beta.gif", :style => "margin-bottom: 10px;"
         %li
           = link_to "Fale Conosco", "#modalContacts", :data => {:toggle => "modal", :target => "#modalContacts"}
         %li 

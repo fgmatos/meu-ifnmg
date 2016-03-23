@@ -1,3 +1,13 @@
+- ifnmg = { "INST.FED.DE EDUC.,CIENC.E TEC.DO NORTE DE MG" => 158121,
+          "INST.FED.DO NORTE DE MG/CAMPUS MONTES CLAROS" => 158437,
+          "INST.FED.DO NORTE DE MG/CAMPUS JANUARIA" => 158378,
+          "INST.FED.DO NORTE DE MG/CAMPUS SALINAS" => 158377,
+          "INST.FED.DO NORTE DE MG/CAMPUS ARINO" => 158438,
+          "INST.FED.DO NORTE DE MG/CAMPUS ALMENARA" => 158439,
+          "INST.FED.DO NORTE DE MG/CAMPUS PIRAPORA" => 158440,
+          "INST.FED DO NORTE DE MG/CAMPUS ARACUAI" => 158441,
+          "INST.FED.DO NORTE DE MG/CAMPUS ARINOS" => 158438 }
+
 .container
   .row
     .col-md-12
@@ -79,13 +89,19 @@
           .tab-content
             - anos.each do |ano|
               %div{ :id => "tb#{ano}", :class=>"tab-pane fade" }
+                - total = Hash.new
+                - total[ano] = 0 
                 - @minhas_diarias.each do |diaria|
                   - if (diaria.data.year == ano)
-                    %a{ :href => "#", :data => {:toggle => "popover", :trigger =>"hover", :content => "#{diaria.nome_unidade}", :placement =>"right" }, :title => "nº #{diaria.num_doc}" }  
+                  - total[ano] += diaria.valor.to_f
+                  - id_unidade = ifnmg[diaria.nome_unidade].to_s
+                  - link = "http://www.portaltransparencia.gov.br/despesasdiarias/pagamento?documento="+ id_unidade +"26410" + diaria.num_doc
+                    %a{ :href => link, :target =>"_blank", :data => {:toggle => "popover", :trigger =>"hover", :content => "#{diaria.nome_unidade}", :placement =>"right" }, :title => "nº #{diaria.num_doc}" }  
                       = diaria.data.strftime("%d/%m/%Y") + " - " 
                       = number_to_currency(diaria.valor, unit: "R$ ", separator: ",", delimiter: ".").to_s 
                       -# "R$ #{'%.2f' % diaria.valor}"
                     %br
+                = total[ano]
 
   %script{:type=>"text/javascript"}
     $('[data-toggle="popover"]').popover();

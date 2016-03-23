@@ -1,0 +1,9 @@
+.container.centered
+  %ul.pagination
+    - for i in "A".."Z"
+      %li
+        %a
+          = i
+          %span.badge
+            = FACADE.Servidor.select(:nome).where("nome LIKE ?", i+"%").count
+    
