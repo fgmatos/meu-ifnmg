@@ -56,3 +56,6 @@ gem 'haml'
 gem "chartkick"
 # fgm: postgres
 # gem "pg"
+
+#fgm - testes: pegando informacoes da web
+gem "mechanize"

@@ -8,6 +8,8 @@ Rails.application.routes.draw do
   
   get 'servidor/:id' => 'pages#show_servidor'
   
+  get 'contratos'   => 'pages#contratos'
+  
   get 'sobre' =>  'pages#sobre'
   
   # Example of regular route:
