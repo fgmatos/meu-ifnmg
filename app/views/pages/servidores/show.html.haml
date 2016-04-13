@@ -24,6 +24,7 @@
           %b
             CPF:
           = @servidor.cpf
+          = @servidor.id_servidor_portal
           %br
           %b
             Matrícula: 
@@ -46,7 +47,7 @@
           = @servidor.padrao_cargo
           %br
           %b
-            Unidade: 
+            Lotação: 
           = @servidor.uorg_lotacao
           %br
           %b
@@ -55,21 +56,21 @@
           %br
           %b
             Data ingresso (função): 
-          = @servidor.data_ingresso_cargofuncao
+          = @servidor.data_ingresso_cargofuncao.strftime("%d/%m/%Y")
           %br
           %b
-            Data ingresso (órgão): 
-          = @servidor.data_ingresso_orgao
-          
+            Data ingresso no Orgão: 
+          = @servidor.data_ingresso_orgao.strftime("%d/%m/%Y") # + " - "
+          -#= ( ( Date.today - @servidor.data_ingresso_cargofuncao) / 365 ).to_i
           
     .col-md-8
       .panel.panel-default
         .panel-heading
           %b
-            Diarias
+            Propostas de Concessão de Diarias e Passagens (PCDP's)
             %span.badge
               = @minhas_diarias.all.count
-              
+                            
         .panel-body
         
           %ul.nav.nav-tabs
@@ -101,7 +102,8 @@
                       = number_to_currency(diaria.valor, unit: "R$ ", separator: ",", delimiter: ".").to_s 
                       -# "R$ #{'%.2f' % diaria.valor}"
                     %br
-                = total[ano]
+                %span.badge
+                  = "Total de diárias no ano: " + number_to_currency(total[ano],unit: "R$ ", separator: ",", delimiter: ".").to_s 
 
   %script{:type=>"text/javascript"}
     $('[data-toggle="popover"]').popover();
