@@ -25,7 +25,11 @@
             %span.badge
               = FACADE.Servidor.all.count
         %li 
-          = link_to "Diarias", root_url+"diarias", class: "active"
+          -# = link_to "Diarias", root_url+"diarias", class: "active"
+          %a{ :href => root_url + "diarias", :class => "active" }
+            Diarias
+            %span.badge
+              = FACADE.Diaria.all.count
         %li
           %a{ :href => root_url + "contratos", :class => "active" }
             Contratos
