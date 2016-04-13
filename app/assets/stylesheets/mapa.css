@@ -1,0 +1,22 @@
+#municipio svg path {
+    stroke:#148a14; /*cor da borda do estado*/
+    fill:#1cb91c; /*cor do estado*/
+    cursor:pointer;
+}
+
+#municipio svg path:hover{
+    fill:#fdff00;
+    stroke:#fdff00;
+}
+
+#municipio svg text {
+    fill:#fff;
+    font-size: 5px;
+    cursor:pointer;
+}
+
+#municipio svg title {
+    fill:#fff;
+    font-size: 5px;
+    cursor:pointer;
+}

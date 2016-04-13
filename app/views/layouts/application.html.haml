@@ -17,6 +17,8 @@
     = javascript_include_tag "https://code.highcharts.com/highcharts.js" 
     /  google charts -> javascript_include_tag "//www.google.com/jsapi", "chartkick"
     
+    = stylesheet_link_tag 'mapa', media: 'all', 'data-turbolinks-track' => true
+    
   %body
     #page
       = render 'shared/navbar'

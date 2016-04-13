@@ -1,6 +1,7 @@
 .panel.panel-default
   .panel-heading
     %b Escolha por Unidade
-  .panel-body
+  .panel-body(style="padding: 0px;")
     %center
-      = embedded_svg "mapa_v3.svg"
+      //= embedded_svg "mapa_v3.svg"
+      = render "shared/mapa.html"
