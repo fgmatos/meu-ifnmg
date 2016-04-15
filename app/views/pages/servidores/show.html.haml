@@ -24,7 +24,7 @@
           %b
             CPF:
           = @servidor.cpf
-          = @servidor.id_servidor_portal
+          -# = @servidor.id_servidor_portal
           %br
           %b
             Matrícula: 
@@ -102,7 +102,9 @@
                       %th Data
                       %th Valor
                       %th Documento
-                      %th Link
+                      %th Unidade
+                      -#%th Link
+                      
                   %tbody
                     - total = Hash.new
                     - total[ano] = 0 
@@ -118,17 +120,19 @@
                             = number_to_currency(diaria.valor, unit: "R$ ", separator: ",", delimiter: ".").to_s 
                             -# "R$ #{'%.2f' % diaria.valor}"
                           %td
-                            = diaria.nome_unidade
-                          %td
-                            = diaria.num_doc
-                          %td
                             %a{ :href => link, :target =>"_blank", :data => {:toggle => "popover", :trigger =>"hover", :content => "#{diaria.nome_unidade}", :placement =>"right" }, :title => "nº #{diaria.num_doc}" }
-                              link
+                              = diaria.num_doc
+                          %td
+                            = diaria.nome_unidade
+                          -#%td
+                          -#  = diaria.num_doc
+                          
                     %tr
                       %td(colspan="4")
-                        
+                  %br      
                   %span.badge
-                    = "Total de diárias no ano: " + number_to_currency(total[ano],unit: "R$ ", separator: ",", delimiter: ".").to_s 
+                    = "Total de diárias no ano: " + number_to_currency(total[ano],unit: "R$ ", separator: ",", delimiter: ".").to_s
+                  
 
 :javascript
   $('[data-toggle="popover"]').popover();
