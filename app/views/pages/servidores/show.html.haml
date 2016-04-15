@@ -24,6 +24,7 @@
           %b
             CPF:
           = @servidor.cpf
+          -# = @servidor.id_servidor_portal
           %br
           %b
             Matrícula: 
@@ -46,7 +47,7 @@
           = @servidor.padrao_cargo
           %br
           %b
-            Unidade: 
+            Lotação: 
           = @servidor.uorg_lotacao
           %br
           %b
@@ -55,21 +56,28 @@
           %br
           %b
             Data ingresso (função): 
-          = @servidor.data_ingresso_cargofuncao
+          = @servidor.data_ingresso_cargofuncao.strftime("%d/%m/%Y")
           %br
           %b
-            Data ingresso (órgão): 
-          = @servidor.data_ingresso_orgao
-          
+            Data ingresso no Orgão: 
+          = @servidor.data_ingresso_orgao.strftime("%d/%m/%Y") # + " - "
+          -#= ( ( Date.today - @servidor.data_ingresso_cargofuncao) / 365 ).to_i
           
     .col-md-8
       .panel.panel-default
         .panel-heading
           %b
-            Diarias
+            Pedidos de diária:
             %span.badge
               = @minhas_diarias.all.count
-              
+            - geral = 0
+            - @minhas_diarias.each do |diaria|
+              - geral += diaria.valor.to_f
+            .pull-right
+              Valor recebido:
+              %span.badge
+                = number_to_currency(geral,unit: "R$ ", separator: ",", delimiter: ".").to_s
+               
         .panel-body
         
           %ul.nav.nav-tabs
@@ -84,25 +92,48 @@
                     = ano.to_s
                     %span.badge
                       = @minhas_diarias.where("data BETWEEN ? AND ? ", ano.to_s + "-01-01", ano.to_s + "-12-31").count
-        
           
           .tab-content
             - anos.each do |ano|
               %div{ :id => "tb#{ano}", :class=>"tab-pane fade" }
-                - total = Hash.new
-                - total[ano] = 0 
-                - @minhas_diarias.each do |diaria|
-                  - if (diaria.data.year == ano)
-                  - total[ano] += diaria.valor.to_f
-                  - id_unidade = ifnmg[diaria.nome_unidade].to_s
-                  - link = "http://www.portaltransparencia.gov.br/despesasdiarias/pagamento?documento="+ id_unidade +"26410" + diaria.num_doc
-                    %a{ :href => link, :target =>"_blank", :data => {:toggle => "popover", :trigger =>"hover", :content => "#{diaria.nome_unidade}", :placement =>"right" }, :title => "nº #{diaria.num_doc}" }  
-                      = diaria.data.strftime("%d/%m/%Y") + " - " 
-                      = number_to_currency(diaria.valor, unit: "R$ ", separator: ",", delimiter: ".").to_s 
-                      -# "R$ #{'%.2f' % diaria.valor}"
-                    %br
-                = total[ano]
+                %table.table.table-hover
+                  %thead
+                    %tr
+                      %th Data
+                      %th Valor
+                      %th Documento
+                      %th Unidade
+                      -#%th Link
+                      
+                  %tbody
+                    - total = Hash.new
+                    - total[ano] = 0 
+                      - @minhas_diarias.each do |diaria|
+                        %tr
+                          - if (diaria.data.year == ano)
+                          - total[ano] += diaria.valor.to_f
+                          - id_unidade = ifnmg[diaria.nome_unidade].to_s
+                          - link = "http://www.portaltransparencia.gov.br/despesasdiarias/pagamento?documento="+ id_unidade +"26410" + diaria.num_doc
+                          %td   
+                            = diaria.data.strftime("%d/%m/%Y") 
+                          %td
+                            = number_to_currency(diaria.valor, unit: "R$ ", separator: ",", delimiter: ".").to_s 
+                            -# "R$ #{'%.2f' % diaria.valor}"
+                          %td
+                            %a{ :href => link, :target =>"_blank", :data => {:toggle => "popover", :trigger =>"hover", :content => "#{diaria.nome_unidade}", :placement =>"right" }, :title => "nº #{diaria.num_doc}" }
+                              = diaria.num_doc
+                          %td
+                            = diaria.nome_unidade
+                          -#%td
+                          -#  = diaria.num_doc
+                          
+                    %tr
+                      %td(colspan="4")
+                  %br      
+                  %span.badge
+                    = "Total de diárias no ano: " + number_to_currency(total[ano],unit: "R$ ", separator: ",", delimiter: ".").to_s
+                  
 
-  %script{:type=>"text/javascript"}
-    $('[data-toggle="popover"]').popover();
+:javascript
+  $('[data-toggle="popover"]').popover();
   

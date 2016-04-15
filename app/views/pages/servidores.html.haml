@@ -19,10 +19,21 @@
       .tab-content
         - for i in "A".."Z"
           .tab-pane.fade{ :id => "#{i}"}
-            - @servidores.where("nome LIKE ?", i+"%").each do |s|
-              %a{ :href => root_url + "servidor/" + s.id.to_s} 
-                = s.nome 
-                %br
+            %table.table.table-hover
+              %thead
+                %tr
+                  %th Nome do servidor
+              %tbody
+                - @servidores.where("nome LIKE ?", i+"%").each do |s|
+                  %tr
+                    %td
+                      %a{ :href => root_url + "servidor/" + s.id.to_s} 
+                        = s.nome
+                      %span.badge
+                        - @servidor = FACADE.Servidor.find(s.id)
+                        - @minhas_diarias = FACADE.Diaria.where("NOME = ?", @servidor.nome)
+                        = @minhas_diarias.all.count
+                      %br
               
 %script{:type=>"text/javascript"}
   $('#A').addClass("active in");

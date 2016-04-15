@@ -10,23 +10,24 @@
             .widget
               .widget-header
                 %i.icon-search
-                %h3 Sobre o Site
+                -#%h3 Sobre o Site
               .widget-content
                 O Meu IFNMG é um site sem fins lucrativos, desenvolvido por pesquisadores da área de Ciências da Computação, 
                 que decidiram utilizar os seus conhecimentos para aumentar a transparência e levar à comunidade informações
-                importantes sobre as atividades dos gestores e servidores da nossa instituição
-                O site é totalmente automatizando, coletando as informações de bases de dados governamentais, processando as mesmas e republicando
+                importantes sobre as atividades dos gestores e servidores da nossa instituição.
+                %p
+                O site coleta as informações de bases de dados governamentais, processando as mesmas e apresentando 
                 em um formato mais acessível à população.
                 %br
                 %br
-                O site tem como público alvo a comunidade acadêmica, servidores e a população em geral que queira mais informações sobre as ações
+                Nosso público alvo é comunidade acadêmica, servidores e a população em geral que queira mais informações sobre as ações
                 executadas pelo IFNMG.
                 %br
                 %br
                 O site está em constante desenvolvimento. Contatos sobre mais informações, dúvidas, reclamações, críticas, sugestões, ou
                 solicitação de dados, podem ser enviadas pelo link 
                 %a{:href => root_url + "modalContacts", :data => {:toggle => "modal", :target => "#modalContacts" } }
-                  %b
+                  %br
                     Fale Conosco
       
       
@@ -39,7 +40,8 @@
                 Todos os dados aqui apresentados são <b>dados abertos</b>, disponibilizados pelo Governo Federal.
                 %br
                 %br
-                Trnasparencia.gov.br
+                %a{:href => "http://www.transparencia.gov.br", :class => "active" }
+                  www.transparencia.gov.br
                 %br
       
           
@@ -53,7 +55,13 @@
                   %p
                     %b Equipe
                     %br
-                
+                    Fabiano Matos
+                    %br
+                    Fabrício Matos
+                    %br
+                    Nelson Cavalcante
+                    %br
+                    Rogério Luiz
             
             
       

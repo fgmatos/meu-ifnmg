@@ -8,21 +8,25 @@
             %a{:href => root_path } Home
           %li 
             %a{:href => root_url+"sobre"} Sobre o meuIFNMG.com
-          %li
-            %a{:href => root_url+"termos"} Termo de uso
+          -#%li
+          -#  %a{:href => root_url+"termos"} Termo de uso
       .col-md-4.col-sm-4
         %ul
           %p Informações
           %li 
+            %a{:href => "#"} Unidades
+          %li
+            %a{:href => root_url + "servidores"} Servidores
+          %li 
             %a{:href => root_url + "diarias"} Diarias
           %li
-            %a{:href => "#"} Diarias por Unidade
+            %a{:href => "#"} Ranking
+          %li
+            %a{:href => root_url + "contratos"} Contratos  
               
       .col-md-4.col-sm-4
         %ul
           %p Ajuda
-          %li 
-            %a{:href => root_url + "#"} Como Funciona
           %li
             %a{:href => "#modalContacts", :data => {:toggle => "modal", :target => "#modalContacts"} } Contato
       
