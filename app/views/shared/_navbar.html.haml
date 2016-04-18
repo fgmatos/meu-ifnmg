@@ -16,7 +16,7 @@
         %li 
           = link_to t('home'), root_url, :method => :get, class: "active"
         %li
-          = link_to "Unidades", "#", class: "active"
+          = link_to "Unidades", "#{root_url}unidades", class: "active"
         %li
           %a{ :href => root_url + "servidores", :class => "active" }
             Servidores
