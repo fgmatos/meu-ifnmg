@@ -1,6 +1,6 @@
 .small-box {
 	background-color: #cccccc;
-	height: 150px;
+	height: 100px;
 	/*margin: 5px 5px 5px 5px;*/
 	margin: 5px;
 	padding: 0px 0px 0px 0px;
@@ -8,7 +8,7 @@
 
 .box {
 	background-color: #cccccc;
-	height: 300px;
+	height: 150px;
 	width: 24%;
 	margin: 5px;
 	padding: 0px 0px 0px 0px;
@@ -18,11 +18,11 @@
 	text-align: center;
 	color: #ffffff;
 	background-color: rgba(69, 186, 1, 1);
-	padding: 10px 10px 10px 10px;
+	padding: 5px;;
 }
 
 .box > h2 {
-	margin-top: 200px;
+	margin-top: 75px;
 }
 
 .box > h2:hover, .small-box h2:hover {
