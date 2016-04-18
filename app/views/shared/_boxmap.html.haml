@@ -3,7 +3,7 @@
     %b Escolha por Unidade
   .panel-body(style="padding: 0px;")
     %center
-      //= embedded_svg "mapa_v3.svg"
+      /  embedded_svg "mapa_v3.svg"
       
       
       = stylesheet_link_tag 'mapa', media: 'all', 'data-turbolinks-track' => true
@@ -12,13 +12,17 @@
       :javascript
         $("#municipio path").click(function(){
         
-            switch( $(this).attr("data-name") ) {
-              case "mapa":
-                window.location.replace("/unidades");
-                break;
-              default:
-                alert('Voce clicou no estado do '+$(this).attr('data-name'));
-                
-            }
+          name = $(this).attr("data-name")
+          switch( name.toLowerCase() ) {
+            case "mapa":
+              window.location.replace("/unidades");
+              break;
+            case "januaria":
+              window.location.replace("/unidades/januaria");
+              break;
+            default:
+              alert('Voce clicou em ' + name );
+              
+          }
             
         });

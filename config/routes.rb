@@ -3,6 +3,8 @@ Rails.application.routes.draw do
   root 'pages#index'
   
   get 'unidades' => "pages#unidades"
+  get "unidades/januaria" => "pages#januaria"
+  
   
   get 'diarias' => 'pages#diarias' 
   

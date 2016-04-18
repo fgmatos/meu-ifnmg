@@ -8,6 +8,11 @@ class PagesController < ApplicationController
     
   end
   
+  def januaria
+    render "pages/unidades/januaria"
+  end
+  
+  
   def diarias
   
     @top10 = FACADE.Diaria.select(:valor).
