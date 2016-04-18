@@ -1,0 +1,38 @@
+.small-box {
+	background-color: #cccccc;
+	height: 150px;
+	/*margin: 5px 5px 5px 5px;*/
+	margin: 5px;
+	padding: 0px 0px 0px 0px;
+}
+
+.box {
+	background-color: #cccccc;
+	height: 300px;
+	width: 24%;
+	margin: 5px;
+	padding: 0px 0px 0px 0px;
+	float: left;
+}
+.box > h2, .small-box > h2 {
+	text-align: center;
+	color: #ffffff;
+	background-color: rgba(69, 186, 1, 1);
+	padding: 10px 10px 10px 10px;
+}
+
+.box > h2 {
+	margin-top: 200px;
+}
+
+.box > h2:hover, .small-box h2:hover {
+	box-shadow: 0 0 5px #000
+}
+
+.small-box > h2 {
+	margin-top: 80px;
+}
+.januaria {
+	background-image: url('/images/tab_info.gif');
+	background-repeat: no-repeat;
+}

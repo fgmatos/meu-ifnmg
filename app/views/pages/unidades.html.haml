@@ -1,0 +1,36 @@
+= stylesheet_link_tag "unidades"
+
+.container#unidade
+  .grid-unidades
+  
+    .row
+      .col-md-12
+        %h2 
+          Unidades
+          %span.label.label-danger
+            In construction
+        %hr
+    .row
+      .col-md-6
+        %p
+          O IFNMG...
+      .col-md-6
+        .note-alert
+          %p
+            Para mais informações acesso o site do
+            %b IFNMG
+            através do link:
+            %a( href="http://www.ifnmg.edu.br" target="_blank")
+              http://www.ifnmg.edu.br
+
+
+    - unidades = [ "Reitoria", "Januária", "Salinas", "Montes Claros", "Arinos", |
+                   "Araçuaí", "Almenara", "Pirapora", "Diamantina", |
+                   "Teófilo Otoni", "Janaúba", "Porteirinha"] |
+
+    .row
+      - unidades.each do |u|
+        .box
+          %h2
+            = u
+      

@@ -4,6 +4,10 @@ class PagesController < ApplicationController
     
   end
   
+  def unidades
+    
+  end
+  
   def diarias
   
     @top10 = FACADE.Diaria.select(:valor).
