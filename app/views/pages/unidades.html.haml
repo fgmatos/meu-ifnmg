@@ -1,36 +1,62 @@
 = stylesheet_link_tag "unidades"
 
-.container#unidade
-  .grid-unidades
-  
-    .row
-      .col-md-12
-        %h2 
-          Unidades
-          %span.label.label-danger
-            In construction
-        %hr
-    .row
-      .col-md-6
+.container#unidade  
+  .row
+    .col-md-12
+      %h2 
+        Unidades
+        %span.label.label-danger
+          In construction
+      %hr
+  .row
+    .col-md-6
+      %p
+        O IFNMG é um dos 38 Institutos Federais que fazem parte, juntamente com os CEFET's e escolas técnicas, 
+        da 
+        %a(href="http://institutofederal.mec.gov.br/" target="_blank")
+          Rede Federal de Educação Profissional, Ciêntífica e Tecnológia 
+    .col-md-6
+      .note-alert
         %p
-          O IFNMG...
-      .col-md-6
-        .note-alert
-          %p
-            Para mais informações acesso o site do
-            %b IFNMG
-            através do link:
-            %a( href="http://www.ifnmg.edu.br" target="_blank")
-              http://www.ifnmg.edu.br
+          Para mais informações acesso o site do
+          %b IFNMG
+          através do link:
+          %a( href="http://www.ifnmg.edu.br" target="_blank")
+            http://www.ifnmg.edu.br
 
-
+  .grid-unidades
+    - p = "26%"
+    - m = "45%"
+    - sizes = [ [ m, p, p] , [ p, m, p], [ p , p, m] ]  
+    
     - unidades = [ "Reitoria", "Januária", "Salinas", "Montes Claros", "Arinos", |
                    "Araçuaí", "Almenara", "Pirapora", "Diamantina", |
                    "Teófilo Otoni", "Janaúba", "Porteirinha"] |
-
+    
+    -# unidades = { name: "Reitoria" }
+    -# unidades.merge!( { name: "Januária" } ){ |key, v1, v2| v1 }
+    
+    -# "Salinas", "Montes Claros", "Arinos", |
+    -# "Araçuaí", "Almenara", "Pirapora", "Diamantina", |
+    -# "Teófilo Otoni", "Janaúba", "Porteirinha"} |   
+    
+    -# ramdomize data
+    -# - unidades.sort_by! { rand }
+    
+    - i = 0
+    - x = 0
     .row
       - unidades.each do |u|
-        .box
+        .box( style="width: #{sizes[x][i]};" )
           %h2
             = u
+            -# s = STDIN.gets.chomp
+          - x = x + 1
+          - if x == 3
+            - i = i + 1
+            - if i == 3
+              - i = 0
+            - x = 0
+
+          
       
