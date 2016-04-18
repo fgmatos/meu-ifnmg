@@ -2,6 +2,8 @@ Rails.application.routes.draw do
   # default root
   root 'pages#index'
   
+  get 'unidades' => "pages#unidades"
+  
   get 'diarias' => 'pages#diarias' 
   
   get 'servidores' => 'pages#servidores'
