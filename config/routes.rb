@@ -17,6 +17,9 @@ Rails.application.routes.draw do
   
   get 'sobre' =>  'pages#sobre'
   
+  # ranking
+  get 'ranking' => "pages#ranking"
+  
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 
