@@ -12,3 +12,6 @@ Rails.application.config.assets.version = '1.0'
 
 Rails.application.config.assets.precompile += %w( logo.png )
 Rails.application.config.assets.precompile += %w( mapa.css )
+
+# fgm
+Rails.application.config.assets.precompile += %w( unidades.css )

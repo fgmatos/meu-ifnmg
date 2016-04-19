@@ -1,0 +1,76 @@
+
+.box {
+	background-color: #cccccc;
+	height: 150px;
+	width: 24%;
+	margin: 5px;
+	padding: 0px 0px 0px 0px;
+	float: left;
+}
+.box > a >  h4 {
+	text-align: center;
+	color: #ffffff;
+	background-color: rgba(69, 186, 1, 1);
+	padding: 5px;
+}
+
+/*.box > h3 {
+	margin-top: 75px;
+}*/
+
+.box > a > h4:hover {
+	box-shadow: 0 0 5px #000
+}
+
+/*campi images*/
+
+.contain {
+	background-size:     contain;                      /* <------ */
+    background-repeat:   no-repeat;
+    background-position: center center; 
+}
+
+.cover {
+	background-size:     cover;                      /* <------ */
+    background-repeat:   no-repeat;
+    background-position: center center; 
+}
+
+.arinos {
+	background-image: url('/images/unidades/arinos.jpg');
+	
+}
+.almenara {
+	background-image: url('/images/unidades/almenara.jpg');
+}
+.aracuai {
+	background-image: url('/images/unidades/aracuai.jpg');
+}
+.diamantina {
+	background-image: url('/images/unidades/diamantina.jpg');
+}
+.janauba{
+	background-image: url('/images/unidades/janauba.jpg');
+}
+.januaria {
+	background-image: url('/images/unidades/januaria.jpg');
+}
+.montes-claros {
+	background-image: url('/images/unidades/montes-claros.jpg');
+}
+.pirapora {
+	background-image: url('/images/unidades/pirapora.jpg');
+}
+.porteirinha {
+	background-image: url('/images/unidades/porteirinha.jpg');
+}
+.reitoria{
+	background-image: url('/images/unidades/reitoria.jpg');
+}
+.salinas {
+	background-image: url('/images/unidades/salinas.jpg');
+}
+.teofilo-otoni {
+	background-image: url('/images/unidades/teofilo-otoni.jpg');
+}
+
