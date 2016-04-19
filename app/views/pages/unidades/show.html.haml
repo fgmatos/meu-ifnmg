@@ -7,21 +7,26 @@
       %h2
         = unidade.gsub("-", " ").titleize
       %hr
+      
   .row
-    .col-md-12.col-sm-3
-      Destaque
+    -# .col-md-3.col-sm-3
+      -# Destaque
+    -# .col-md-3
+      -# .note-info
+        -# %p
+          -# = "notas sobre #{unidade} "
   .row
-    .col-md-3
-      .panel.panel-success
+    .col-md-2
+      .panel.panel-default
         -#.panel-heading
           -#informações
         .panel-body
           %p
             Servidores
             %span.label.label-success.pull-right
-              500
+              = @servidores.count
           %p
             Diarias
             %span.label.label-success.pull-right
-              500
+              = @diarias.count
             

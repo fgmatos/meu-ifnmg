@@ -13,6 +13,8 @@ class PagesController < ApplicationController
   
   # GET "/unidades/:name" - Retorna informacoes sobre uma Unidade do IFNMG
   def unidade
+    @diarias = FACADE.Diaria.where("nome_unidade like ?", "%#{@unidade}%")
+    @servidores = FACADE.Servidor.where("uorg_lotacao like ?", "%#{@unidade}%")
     render "pages/unidades/show", locals: { unidade: @unidade }
   end
   
