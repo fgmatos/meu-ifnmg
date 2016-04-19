@@ -11,6 +11,10 @@ class PagesController < ApplicationController
     # "pages/unidades.html.haml"
   end
   
+  def ranking
+    # "pages/ranking.html.haml"
+  end
+  
   # GET "/unidades/:name" - Retorna informacoes sobre uma Unidade do IFNMG
   def unidade
     @diarias = FACADE.Diaria.where("nome_unidade like ?", "%#{@unidade}%")
