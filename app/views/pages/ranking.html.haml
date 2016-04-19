@@ -1,0 +1,70 @@
+- ifnmg = { "INST.FED.DE EDUC.,CIENC.E TEC.DO NORTE DE MG" => 158121,
+          "INST.FED.DO NORTE DE MG/CAMPUS MONTES CLAROS" => 158437,
+          "INST.FED.DO NORTE DE MG/CAMPUS JANUARIA" => 158378,
+          "INST.FED.DO NORTE DE MG/CAMPUS SALINAS" => 158377,
+          "INST.FED.DO NORTE DE MG/CAMPUS ARINO" => 158438,
+          "INST.FED.DO NORTE DE MG/CAMPUS ALMENARA" => 158439,
+          "INST.FED.DO NORTE DE MG/CAMPUS PIRAPORA" => 158440,
+          "INST.FED DO NORTE DE MG/CAMPUS ARACUAI" => 158441,
+          "INST.FED.DO NORTE DE MG/CAMPUS ARINOS" => 158438 }
+          
+- @Diarias = FACADE.Diaria.all.order("data ASC")
+
+.container#ranking
+  .row
+    .col-md-12
+      %h2 
+        Ranking
+      %hr
+  .row
+    .col-md-6
+      %p
+        Apresntaremos abaixo os lideres em gastos com diárias do IFNMG.
+    .col-md-6
+  .row
+    .col-md-12
+      %ul.nav.nav-tabs
+        - anos = []
+        - @Diarias.each do |diaria|
+          - ano = diaria.data.year
+          - if !anos.include?(ano)
+            - anos.push(ano)
+            %li
+              %a{:data => {:toggle=>"tab"}, :href=>"#tb#{ano}"}
+                = ano.to_s
+                %span.badge
+                  = @Diarias.where("data BETWEEN ? AND ? ", ano.to_s + "-01-01", ano.to_s + "-12-31").count
+      .tab-content
+        - anos.each do |ano|
+          %div{ :id => "tb#{ano}", :class=>"tab-pane fade" }
+            %table.table.table-hover
+              %thead
+                %tr
+                  %th Nº
+                  %th Nome
+                  %th Diárias Recebidas
+                  
+              %tbody
+                - total = Hash.new
+                - total[ano] = 0 
+                  - @Diarias.each do |diaria|
+                    %tr
+                      - if (diaria.data.year == ano)
+                      - total[ano] += diaria.valor.to_f
+                      - id_unidade = ifnmg[diaria.nome_unidade].to_s
+                      - link = "http://www.portaltransparencia.gov.br/despesasdiarias/pagamento?documento="+ id_unidade +"26410" + diaria.num_doc
+                      %td   
+                        
+                      %td
+                        -#= diaria.nome
+                      %td
+                        -# %a{ :href => link, :target =>"_blank", :data => {:toggle => "popover", :trigger =>"hover", :content => "#{diaria.nome_unidade}", :placement =>"right" }, :title => "nº #{diaria.num_doc}" }
+                          -#= diaria.num_doc
+                      %td
+                        -#= diaria.nome_unidade
+                      
+                %tr
+                  %td(colspan="4")
+              %br      
+              %span.badge
+                = "Total de diárias no ano: " + number_to_currency(total[ano],unit: "R$ ", separator: ",", delimiter: ".").to_s
