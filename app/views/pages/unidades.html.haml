@@ -5,8 +5,8 @@
     .col-md-12
       %h2 
         Unidades
-        %span.label.label-danger
-          In construction
+        %span.label.label-success
+          ifnmg
       %hr
   .row
     .col-md-6
@@ -29,34 +29,30 @@
     - m = "45%"
     - sizes = [ [ m, p, p] , [ p, m, p], [ p , p, m] ]  
     
+    -# swap for a Unidade model
     - unidades = [ "Reitoria", "Januária", "Salinas", "Montes Claros", "Arinos", |
                    "Araçuaí", "Almenara", "Pirapora", "Diamantina", |
                    "Teófilo Otoni", "Janaúba", "Porteirinha"] |
     
-    -# unidades = { name: "Reitoria" }
-    -# unidades.merge!( { name: "Januária" } ){ |key, v1, v2| v1 }
-    
-    -# "Salinas", "Montes Claros", "Arinos", |
-    -# "Araçuaí", "Almenara", "Pirapora", "Diamantina", |
-    -# "Teófilo Otoni", "Janaúba", "Porteirinha"} |   
-    
     -# ramdomize data
-    -# - unidades.sort_by! { rand }
+    - unidades.sort_by! { rand }
     
     - i = 0
     - x = 0
     .row
       - unidades.each do |u|
-        .box( style="width: #{sizes[x][i]};" )
-          %h2
-            = u
-            -# s = STDIN.gets.chomp
-          - x = x + 1
-          - if x == 3
-            - i = i + 1
-            - if i == 3
-              - i = 0
-            - x = 0
+        - str = u.to_s
+        - classname = u.mb_chars.normalize(:kd).gsub(/[^\x00-\x7F]/n,'').downcase.gsub(" ", "-")
+        .box( style="width: #{sizes[x][i]};" class="#{classname} cover")
+          %a( href="/unidades/#{classname}")
+            %h4
+              = u
+            - x = x + 1
+            - if x == 3
+              - i = i + 1
+              - if i == 3
+                - i = 0
+              - x = 0
 
           
       
