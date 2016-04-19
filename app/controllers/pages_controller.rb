@@ -1,17 +1,20 @@
 class PagesController < ApplicationController
   
+  before_action :load_unidade, only: [:unidade]
+  
   def index   
-    
+    # "pages/index.html.haml"
   end
   
+  # GET "/unidades" - Retorna todas unidades do IFNMG
   def unidades
-    
+    # "pages/unidades.html.haml"
   end
   
-  def januaria
-    render "pages/unidades/januaria"
+  # GET "/unidades/:name" - Retorna informacoes sobre uma Unidade do IFNMG
+  def unidade
+    render "pages/unidades/show", locals: { unidade: @unidade }
   end
-  
   
   def diarias
   
@@ -64,6 +67,12 @@ class PagesController < ApplicationController
       flash[:danger] = "Atenção: servidor id(#{params[:id]}) não existe."
       redirect_to root_url
     end
+  end
+  
+  private
+  
+  def load_unidade
+    @unidade = params[:name]
   end
   
 end

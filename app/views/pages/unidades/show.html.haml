@@ -1,0 +1,27 @@
+
+-# Uma unica view para todoas as Unidades
+
+.container
+  .row
+    .col-md-12
+      %h2
+        = unidade.gsub("-", " ").titleize
+      %hr
+  .row
+    .col-md-12.col-sm-3
+      Destaque
+  .row
+    .col-md-3
+      .panel.panel-success
+        -#.panel-heading
+          -#informações
+        .panel-body
+          %p
+            Servidores
+            %span.label.label-success.pull-right
+              500
+          %p
+            Diarias
+            %span.label.label-success.pull-right
+              500
+            
