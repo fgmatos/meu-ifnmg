@@ -1,0 +1,33 @@
+
+%div{ :id => "tbGeneral", :class=>"tab-pane fade" }
+  %table.table.table-hover
+    %thead
+      %tr
+        %th Nº
+        %th Nome
+        %th Diárias Recebidas
+        %th %
+        
+    %tbody
+      - num = 0
+      - topServidores = @Diarias.select(:valor).group(:nome).reorder('sum_valor DESC').limit(30).sum(:valor)
+      - topServidores.each do |servidor|
+        - num = num + 1
+        %tr
+          %td   
+            = num
+          %td
+            - s = FACADE.Servidor.where("nome = ?", servidor[0].to_s)
+            - if s[0].nil?
+              = servidor[0]
+            - else
+              %a{:href=> root_url + "servidor/#{s[0].id}" }
+                = servidor[0]
+          %td
+            = number_to_currency(servidor[1],unit: "R$ ", separator: ",", delimiter: ".").to_s
+          %td
+            = format("%.2f", ( servidor[1].to_f / FACADE.Diaria.TotalDiarias.to_f ) * 100 )
+            
+      %br      
+      %span.badge
+        = "Total de diárias em todos os anos: " + number_to_currency(FACADE.Diaria.TotalDiarias,unit: "R$ ", separator: ",", delimiter: ".").to_s
