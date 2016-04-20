@@ -22,7 +22,7 @@
               %td= num
               %td
                 - @s = FACADE.Servidor.where("nome = ?", nome)
-                - if @s.nil?
+                - if @s[0].nil?
                   %a{:href=> root_url + "servidor" }
                     = nome
                 - else
