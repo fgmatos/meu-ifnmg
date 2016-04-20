@@ -7,7 +7,8 @@ Rails.application.routes.draw do
   get "unidades/:name" => "pages#unidade"
   
   # diarias
-  get 'diarias' => 'pages#diarias' 
+  get 'diarias' => 'pages#diarias'
+  get 'diariasII' => 'pages#newdiarias'  
   
   get 'servidores' => 'pages#servidores'
   
