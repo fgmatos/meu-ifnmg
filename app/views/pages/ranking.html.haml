@@ -45,8 +45,6 @@
                   
               %tbody
                 - num = 0
-                - total = Hash.new
-                - total[ano] = 0 
                 - topServidores = @Diarias.select(:valor).where("data BETWEEN ? AND ? ", ano.to_s + "-01-01", ano.to_s + "-12-31").group(:nome).reorder('sum_valor DESC').limit(30).sum(:valor)
                 - topServidores.each do |servidor|
                   - num = num + 1
