@@ -1,0 +1,132 @@
+          
+- @Diarias = FACADE.Diaria.all.order("data ASC")
+
+.container#diarias
+  .row
+    .col-md-12
+      %h2 
+        Diárias
+      %hr
+  .row
+    .col-md-6
+      %p
+        Acompanhe aqui as despesas com Diárias realizadas pelo IFNMG ao longo dos últimos cinco anos. 
+        Estão disponíveis os dados entre os anos 2011 e 2015.
+        .row
+          .col-md-12
+            .note-info
+              %p
+                Todos os dados foram obtidos no 
+                %b Porta da Transparência
+                através do link:
+                %a{:href => "http://www.transparencia.gov.br/downloads/mensal.asp?c=Diarias", :target =>"_blank"}
+                  http://www.transparencia.gov.br/downloads/mensal.asp?c=Diarias
+            -# .row
+              -# .col-md-6
+                -# .note-alert
+                  -# %p
+                    -# Foram utilzados 
+                    -# %b apenas dados entre 2011 e 2015
+                    -# que são disponibilizados com as informações do favorecido!                 
+    .col-md-6
+      -# # %h3 F.A.Q
+    
+  
+      .panel-group#accordion
+      
+        .panel.panel-success
+          .panel-heading
+            %h4.panel-title
+              %a{ :href=>"#faq1", :data =>{:toggle=>"collapse", :parent=>"#accordion"}}
+                1. A que se destinam as diárias pagas na administração federal?
+          #faq1.panel-collapse.collapse
+            .panel-body.justify
+              As diárias destinam-se a indenizar o agente público ou colaborador eventual pelas despesas |
+              extraordinárias com hospedagem, alimentação e locomoção urbana, durante o período |
+              de deslocamento, em objeto de serviço de interesse da administração pública, do |
+              servidor fora da localidade onde tem exercício e do colaborador eventual. |
+  
+  
+        .panel.panel-warning
+          .panel-heading
+            %h4.panel-title
+              %a{ :href=>"#faq2", :data =>{:toggle=>"collapse", :parent=>"#accordion"}}
+                2. Quem faz jus à percepção de diárias?
+          #faq2.panel-collapse.collapse
+            .panel-body.justify
+              Fará jus à percepção de diárias o servidor civil da administração federal direta, autárquica
+              e fundacional que se deslocar, a serviço, da localidade onde tem exercício para outro
+              ponto do território nacional, ou para o exterior. Fará jus também o colaborador eventual
+              que seja convidado a prestar serviços ou participar de eventos de interesse dos órgãos
+              ou entidades da Administração Pública Federal. Terá direito ainda à percepção de diárias
+              o servidor ou colaborador eventual que acompanhar servidor com deficiência em deslocamento
+              a serviço, autorizado por meio de resultado de perícia oficial.
+  
+                             
+        .panel.panel-danger
+          .panel-heading
+            %h4.panel-title
+              %a{ :href=>"#faq3", :data =>{:toggle=>"collapse", :parent=>"#accordion"}}
+                3. Quais as situações de deslocamento em que o servidor não faz jus à diária?
+          #faq3.panel-collapse.collapse
+            .panel-body
+              %ul.justify
+                %li
+                  Quando o deslocamento da sede for exigência permanente do cargo;
+                %li
+                  Quando o deslocamento da sede ocorrer dentro da mesma região metropolitana;
+                %li
+                  Quando o servidor é nomeado ou designado para servir no exterior; e
+                %li
+                  Quando governo estrangeiro ou organismo internacional de que o Brasil participe ou
+                  com o qual coopere custear as despesas com pousada, alimentação e locomoção urbana
+  .row
+    .col-md-12  
+      %ul.nav.nav-tabs
+        %li
+          %a{:data => {:toggle=>"tab"}, :href=>"#tbGeneral"}
+            Geral
+            %span.badge
+              = @Diarias.count
+        - anos = []
+        - @Diarias.each do |diaria|
+          - ano = diaria.data.year
+          - if !anos.include?(ano)
+            - anos.push(ano)
+            %li
+              %a{:data => {:toggle=>"tab"}, :href=>"#tb#{ano}"}
+                = ano.to_s
+                %span.badge
+                  = @Diarias.where("data BETWEEN ? AND ? ", ano.to_s + "-01-01", ano.to_s + "-12-31").count
+  
+      .tab-content
+        %div{ :id => "tbGeneral", :class=>"tab-pane fade" }
+          - @valor_diarias_geral = FACADE.Diaria.group(:nome_unidade).sum(:valor)
+          = column_chart @valor_diarias_geral, |
+                library: { | 
+                   title: { text: "Diárias em Todos os anos" }, |
+                   tooltip: { |
+                      valuePrefix: "RS ", |
+                      pointFormat: "Total de diarias: <b>{point.y}</b>", |
+                      valueDecimals: 2 , |
+                   } |
+               } |
+          %br      
+          %span.badge
+            = "Total de diárias em todos os anos: " + number_to_currency(FACADE.Diaria.TotalDiarias,unit: "R$ ", separator: ",", delimiter: ".").to_s
+        - anos.each do |ano|
+          %div{ :id => "tb#{ano}", :class=>"tab-pane fade" }
+            - @valor_diarias = FACADE.Diaria.where(:data => "#{ano}-01-01".."#{ano}-12-31").group(:nome_unidade).sum(:valor)
+            = column_chart @valor_diarias, |
+              library: { |
+                title: { text: "Diárias em #{ano}"}, |
+                subtitle: { text: '' }, |
+                tooltip: { |
+                  valuePrefix: "RS ", |
+                  pointFormat: "Total de diarias: <b>{point.y}</b>", |
+                  valueDecimals: 2 , |
+                } |
+              } |
+            %br      
+            %span.badge
+              = "Total de diárias no ano: " + number_to_currency(FACADE.Diaria.TotalDiarias(ano),unit: "R$ ", separator: ",", delimiter: ".").to_s
