@@ -105,14 +105,23 @@
         %div{ :id => "tbGeneral", :class=>"tab-pane fade" }
           - @valor_diarias_geral = FACADE.Diaria.group(:nome_unidade).sum(:valor)
           = column_chart @valor_diarias_geral, |
-                library: { | 
-                   title: { text: "Diárias em Todos os anos" }, |
-                   tooltip: { |
-                      valuePrefix: "RS ", |
-                      pointFormat: "Total de diarias: <b>{point.y}</b>", |
-                      valueDecimals: 2 , |
-                   } |
-               } |
+            library: { | 
+              title: { text: "Diárias em todos os anos" }, |
+              tooltip: { |
+                valuePrefix: "R$ ", |
+                pointFormat: "Total de diarias: <b>{point.y}</b>", |
+                valueDecimals: 2 |
+              }, |
+              plotOptions: { |
+                column: { |
+                  dataLabels: { |
+                    enabled: true , |
+                    format: 'R$: {y:.2f}', |
+                    valueDecimals: 2, |
+                  }, |
+                }, |
+              }, |
+            } |
           %br      
           %span.badge
             = "Total de diárias em todos os anos: " + number_to_currency(FACADE.Diaria.TotalDiarias,unit: "R$ ", separator: ",", delimiter: ".").to_s
@@ -124,10 +133,19 @@
                 title: { text: "Diárias em #{ano}"}, |
                 subtitle: { text: '' }, |
                 tooltip: { |
-                  valuePrefix: "RS ", |
+                  valuePrefix: "R$ ", |
                   pointFormat: "Total de diarias: <b>{point.y}</b>", |
                   valueDecimals: 2 , |
-                } |
+                } , |
+                plotOptions: { |
+                  column: { |
+                    dataLabels: { |
+                      enabled: true , |
+                      valueDecimals: 2, |
+                      format: 'R$: {y:.2f}', |
+                    }, |
+                  }, |
+                }, |
               } |
             %br      
             %span.badge
@@ -142,11 +160,20 @@
                 title: { text: "Evolução de Gastos com Diárias"}, |
                 subtitle: { text: 'Todas as unidades do IFNMG' }, |
                 tooltip: { |
-                  valuePrefix: "RS ", |
+                  valuePrefix: "R$ ", |
                   pointFormat: "Total de diarias: <b>{point.y}</b>", |
                   valueDecimals: 2 , |
-                } |
-              } |
+                }, |
+                plotOptions: { |
+                  column: { |
+                    dataLabels: { |
+                      enabled: true , |
+                      valueDecimals: 2, |
+                      format: 'R$: {y:.2f}', |
+                    }, |
+                  }, |
+                }, |
+              }  |
             %br      
             %span.badge
               = "Total de diárias no ano: " + number_to_currency(FACADE.Diaria.TotalDiarias,unit: "R$ ", separator: ",", delimiter: ".").to_s
