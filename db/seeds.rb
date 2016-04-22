@@ -5,7 +5,7 @@ require "import"
 
 # tasks - list of task to import
   # taskname: um nome para identificar a tarefa. Ex.: :task01, ou :importando2015
-  # => type: dado a importar: ":diarias" ou ":servidores"
+  # => type: dado a importar -> :diarias, :servidores ou :remuneracoes
   # => year_range: intevalo de anos. Ex: 2011..2015
   # => month_range: intervalo de meses. Ex: 1..2  ou :all para todos os meses
   # => options: { } - Paramentros para leitura do CSV
@@ -34,7 +34,12 @@ tasks = {
             :month_range => 1..3
             # ,
             # :options => {:quote_char => "|"}
-        } 
+        },
+        :t05 => {
+            :type => :remuneracoes, 
+            :year_range => 2015, 
+            :month_range => 12
+        }
   }
   
 # to log the execution uncomment the following lines
@@ -47,8 +52,8 @@ tasks.each do | task, options |
     choice = STDIN.gets.chomp
     if (choice.upcase == "Y" || choice.upcase == "S")
       import = DataImport.new(options[:type], options[:year_range], options[:month_range], options[:options])
-      # import.execute
-      import.run_test
+      import.execute
+      # import.run_test
     end
 end
 
