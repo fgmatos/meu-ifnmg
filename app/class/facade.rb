@@ -15,6 +15,10 @@ class Facade
     def Servidor
        @servidor = TServidor 
     end
+    
+    def Remuneracao
+      @remuneracao = TRemuneracao
+    end
 
     # private :new
     private_class_method :new    
