@@ -9,9 +9,18 @@ require "csv"
 #   
 
 class DataImport 
-  
+  # codigo do orgao IFNMG
   UORG = 26410
-  # unidades gestoras do IFNMG [reitoria, salinas, januaria, montes-claros, arinos, almenara, pirapora, aracuai]
+  
+  # unidades gestoras do IFNMG 
+  # => reitoria - 158121
+  # => salinas - 158377
+  # => januaria
+  # => montes-claros
+  # => arinos
+  # => almenara
+  # => pirapora
+  # => aracuai
   UGS =  ["158121", "158377", "158378", "158437", "158438", "158439", "158440", "158441"]
   
   # if TRUE show report  
@@ -19,34 +28,55 @@ class DataImport
   
   @@instances = 0
     
-  
+  # constructor 
   def initialize(type, year_range, month_range, options = nil)
-    
+    # registros processados
     @records_processed = 0
+    
+    # registros importados
     @records_imported = 0
+    
+    # Modo de teste - simula a importacao sem salvar no banco
     @test_mode = FALSE
     
+    # registros processados em cada arquivo
     @records_each_file = 0
+    
+    # hash para armazenar a quantidade de registros em cada arquivo. 
+    # =>  Ex.:@files[filename] = @records_each_file
     @files = Hash.new
     
+    # tipo de dado a ser importado
+    # =>  suportados :diarias e :servidores
     @type = type.to_sym
-    @name =  getGOV_file_str
     
+    # @name =  getGOV_file_str
+    
+    # diretorio base para a importacao de dados
+    # => Ex.: app/data/servidores
     @diretorio = Rails.root.join("app","data",@type.to_s).to_s + "/"
     
-    @year_range = year_range
+    @year_range = validate_range(year_range)
     
     if month_range == :all
       @months_range = 1..12  
     else
-      @months_range = month_range
+      @months_range = validate_range(month_range)
     end
     
-    if (options.nil?)
-      @options = {headers: true, encoding:'windows-1250', col_sep: "\t", header_converters: :symbol}
-    else
-      @options = options          
+    # default options
+    @options = {headers: true, encoding:'windows-1250', col_sep: "\t", header_converters: :symbol}
+    
+    # if user seted personal options include 
+    if (!options.nil?)
+      @options.merge!(options)          
     end
+    
+    # if (options.nil?)
+      # @options = {headers: true, encoding:'windows-1250', col_sep: "\t", header_converters: :symbol}
+    # else
+      # @options = options          
+    # end
     
     @@instances += 1
   end
@@ -84,13 +114,25 @@ class DataImport
         puts "importing: " + file.to_s
       end
       
+      # this block is equivalent to try..except 
       begin
-        CSV.foreach(file, @options) do |row|
+        
+        temp = File.read(file, encoding:"ISO-8859-1")
+        
+        # remove 'aspas' do arquivo
+        @file = strip(temp)
+        
+        # converte o arquivo para CSV
+        @csvfile = parse(@file)
+        
+        # CSV.foreach(file, @options) do |row|
+        @csvfile.each do |row|
+          # convert o registro para um hash
           data = row.to_hash
           @records_processed +=  1
-          if doFilter(data)
+          # testa se o registro tiver dados relacionados ao IFNMG
+          if belongsIFNMG(data)
             if !@test_mode
-              # puts "nº " + @records_imported.to_s + ": " + data[:nome_favorecido].to_s        else
               import(data)         
             end
             @records_each_file += 1
@@ -104,12 +146,20 @@ class DataImport
       
     else # file not exits
       puts "Error on importing: " + file.to_s + "!. File no found."
-      exit
+      # exit
     end # if file.exist?
     
   end
   
-  def doFilter(data)
+  def parse(file)
+    CSV.parse(file, @options)
+  end
+  
+  def strip(file)
+    file.gsub('"',"'")
+  end
+  
+  def belongsIFNMG(data)
     case @type
       when :diarias then UGS.include? data[:cdigo_unidade_gestora]
       when :servidores then 
@@ -163,26 +213,30 @@ class DataImport
   
   def print_debug_info
     puts "------------------------------- DataImport Report --------------------------------"
+    puts "CSV read options: #{@options}"
     puts "Arquivos:"
     @files.each do | file, records |
-        puts "   --> "+ file.to_s + ": " + records.to_s + " registros"
+        puts "   --> #{file}: #{records} registros"
     end
-    puts "Registros processados: " + @records_processed.to_s
-    puts "Registros importados: " + @records_imported.to_s
+    puts "Registros processados: #{@records_processed}"
+    puts "Registros importados: #{@records_imported}"
     puts "------------------------------------- END ----------------------------------------"
   end
   
   def getFilename(mes, ano)
-    dias = Time.days_in_month(mes, ano)
+    data = ano.to_s + mes.to_s.rjust(2,'0')
     case @type
     when :diarias
-      then @diretorio + ano.to_s + mes.to_s.rjust(2,'0') + @name
+      then @diretorio + data + getGOV_filename
     when :servidores
-      then @diretorio + ano.to_s + mes.to_s.rjust(2,'0') + dias.to_s + @name
+      then
+        dias = Time.days_in_month(mes, ano)
+        folder = "#{data}_Servidores/" 
+        @diretorio + folder + data + dias.to_s + getGOV_filename
     end
   end
   
-  def getGOV_file_str
+  def getGOV_filename
     case @type.to_s
       when "diarias" then "_Diarias.csv"
       when "servidores" then "_Cadastro.csv"
@@ -227,7 +281,20 @@ class DataImport
     end # end case
   end
   
-  
+  # garante que sera usando um 'Range' ou 'Array' para meses e anos na importacao. 
+  # Se vier um unico valor sera criado um range com apenas ele.
+  def validate_range(value)
+    classname = value.class.to_s
+    case classname
+      when "Range" 
+        then value
+      when "Array"
+        then value
+      else
+        return (value..value)
+    end
+  end
+
   
 end
 
