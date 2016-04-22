@@ -98,7 +98,9 @@
                 = ano.to_s
                 %span.badge
                   = @Diarias.where("data BETWEEN ? AND ? ", ano.to_s + "-01-01", ano.to_s + "-12-31").count
-  
+        %li
+          %a{:data => {:toggle=>"tab"}, :href=>"#tbEvolucao"}
+            Evolução
       .tab-content
         %div{ :id => "tbGeneral", :class=>"tab-pane fade" }
           - @valor_diarias_geral = FACADE.Diaria.group(:nome_unidade).sum(:valor)
@@ -130,3 +132,21 @@
             %br      
             %span.badge
               = "Total de diárias no ano: " + number_to_currency(FACADE.Diaria.TotalDiarias(ano),unit: "R$ ", separator: ",", delimiter: ".").to_s
+        
+          %div{ :id => "tbEvolucao", :class=>"tab-pane fade" }
+            - diarias_all = Hash.new
+            - anos.each do | ano|
+              - diarias_all[ano] = FACADE.Diaria.TotalDiarias(ano)
+            = column_chart diarias_all, |
+              library: { |
+                title: { text: "Evolução de Gastos com Diárias"}, |
+                subtitle: { text: 'Todas as unidades do IFNMG' }, |
+                tooltip: { |
+                  valuePrefix: "RS ", |
+                  pointFormat: "Total de diarias: <b>{point.y}</b>", |
+                  valueDecimals: 2 , |
+                } |
+              } |
+            %br      
+            %span.badge
+              = "Total de diárias no ano: " + number_to_currency(FACADE.Diaria.TotalDiarias,unit: "R$ ", separator: ",", delimiter: ".").to_s
