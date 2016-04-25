@@ -7,7 +7,8 @@ Rails.application.routes.draw do
   get "unidades/:name" => "pages#unidade"
   
   # diarias
-  get 'diarias' => 'pages#diarias' 
+  get 'diarias' => 'pages#newdiarias'
+  get 'diariasII' => 'pages#diarias'  
   
   get 'servidores' => 'pages#servidores'
   
@@ -16,6 +17,9 @@ Rails.application.routes.draw do
   get 'contratos'   => 'pages#contratos'
   
   get 'sobre' =>  'pages#sobre'
+  
+  # ranking
+  get 'ranking' => "pages#ranking"
   
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

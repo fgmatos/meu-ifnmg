@@ -29,10 +29,10 @@
                     %td
                       %a{ :href => root_url + "servidor/" + s.id.to_s} 
                         = s.nome
-                      %span.badge
-                        - @servidor = FACADE.Servidor.find(s.id)
-                        - @minhas_diarias = FACADE.Diaria.where("NOME = ?", @servidor.nome)
-                        = @minhas_diarias.all.count
+                      -#%span.badge
+                        -#- @servidor = FACADE.Servidor.find(s.id)
+                        -#- @minhas_diarias = FACADE.Diaria.where("NOME = ?", @servidor.nome)
+                        -#= @minhas_diarias.all.count
                       %br
               
 %script{:type=>"text/javascript"}

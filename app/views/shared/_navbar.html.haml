@@ -29,7 +29,7 @@
             %span.badge
               = FACADE.Diaria.all.count
         %li
-          = link_to "Ranking", "#", class: "active"
+          = link_to "Ranking", "#{root_url}ranking", class: "active"
         %li
           %a{ :href => root_url + "contratos", :class => "active" }
             Contratos

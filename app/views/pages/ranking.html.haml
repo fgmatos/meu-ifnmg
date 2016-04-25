@@ -1,0 +1,68 @@
+          
+- @Diarias = FACADE.Diaria.all.order("data ASC")
+
+.container#ranking
+  .row
+    .col-md-12
+      %h2 
+        Ranking
+      %hr
+  .row
+    .col-md-6
+      %p
+        Apresntaremos abaixo os lideres em gastos com diárias do IFNMG.
+    .col-md-6
+  .row
+    .col-md-12  
+      %ul.nav.nav-tabs
+        %li
+          %a{:data => {:toggle=>"tab"}, :href=>"#tbGeneral"}
+            Geral
+            %span.badge
+              = @Diarias.count
+        - anos = []
+        - @Diarias.each do |diaria|
+          - ano = diaria.data.year
+          - if !anos.include?(ano)
+            - anos.push(ano)
+            %li
+              %a{:data => {:toggle=>"tab"}, :href=>"#tb#{ano}"}
+                = ano.to_s
+                %span.badge
+                  = @Diarias.where("data BETWEEN ? AND ? ", ano.to_s + "-01-01", ano.to_s + "-12-31").count
+
+      .tab-content
+        = render 'pages/ranking/general'
+        - anos.each do |ano|
+          %div{ :id => "tb#{ano}", :class=>"tab-pane fade" }
+            %table.table.table-hover
+              %thead
+                %tr
+                  %th Nº
+                  %th Nome
+                  %th Diárias Recebidas
+                  %th %
+                  
+              %tbody
+                - num = 0
+                - topServidores = @Diarias.select(:valor).where("data BETWEEN ? AND ? ", ano.to_s + "-01-01", ano.to_s + "-12-31").group(:nome).reorder('sum_valor DESC').limit(30).sum(:valor)
+                - topServidores.each do |servidor|
+                  - num = num + 1
+                  %tr
+                    %td   
+                      = num
+                    %td
+                      - s = FACADE.Servidor.where("nome = ?", servidor[0].to_s)
+                      - if s[0].nil?
+                        = servidor[0]
+                      - else
+                        %a{:href=> root_url + "servidor/#{s[0].id}" }
+                          = servidor[0]
+                    %td
+                      = number_to_currency(servidor[1],unit: "R$ ", separator: ",", delimiter: ".").to_s
+                    %td
+                      = format("%.2f",( servidor[1].to_f / FACADE.Diaria.TotalDiarias(ano).to_f ) * 100 )
+                      
+                %br      
+                %span.badge
+                  = "Total de diárias no ano: " + number_to_currency(FACADE.Diaria.TotalDiarias(ano),unit: "R$ ", separator: ",", delimiter: ".").to_s
