@@ -7,11 +7,8 @@ class CreateRemuneracaos < ActiveRecord::Migration
       t.string :cpf
       t.string :nome
       t.string :remuneracao_basica_bruta_rs
-      t.string :remuneracao_basica_bruta_us
       t.string :abate_teto_rs
-      t.string :abate_teto_us
       t.string :gratificacao_natalina_rs
-      t.string :gratificacao_natalina_us
       t.string :abate_teto_gratificacao_natalina
       t.string :ferias
       t.string :outras_remuneracoes_eventuais

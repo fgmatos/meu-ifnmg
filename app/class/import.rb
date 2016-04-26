@@ -136,7 +136,8 @@ class DataImport
           end
         end # end foreach
       rescue => ex
-        puts "Erro na leitrua do arquivo: " + file.to_s + " - " + ex.message
+        puts "Erro : #{file}, record: #{@records_processed} - Exception: #{ex.class} -> #{ex.message}"
+        puts " => #{data.inspect}"
       end
       @files[ @filename.to_sym ] = @records_each_file 
       
@@ -205,6 +206,8 @@ class DataImport
     # obj.data = data[:data_pagamento]
     # obj.valor = data[:valor_pagamento].to_f
     
+    # set traking information
+    
     obj.save!
   end
   
@@ -258,15 +261,16 @@ class DataImport
                       :uorg_lotacao, :cod_org_lotacao, :cod_org_exercicio, :situacao_vinculo, :jornada_de_trabalho,
                       :data_ingresso_cargofuncao, :data_ingresso_orgao, :data_ingresso_servicopublico,
                       :data_diploma_ingresso_servicopublico, :diploma_ingresso_orgao)
-    when :remuneracoes then
-      data.extract!(:ano, :mes, :id_servidor_portal, :cpf, :nome, :remunerao_bsica_bruta_r,
-                    :abateteto_r, :gratificao_natalina_r, :abateteto_da_gratificao_natalina_r,
-                    :frias_r, :outras_remuneraes_eventuais_r, :irrf_r, :pssrpgs_r, :penso_militar_r,
-                    :fundo_de_sade_r, :demais_dedues_r, :remunerao_aps_dedues_obrigatrias_r,
-                    :verbas_indenizatrias_registradas_em_sistemas_de_pessoal__civil_r,
-                    :verbas_indenizatrias_registradas_em_sistemas_de_pessoal__militar_r,
-                    :total_de_verbas_indenizatrias_r, :total_de_honorrios_jetons
-                    )
+    when :remuneracoes 
+      then
+        data.extract!(:ano, :mes, :id_servidor_portal, :cpf, :nome, :remunerao_bsica_bruta_r,
+                      :abateteto_r, :gratificao_natalina_r, :abateteto_da_gratificao_natalina_r,
+                      :frias_r, :outras_remuneraes_eventuais_r, :irrf_r, :pssrpgs_r, :penso_militar_r,
+                      :fundo_de_sade_r, :demais_dedues_r, :remunerao_aps_dedues_obrigatrias_r,
+                      :verbas_indenizatrias_registradas_em_sistemas_de_pessoal__civil_r,
+                      :verbas_indenizatrias_registradas_em_sistemas_de_pessoal__militar_r,
+                      :total_de_verbas_indenizatrias_r, :total_de_honorrios_jetons
+                      )
     else {}
     end
   end
@@ -327,7 +331,8 @@ class DataImport
           data[:fundo_de_saude] = data[:fundo_de_saude].gsub! "," , "."
           data[:demais_deducoes] = data[:demais_deducoes].gsub! "," , "."
           data[:remuneracao_apos_deducoes] = data[:remuneracao_apos_deducoes].gsub! "," , "."
-          data[:verbas_indenizatorias_civil] = data[:verbas_indenizatorias_militar].gsub! "," , "."
+          data[:verbas_indenizatorias_civil] = data[:verbas_indenizatorias_civil].gsub! "," , "."
+          data[:verbas_indenizatorias_militar] = data[:verbas_indenizatorias_militar].gsub! "," , "."
           data[:total_verbas_indenizatorias] =  data[:total_verbas_indenizatorias].gsub! "," , "."
           data[:total_honorarios] = data[:total_honorarios].gsub! "," , "."
         
