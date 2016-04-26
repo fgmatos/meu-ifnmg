@@ -104,6 +104,9 @@
       .tab-content
         %div{ :id => "tbGeneral", :class=>"tab-pane fade" }
           - @valor_diarias_geral = FACADE.Diaria.group(:nome_unidade).sum(:valor)
+          %br 
+          %span.badge
+            = "Total de diárias em todos os anos: " + number_to_currency(FACADE.Diaria.TotalDiarias,unit: "R$ ", separator: ",", delimiter: ".").to_s
           = column_chart @valor_diarias_geral, |
             library: { | 
               title: { text: "Diárias em todos os anos" }, |
@@ -122,12 +125,24 @@
                 }, |
               }, |
             } |
-          %br      
-          %span.badge
-            = "Total de diárias em todos os anos: " + number_to_currency(FACADE.Diaria.TotalDiarias,unit: "R$ ", separator: ",", delimiter: ".").to_s
+          %br 
+          = pie_chart @valor_diarias_geral, |
+              library: { |
+                title: { text: "Diárias em todos os anos"}, |
+                subtitle: { text: '' }, |
+                tooltip: { |
+                  valuePrefix: "R$ ", |
+                  pointFormat: "Total de diarias: <b>{point.y}</b>", |
+                  valueDecimals: 2 |
+                }, |
+              } |     
+          %br
         - anos.each do |ano|
           %div{ :id => "tb#{ano}", :class=>"tab-pane fade" }
             - @valor_diarias = FACADE.Diaria.where(:data => "#{ano}-01-01".."#{ano}-12-31").group(:nome_unidade).sum(:valor)
+            %br 
+            %span.badge
+              = "Total de diárias no ano: " + number_to_currency(FACADE.Diaria.TotalDiarias(ano),unit: "R$ ", separator: ",", delimiter: ".").to_s
             = column_chart @valor_diarias, |
               library: { |
                 title: { text: "Diárias em #{ano}"}, |
@@ -147,14 +162,26 @@
                   }, |
                 }, |
               } |
-            %br      
-            %span.badge
-              = "Total de diárias no ano: " + number_to_currency(FACADE.Diaria.TotalDiarias(ano),unit: "R$ ", separator: ",", delimiter: ".").to_s
+            %br 
+            = pie_chart @valor_diarias, |
+                  library: { |
+                    title: { text: "Diárias em #{ano}"}, |
+                    subtitle: { text: '' }, |
+                    tooltip: { |
+                      valuePrefix: "R$ ", |
+                      pointFormat: "Total de diarias: <b>{point.y}</b>", |
+                      valueDecimals: 2 |
+                    }, |
+                  } |  
+            %br                  
         
           %div{ :id => "tbEvolucao", :class=>"tab-pane fade" }
             - diarias_all = Hash.new
             - anos.each do | ano|
               - diarias_all[ano] = FACADE.Diaria.TotalDiarias(ano)
+            %br      
+            %span.badge
+              = "Total de diárias no ano: " + number_to_currency(FACADE.Diaria.TotalDiarias,unit: "R$ ", separator: ",", delimiter: ".").to_s
             = column_chart diarias_all, |
               library: { |
                 title: { text: "Evolução de Gastos com Diárias"}, |
@@ -174,6 +201,14 @@
                   }, |
                 }, |
               }  |
-            %br      
-            %span.badge
-              = "Total de diárias no ano: " + number_to_currency(FACADE.Diaria.TotalDiarias,unit: "R$ ", separator: ",", delimiter: ".").to_s
+            %br
+            = pie_chart diarias_all, |
+                  library: { |
+                    title: { text: "Evolução de Gastos com Diárias"}, |
+                    subtitle: { text: '' }, |
+                    tooltip: { |
+                      valuePrefix: "R$ ", |
+                      pointFormat: "Total de diarias: <b>{point.y}</b>", |
+                      valueDecimals: 2 |
+                    }, |
+                  } |  
