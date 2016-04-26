@@ -15,3 +15,7 @@ Rails.application.config.assets.precompile += %w( mapa.css )
 
 # fgm
 Rails.application.config.assets.precompile += %w( unidades.css )
+Rails.application.config.assets.precompile += %w( business/*)
+Rails.application.config.assets.precompile += %w(  design/* )
+Rails.application.config.assets.precompile += %w(  essential/* )
+Rails.application.config.assets.precompile += %w(  professions/* )
