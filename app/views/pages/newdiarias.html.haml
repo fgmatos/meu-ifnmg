@@ -135,6 +135,17 @@
                   pointFormat: "Total de diarias: <b>{point.y}</b>", |
                   valueDecimals: 2 |
                 }, |
+                plotOptions: { |
+                  pie: { |
+                    center: true, |
+                    dataLabels: { |
+                      enabled: true , |
+                      format: 'R$: {y:.2f}', |
+                      valueDecimals: 2, |
+                    }, |
+                    showInLegend: true |
+                  }, |
+                }, |
               } |     
           %br
         - anos.each do |ano|
@@ -171,6 +182,17 @@
                       valuePrefix: "R$ ", |
                       pointFormat: "Total de diarias: <b>{point.y}</b>", |
                       valueDecimals: 2 |
+                    }, |
+                    plotOptions: { |
+                      pie: { |
+                        center: true, |
+                        dataLabels: { |
+                          enabled: true , |
+                          format: 'R$: {y:.2f}', |
+                          valueDecimals: 2, |
+                        }, |
+                        showInLegend: true |
+                      }, |
                     }, |
                   } |  
             %br                  
@@ -210,5 +232,16 @@
                       valuePrefix: "R$ ", |
                       pointFormat: "Total de diarias: <b>{point.y}</b>", |
                       valueDecimals: 2 |
+                    }, |
+                    plotOptions: { |
+                      pie: { |
+                        center: true, |
+                        dataLabels: { |
+                          enabled: true , |
+                          format: 'R$: {y:.2f}', |
+                          valueDecimals: 2, |
+                        }, |
+                        showInLegend: true |
+                      }, |
                     }, |
                   } |  
