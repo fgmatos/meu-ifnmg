@@ -12,6 +12,8 @@
   .row
     .col-md-12
       %h2 
+        %span.badge(style="font-size: 14px;")
+          %span.glyphicon.glyphicon-user
         = @servidor.nome
       %hr
   .row
@@ -64,6 +66,24 @@
           -#= ( ( Date.today - @servidor.data_ingresso_cargofuncao) / 365 ).to_i
           
     .col-md-8
+      .panel.panel-default
+        .panel-heading
+          %b
+            Historico de Remunerações
+            %span.badge
+              = "#{@servidor.quant_salarios} meses"
+            .pull-right
+              Valor:
+              %span.badge
+                = number_to_currency(@servidor.total_salarios, unit: "R$ ", separator: ",", delimiter: ".").to_s
+               
+        .panel-body
+          - FACADE.Remuneracao.select(:ano).distinct.each do |data|
+            %a(href="#")
+              = data.ano
+              %span.badge
+                = number_to_currency(@servidor.total_salarios(data.ano), unit: "R$ ", separator: ",", delimiter: ".").to_s
+      
       .panel.panel-default
         .panel-heading
           %b

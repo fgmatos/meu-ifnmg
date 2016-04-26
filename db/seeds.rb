@@ -13,6 +13,7 @@ require "import"
 
 
 tasks = { 
+        # DIARIAS
         :t01 => {
             :type => :diarias, 
             :year_range => 2011..2015, 
@@ -23,9 +24,10 @@ tasks = {
             :year_range => 2016, 
             :month_range => 01..03
         }, 
+        # SERVIDORES
         :t03 => { 
             :type => :servidores, 
-            :year_range => 2014..2015, 
+            :year_range => 2013..2015, 
             :month_range => :all
         },
         :t04 => {
@@ -35,16 +37,22 @@ tasks = {
             # ,
             # :options => {:quote_char => "|"}
         },
+        # REMUNERACOES (servidores)
         :t05 => {
             :type => :remuneracoes, 
-            :year_range => 2015, 
-            :month_range => 12
+            :year_range => 2013..2015, 
+            :month_range => :all
+        },
+        :t06 => {
+            :type => :remuneracoes, 
+            :year_range => 2016, 
+            :month_range => 01..03
         }
   }
   
 # to log the execution uncomment the following lines
-# $stdout = File.new("import-log#{Time.new}.log","w")
-# $stdout.sync = true
+$stdout = File.new("import-log#{Time.new}.log","w")
+$stdout.sync = true
 
 # A cada TASK | key, value |
 tasks.each do | task, options |
