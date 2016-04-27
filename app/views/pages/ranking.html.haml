@@ -34,7 +34,7 @@
       .tab-content
         = render 'pages/ranking/general'
         - anos.each do |ano|
-          %div{ :id => "tb#{ano}", :class=>"tab-pane fade active in"}
+          %div{ :id => "tb#{ano}", :class=>"tab-pane fade"}
             %table.table.table-hover
               %thead
                 %tr
@@ -65,4 +65,9 @@
                       
                 %br      
                 %span.badge
-                  = "Total de diárias no ano: " + number_to_currency(FACADE.Diaria.TotalDiarias(ano),unit: "R$ ", separator: ",", delimiter: ".").to_s
+                  = "Total de diárias no ano de #{ano}: " + number_to_currency(FACADE.Diaria.TotalDiarias(ano),unit: "R$ ", separator: ",", delimiter: ".").to_s
+
+:javascript
+  $( document ).ready(function() {
+    $("#tb2016").addClass("active in");
+  });
