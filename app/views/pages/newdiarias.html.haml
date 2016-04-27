@@ -3,7 +3,7 @@
 
 .container#diarias
   .row
-    .col-md-12
+    .col-md-6
       %h2 
         Diárias
       %hr
@@ -81,7 +81,7 @@
                   Quando governo estrangeiro ou organismo internacional de que o Brasil participe ou
                   com o qual coopere custear as despesas com pousada, alimentação e locomoção urbana
   .row
-    .col-md-12  
+    .col-md-12
       %ul.nav.nav-tabs
         %li
           %a{:data => {:toggle=>"tab"}, :href=>"#tbGeneral"}
@@ -101,8 +101,10 @@
         %li
           %a{:data => {:toggle=>"tab"}, :href=>"#tbEvolucao"}
             Evolução
+            
       .tab-content
-        %div{ :id => "tbGeneral", :class=>"tab-pane fade" }
+      
+        %div{ :id => "tbGeneral", :class=>"tab-pane fade active in" }
           - @valor_diarias_geral = FACADE.Diaria.group(:nome_unidade).sum(:valor)
           %br 
           %span.badge
@@ -149,7 +151,7 @@
               } |     
           %br
         - anos.each do |ano|
-          %div{ :id => "tb#{ano}", :class=>"tab-pane fade" }
+          %div{ :id => "tb#{ano}", :class=>"tab-pane fade active" }
             - @valor_diarias = FACADE.Diaria.where(:data => "#{ano}-01-01".."#{ano}-12-31").group(:nome_unidade).sum(:valor)
             %br 
             %span.badge
@@ -197,7 +199,7 @@
                   } |  
             %br                  
         
-          %div{ :id => "tbEvolucao", :class=>"tab-pane fade" }
+          %div{ :id => "tbEvolucao", :class=>"tab-pane fade active" }
             - diarias_all = Hash.new
             - anos.each do | ano|
               - diarias_all[ano] = FACADE.Diaria.TotalDiarias(ano)
@@ -245,3 +247,8 @@
                       }, |
                     }, |
                   } |  
+:javascript
+  $( document ).ready(function() {
+    $(".tab-pane").removeClass("active");
+    $("#tbGeneral").addClass("active in");
+  });
