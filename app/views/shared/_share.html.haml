@@ -1,0 +1,53 @@
+
+.span
+  / Link de compartilhamento pelo Twitter.
+  %a.twitter-share-button.left{"data-count" => "none", "data-text" => "TEXTO QUE SERÁ COMPARTILHADO!!!", :href => "http://twitter.com/share"} Tweet
+  %script{:src => "http://platform.twitter.com/widgets.js", :type => "text/javascript"}
+.span
+  / Link de compartilhamento pelo Linkdin
+  %script{:src => "//platform.linkedin.com/in.js", :type => "text/javascript"}
+  %script{"data-url" => "http://#{request.host}:#{request.port}#{request.fullpath}", :type => "IN/Share"}
+.span
+  / Botão de compartilhamento pelo Google Plus.
+  %g:plusone{:annotation => "none", :size => "medium"}
+  :javascript
+    (function() {
+      var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+      po.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+    })();
+.span
+  / Botão de compartilhamento pelo Facebook.
+  .fb-send{"data-font" => "arial", "data-href" => "http://#{request.host}:#{request.port}#{request.fullpath}"}
+  #fb-root
+    :javascript
+      (function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s); js.id = id;
+        js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+        fjs.parentNode.insertBefore(js, fjs);
+      }(document, 'script', 'facebook-jssdk'));
+    
+-# %a{:class=>"socialite twitter-share", :target => "_blank", :href=>"http://twitter.com/share", :url => "http://socialitejs.com"}
+  -# Share on Twitter
+-#           
+-# 
+-# 
+-# %ul.social-buttons.cf
+  -# %li
+    -# %a{:class=>"socialite twitter-share", :"data-text" => "Socialite.js", :"data-url" => "http://socialitejs.com",  :href=>"http://twitter.com/share", :rel => "nofollow", :target => "_blank"} a
+    -# %a.socialite.twitter-share{"data-count" => "vertical", "data-text" => "Socialite.js", "data-url" => "http://socialitejs.com", :href => "http://twitter.com/share", :rel => "nofollow", :target => "_blank"}
+      -# %span.vhidden Share on Twitter
+  -# %li
+    -# %a.socialite.googleplus-one{"data-href" => "http://socialitejs.com", "data-size" => "tall", :href => "https://plus.google.com/share?url=http://socialitejs.com", :rel => "nofollow", :target => "_blank"}
+      -# %span.vhidden Share on Google+
+  -# %li
+    -# %a.socialite.facebook-like{"data-href" => "http://socialitejs.com", "data-layout" => "box_count", "data-send" => "false", "data-show-faces" => "false", "data-width" => "60", :href => "http://www.facebook.com/sharer.php?u=http://www.socialitejs.com&t=Socialite.js", :rel => "nofollow", :target => "_blank"}
+      -# %span.vhidden Share on Facebook
+  -# %li
+    -# %a.socialite.linkedin-share{"data-counter" => "top", "data-url" => "http://socialitejs.com", :href => "http://www.linkedin.com/shareArticle?mini=true&url=http://socialitejs.com&title=Socialite.js", :rel => "nofollow", :target => "_blank"}
+      -# %span.vhidden Share on LinkedIn
+  -# %li
+    -# %a.socialite.linkedin-share{"data-counter" => "top", "data-url" => "http://socialitejs.com", :href => "http://www.linkedin.com/shareArticle?mini=true&url=http://socialitejs.com&title=Socialite.js", :rel => "nofollow", :target => "_blank"}
+      -# %span.vhidden Share on LinkedIn
