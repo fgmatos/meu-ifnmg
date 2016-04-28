@@ -51,19 +51,23 @@ tasks = {
   }
   
 # to log the execution uncomment the following lines
-$stdout = File.new("import-log#{Time.new}.log","w")
+started_in = Time.now.strftime("%d-%m-%Y-%H-%M-%S")
+$stdout = File.new("import.log","w")
 $stdout.sync = true
 
 # A cada TASK | key, value |
 tasks.each do | task, options |
-    puts "##{task}-> Deseja importar dados de '#{options[:type].upcase}' (ANOS->#{options[:year_range]}) (MESES->#{options[:month_range]}) do IFNMG ? (y/n) ou (s/n)"
-    choice = STDIN.gets.chomp
-    if (choice.upcase == "Y" || choice.upcase == "S")
+    puts "##{task}-> Deseja importar: '#{options[:type].upcase}' (ANOS->#{options[:year_range]}) (MESES->#{options[:month_range]}) do IFNMG ? (y/n) ou (s/n)"
+    # choice = STDIN.gets.chomp
+    # if (choice.upcase == "Y" || choice.upcase == "S")
       import = DataImport.new(options[:type], options[:year_range], options[:month_range], options[:options])
       import.execute
       # import.run_test
-    end
+    # end
 end
+
+# Renomear o arquivo após terminar a importacao
+File.rename("import.log", "import#{started_in}.log")
 
 # # This file should contain all the record creation needed to seed the database with its default values.
 # # The data can then be loaded with the rake db:seed (or created alongside the db with db:setup).
