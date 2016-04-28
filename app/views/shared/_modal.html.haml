@@ -1,0 +1,33 @@
+#modalContacts.modal.fade{"aria-labelledby" => "myModalLabel", :role => "dialog", :tabindex => "-1"}
+  .modal-dialog{:role => "document"}
+    .modal-content
+      .modal-header
+        %button.close{"aria-label" => "Close", "data-dismiss" => "modal", :type => "button"}
+          %span{"aria-hidden" => "true"} ×
+        %h1#modalContactslLabel.modal-title Fale Conosco
+      .modal-body
+        Tem alguma dúvida, sugestão ou reclamação? Deixe uma mensagem que ficaremos felizes em ajudá-lo!
+        %form{:action => contatos_path, :method => "POST", :role => "form"}
+          .container
+            .row{:style => "margin-left: -25px;"}
+              .col-md-6
+                .panel.panel-default
+                  .panel-heading
+                    .form-group
+                      %label Nome
+                      %input#contact_name.form-control{:name => "contact[nome]", :placeholder => "Nome", :required => "", :type => "text"}/
+                    .form-group
+                      %label E-mail
+                      %input#contact_email.form-control{:name => "contact[email]", :placeholder => "E-mail", :required => "", :type => "email"}/
+                    .form-group
+                      %label Assunto
+                      %input#contact_subject.form-control{:name => "contact[subject]", :placeholder => "Assunto", :required => "", :type => "text"}/
+                    .form-group
+                      %label Mensagem
+                      %textarea#contact_message.form-control{:name => "contact[mensagem]", :placeholder => "Mensagem", :required => "", :rows => "5"}
+                    .text-center
+                      %button.btn.btn-success{:type => "submit"} Enviar Menssagem
+                      = hidden_field_tag :authenticity_token, form_authenticity_token
+      .modal-footer
+        / <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        / <button type="button" class="btn btn-primary">Salvar</button>

@@ -19,6 +19,10 @@ class Facade
     def Remuneracao
       @remuneracao = TRemuneracao
     end
+    
+    def Contato
+       @contato = TContato
+    end
 
     # private :new
     private_class_method :new    

@@ -7,3 +7,6 @@ end
 
 class TRemuneracao < Remuneracao
 end
+
+class TContato < Contato
+end

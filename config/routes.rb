@@ -21,6 +21,7 @@ Rails.application.routes.draw do
   # ranking
   get 'ranking' => "pages#ranking"
   
+  post "contatos" => "contatos#create"
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 
