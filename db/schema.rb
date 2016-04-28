@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160217174654) do
+ActiveRecord::Schema.define(version: 20160426135400) do
 
   create_table "contatos", force: :cascade do |t|
     t.string   "nome"
@@ -31,6 +31,34 @@ ActiveRecord::Schema.define(version: 20160217174654) do
     t.string   "valor"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
+    t.string   "traking_info"
+  end
+
+  create_table "remuneracoes", force: :cascade do |t|
+    t.string   "ano"
+    t.string   "mes"
+    t.string   "id_servidor_portal"
+    t.string   "cpf"
+    t.string   "nome"
+    t.string   "remuneracao_basica_bruta_rs"
+    t.string   "abate_teto_rs"
+    t.string   "gratificacao_natalina_rs"
+    t.string   "abate_teto_gratificacao_natalina"
+    t.string   "ferias"
+    t.string   "outras_remuneracoes_eventuais"
+    t.string   "irrf"
+    t.string   "pss_rpgs"
+    t.string   "pensao_militar"
+    t.string   "fundo_de_saude"
+    t.string   "demais_deducoes"
+    t.string   "remuneracao_apos_deducoes"
+    t.string   "verbas_indenizatorias_civil"
+    t.string   "verbas_indenizatorias_militar"
+    t.string   "total_verbas_indenizatorias"
+    t.string   "total_honorarios"
+    t.datetime "created_at",                       null: false
+    t.datetime "updated_at",                       null: false
+    t.string   "traking_info"
   end
 
   create_table "servidors", force: :cascade do |t|
@@ -56,6 +84,7 @@ ActiveRecord::Schema.define(version: 20160217174654) do
     t.string   "diploma_ingresso_orgao"
     t.datetime "created_at",                           null: false
     t.datetime "updated_at",                           null: false
+    t.string   "traking_info"
   end
 
 end

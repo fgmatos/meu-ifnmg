@@ -13,14 +13,7 @@ class DataImport
   UORG = 26410
   
   # unidades gestoras do IFNMG 
-  # => reitoria - 158121
-  # => salinas - 158377
-  # => januaria
-  # => montes-claros
-  # => arinos
-  # => almenara
-  # => pirapora
-  # => aracuai
+  # => reitoria, salinas, januaria, montes-claros, arinos, almenara, pirapora, aracuai
   UGS =  ["158121", "158377", "158378", "158437", "158438", "158439", "158440", "158441"]
   
   # if TRUE show report  
@@ -30,6 +23,12 @@ class DataImport
     
   # constructor 
   def initialize(type, year_range, month_range, options = nil)
+    
+    puts "started: #{Time.now.strftime("%d/%m/%Y - %H:%M:%S")} " if DEBUG
+    
+    #conf
+    @conf = Hash.new
+    
     # registros processados
     @records_processed = 0
     
@@ -47,10 +46,8 @@ class DataImport
     @files = Hash.new
     
     # tipo de dado a ser importado
-    # =>  suportados :diarias e :servidores
+    # =>  suportados :diarias, :servidores e :remuneracoes
     @type = type.to_sym
-    
-    # @name =  getGOV_file_str
     
     # diretorio base para a importacao de dados
     # => Ex.: app/data/servidores
@@ -67,7 +64,7 @@ class DataImport
     # default options
     @options = {headers: true, encoding:'windows-1250', col_sep: "\t", header_converters: :symbol}
     
-    # if user seted personal options include 
+    # if user seted personal options include with default options
     if (!options.nil?)
       @options.merge!(options)          
     end
@@ -76,16 +73,27 @@ class DataImport
   end
   
   def execute
+    # percorre os anos a realizar a importacao
     @year_range.each do |year|
+      # os meses tambem
       for month in @months_range
+        
+        # gera o nome do arquivo a ser importado
         @filename = getFilename(month, year)
+        # contabiliza as importacoes
         @files[ @filename.to_sym ] = 0 
+        # se estive com DEBUG ativo, imprime acompanhamento da execucao
+        if (DEBUG)
+          print "\n#{Time.now.strftime("%H:%M:%S")} - #{@type} #{year}/#{month.to_s.rjust(2,'0')}: "
+        end
+        # vamos processar os dados no arquivo
         process(@filename)
+        
+        print " lines-> #{@conf[:line]+2}, imported-> #{@records_each_file}" if DEBUG
       end
     end
-    if (DEBUG)
-      print_debug_info
-    end
+    # imprime relatorio apos importacao, se o DEBUG estiver ativo
+    print_debug_info if DEBUG
   end
   
   def to_s
@@ -103,14 +111,9 @@ class DataImport
     @records_each_file = 0
     
     if File.exist?(file)
-      
-      if (DEBUG)
-        puts "importing: " + file.to_s
-      end
-      
       # this block is equivalent to try..except 
       begin
-        
+        @conf[:file] = file
         temp = File.read(file, encoding:"ISO-8859-1")
         
         # remove 'aspas' do arquivo
@@ -120,103 +123,144 @@ class DataImport
         @csvfile = parse(@file)
         
         # CSV.foreach(file, @options) do |row|
-        @csvfile.each do |row|
+        @csvfile.each_with_index do |row, i|
           # convert o registro para um hash
           data = row.to_hash
-          @records_processed +=  1
+          @conf[:line] = i
           # testa se o registro tiver dados relacionados ao IFNMG
           if belongsIFNMG(data)
             if !@test_mode
-              # puts data.inspect
-              # STDIN.gets.chomp
               import(data)         
             end
             @records_each_file += 1
             @records_imported +=  1     
           end
         end # end foreach
+        @records_processed += @conf[:line]+2
       rescue => ex
-        puts "Erro : #{file}, record: #{@records_processed} - Exception: #{ex.class} -> #{ex.message}"
+        puts "\nErro : #{file}, record: #{@conf[:line]} - Exception: #{ex.class} -> #{ex.message}"
         puts " => #{data.inspect}"
       end
       @files[ @filename.to_sym ] = @records_each_file 
       
     else # file not exits
-      puts "Error on importing: " + file.to_s + "!. File no found."
-      # exit
+      puts "Error on importing: #{file}!. File no found."
     end # if file.exist?
     
   end
   
   def parse(file)
-    CSV.parse(file, @options)
+    # convert opened file to CSV format
+    return CSV.parse(file, @options)
   end
   
   def strip(file)
-    file.gsub('"',"'")
+    # removendo (") aspas duplas para evitar conflitos na leitura
+    return file.gsub('"',"'")
   end
   
   def belongsIFNMG(data)
+    # testa se esta linha do CSV tem um registro do IFNMG
     case @type
       when :diarias then UGS.include? data[:cdigo_unidade_gestora]
-      when :servidores then 
-        if ( (UORG.to_s == data[:cod_org_lotacao]) || (UORG.to_s == data[:cod_org_exercicio]) )
-          if (FACADE.Servidor.exists?(:cpf => data[:cpf]))
-            compare_records(data)
-          else 
-            return TRUE
-          end
-        end
-      when :remuneracoes then
-        FACADE.Servidor.exists?( {:cpf => data[:cpf], :nome => data[:nome]} )
+      when :servidores then (UORG.to_s == data[:cod_org_lotacao]) || (UORG.to_s == data[:cod_org_exercicio])
+      when :remuneracoes then FACADE.Servidor.exists?( {:cpf => data[:cpf], :nome => data[:nome]} )
       else "unknow filter"
     end
   end
   
-  def compare_records(data)
-    s = FACADE.Servidor.where(cpf: data[:cpf]).take
-    # saved.each do |s|
-      if s.cpf == data[:cpf] && s.nome == data[:nome]
-        
-        s.update( extract_data(data) )
-        return FALSE
-      else 
-        return TRUE
-      end
-    # end # end saved.each
+  def exists(data)
+    # testa se os dados desta linha já foram importados 
+    case @type
+      when :diarias then 
+        false
+      when :servidores then
+        # procuramos se ja existe servidor cadastrado 
+        saved = FACADE.Servidor.where(cpf: data[:cpf])
+        # puts "#{saved.inspect}"
+        # se o ActiveRelation[0].nil? - não ouve resultado
+        if !saved[0].nil?
+          # se a consulta retornou dados vamos percorer cada um para verificar se o CPF e NOME sao iguais
+          # precisamos que os DOIS valores sejam identicos, pois apenas o CPF pode ser repetido,
+          # por que temos somente parte dele
+          saved.each do |s|
+            if s.cpf == data[:cpf] && s.nome == data[:nome]
+              return true
+            end
+          end # end each
+          #se passou por todos os registros e nenhum é igual, entao retornamos FALSO, para inserir um NOVO REGISTRO
+          return false
+        else 
+          # consulta retornou nil, entao o registro nao existe
+            return false
+        end
+      when :remuneracoes then 
+        false
+      else # caso o typo nao seja valido
+        "Tipo invalido"
+    end
   end
+  
   
   def import(data)
     
-    @model = case @type
-      when :diarias then
-        @model = FACADE.Diaria
-      when :servidores then
-        @model = FACADE.Servidor
-      when :remuneracoes then
-        @model = FACADE.Remuneracao
+    begin
+      # Seleciona o Model a ser utilizado para salvar os dados
+      @model = case @type
+        when :diarias then
+          @model = FACADE.Diaria
+        when :servidores then
+          @model = FACADE.Servidor
+        when :remuneracoes then
+          @model = FACADE.Remuneracao
+      end
+      
+      # criamos uma cópia dos dados para logs (DEBUG)
+      received_data = data.clone
+      
+      # retira do hash apenas os campos existentes no Model
+      fields = extract_data(data)
+      
+      # converte as chaves de acesso no hash para o mesmo nomes utilizado no model
+      params = transform_data(fields)
+      
+      # se nao existe o registro, vamos criar um
+      if !exists(params) 
+        # criamos um novo objeto passando os dados como parametros
+        obj = @model.new( params )
+        
+        # definimos informacoes de rastreio : Arqiovo.csv#linha
+        obj.traking_info = "#{@conf[:file].split("/").last}##{@conf[:line]+2}"
+            
+        obj.save!  
+      else
+        # se existe, vamos atualizar
+        saved = FACADE.Servidor.where(cpf: params[:cpf])
+        saved.each do |s|
+          if s.cpf == params[:cpf] && s.nome == params[:nome]
+            # atualizamos o rastreio, assim sabemos TODOS os arquivos e linhas que alteraram este registro 
+            params[:traking_info] = s.traking_info + ",#{@conf[:file].split("/").last}##{@conf[:line]+2}"
+            s.update( params )
+            break
+          end
+        end # end each
+      end 
+      
+    rescue => ex
+      puts "\nErro on import! , model #{@model} - Exception: #{ex.class} -> #{ex.message}"
+      puts "\n data   => #{received_data.inspect}"
+      puts "\n fields => #{fields.inspect}"
+      puts "\n params => #{params.inspect}"
     end
-       
-    obj = @model.new( transform_data( extract_data(data) ) )
-    # obj.id_unidade = data[:cdigo_unidade_gestora].to_i
-    # obj.nome_unidade = data[:nome_unidade_gestora]
-    # obj.cpf = data[:cpf_favorecido] 
-    # obj.nome = data[:nome_favorecido]
-    # obj.num_doc = data[:documento_pagamento] 
-    # obj.data = data[:data_pagamento]
-    # obj.valor = data[:valor_pagamento].to_f
-    
-    # set traking information
-    
-    obj.save!
   end
   
   def print_debug_info
-    puts "------------------------------- DataImport Report --------------------------------"
+    puts "\n------------------------------- DataImport Report --------------------------------"
     puts "CSV read options: #{@options}"
+    puts "Finished: #{Time.now.strftime("%d/%m/%Y - %H:%M:%S")}"
     puts "Arquivos:"
     @files.each do | file, records |
-        puts "   --> #{file}: #{records} registros"
+        puts "   --> #{file.to_s.split("/").last}: #{records} registros"
     end
     puts "Registros processados: #{@records_processed}"
     puts "Registros importados.: #{@records_imported}"
@@ -269,9 +313,9 @@ class DataImport
                       :fundo_de_sade_r, :demais_dedues_r, :remunerao_aps_dedues_obrigatrias_r,
                       :verbas_indenizatrias_registradas_em_sistemas_de_pessoal__civil_r,
                       :verbas_indenizatrias_registradas_em_sistemas_de_pessoal__militar_r,
-                      :total_de_verbas_indenizatrias_r, :total_de_honorrios_jetons
-                      )
-    else {}
+                      :total_de_verbas_indenizatrias_r, :total_de_honorrios_jetons, :total_de_jetons)
+    else 
+      { :null => "data invalid"}
     end
   end
   
@@ -293,11 +337,12 @@ class DataImport
         then data
       when :remuneracoes
         then 
-          # data[:ano]  
-          # data[:mes] 
-          # data[:id_servidor_portal]
-          # data[:cpf]
-          # data[:nome]
+          data[:ano]  = data.delete :ano
+          data[:mes] = data.delete :mes
+          data[:id_servidor_portal] = data.delete :id_servidor_portal
+          data[:cpf] = data.delete :cpf
+          data[:nome] = data.delete :nome
+          
           data[:remuneracao_basica_bruta_rs] = data.delete :remunerao_bsica_bruta_r
           data[:abate_teto_rs] = data.delete :abateteto_r
           data[:gratificacao_natalina_rs] = data.delete :gratificao_natalina_r
@@ -313,7 +358,9 @@ class DataImport
           data[:verbas_indenizatorias_civil] = data.delete :verbas_indenizatrias_registradas_em_sistemas_de_pessoal__civil_r
           data[:verbas_indenizatorias_militar] = data.delete :verbas_indenizatrias_registradas_em_sistemas_de_pessoal__militar_r
           data[:total_verbas_indenizatorias] = data.delete :total_de_verbas_indenizatrias_r
-          data[:total_honorarios] = data.delete :total_de_honorrios_jetons
+          
+          data[:total_honorarios] ||= data.delete :total_de_jetons
+          data[:total_honorarios] ||= data.delete :total_de_honorrios_jetons
           
           # corrigindo formato numerico
           # data.each do |key, value|
