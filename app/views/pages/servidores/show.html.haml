@@ -8,11 +8,13 @@
           "INST.FED DO NORTE DE MG/CAMPUS ARACUAI" => 158441,
           "INST.FED.DO NORTE DE MG/CAMPUS ARINOS" => 158438 }
 
+= stylesheet_link_tag "pages.scss"
+
 .container
   .row
     .col-md-12
       %h2 
-        %span.badge(style="font-size: 14px;")
+        %span.badge(style="font-size: 35px; background-color: white; color: #000000;")
           %span.glyphicon.glyphicon-user
         = @servidor.nome
       %hr
@@ -35,27 +37,19 @@
           %b
             Cargo: 
           = @servidor.descricao_cargo
-          %br
-          %b
-            Classe: 
-          = @servidor.classe_cargo
-          %br
-          %b
-            Nivel: 
-          = @servidor.nivel_cargo
-          %br
-          %b
-            Padrão: 
-          = @servidor.padrao_cargo
+          %label.label.label-success
+            = "classe #{@servidor.classe_cargo} "
+          %label.label.label-primary
+            = @servidor.jornada_de_trabalho
           %br
           %b
             Lotação: 
           = @servidor.uorg_lotacao
           %br
-          %b
-            Jornada de trabalho: 
-          = @servidor.jornada_de_trabalho
-          %br
+          -# %b
+            -# Jornada de trabalho: 
+          -# = @servidor.jornada_de_trabalho
+          -# %br
           %b
             Data ingresso (função): 
           = @servidor.data_ingresso_cargofuncao.strftime("%d/%m/%Y")
@@ -64,7 +58,16 @@
             Data ingresso no Orgão: 
           = @servidor.data_ingresso_orgao.strftime("%d/%m/%Y") # + " - "
           -#= ( ( Date.today - @servidor.data_ingresso_cargofuncao) / 365 ).to_i
-          
+        .panel-footer
+          .social-share.text-center
+            = render "shared/share"
+          -# # .container
+            -# # %label.label.label-success
+              -# # classe
+            -# # %label.label.label-primary
+              -# # padrão
+            -# # %label.label.label-warning
+              -# # Jornada de trabalho
     .col-md-8
       .panel.panel-default
         .panel-heading
