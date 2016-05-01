@@ -1,35 +1,49 @@
-%footer.footer-distributed
+%footer.footer
   .content
     .row
-      .col-md-4.col-sm-4
+      .col-md-3.col-sm-4
+        .social-links
+          %p Social Media
+          = image_tag "flat-icons/social/svg/facebook", size: "40x40"
+          = image_tag "flat-icons/social/svg/google-plus", size: "40x40"
+          = image_tag "flat-icons/social/svg/instagram", size: "40x40"
+          = image_tag "flat-icons/social/svg/twitter", size: "40x40"
+          = image_tag "flat-icons/social/svg/youtube", size: "40x40"
+          = image_tag "flat-icons/social/svg/whatsapp", size: "40x40"
+      
+      .col-md-3.col-sm-4
         %ul
           %p Quem Somos
           %li 
-            %a{:href => root_path } Home
+            %a{:href => root_path } Início
           %li 
-            %a{:href => root_url+"sobre"} Sobre o meuIFNMG.com
+            %a{:href => "#{root_url}sobre"} Sobre o meuIFNMG.com
           -#%li
-          -#  %a{:href => root_url+"termos"} Termo de uso
-      .col-md-4.col-sm-4
+          -#  %a{:href => "#{root_url}termos"} Termo de uso
+      .col-md-3.col-sm-4
         %ul
           %p Informações
           %li 
             %a{:href => "#"} Unidades
           %li
-            %a{:href => root_url + "servidores"} Servidores
+            %a{:href => "#{root_url}servidores"} Servidores
           %li 
-            %a{:href => root_url + "diarias"} Diarias
+            %a{:href => "#{root_url}diarias"} Diarias
           %li
-            %a{:href => "#"} Ranking
+            %a{:href => "#{root_url}ranking"} Ranking
           %li
-            %a{:href => root_url + "contratos"} Contratos  
+            %a{:href => "#{root_url}contratos"} Contratos  
               
-      .col-md-4.col-sm-4
+      .col-md-3.col-sm-4
         %ul
           %p Ajuda
           %li
             %a{:href => "#modalContacts", :data => {:toggle => "modal", :target => "#modalContacts"} } Contato
-      
-      .col-md-12.col-sm-12
-        %hr
-        %p.text-center © 2016 Portal Meu IFNMG.com -  Todos os direitos reservados.
+    .row
+      .col-md-12.col-sm-12.trendmark
+        %p.text-center
+          © 2016 Portal
+          %a(href="#{root_url}") 
+            %b 
+              meuIFNMG.com
+          = "-  Todos os direitos reservados."
