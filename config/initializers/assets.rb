@@ -16,3 +16,6 @@ Rails.application.config.assets.precompile += %w( mapa.css )
 # fgm
 Rails.application.config.assets.precompile += %w( unidades.css )
 Rails.application.config.assets.precompile += %w( flat-icons/*)
+
+# plugins folder - tablesorter
+Rails.application.config.assets.precompile += %w( plugins/*)
