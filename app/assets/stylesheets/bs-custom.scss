@@ -1,0 +1,78 @@
+.navbar {
+    font-family: "Montserrat", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    text-transform: uppercase;
+    font-weight: 700;
+}
+
+.navbar-default{
+	background-image: none !important;
+	background-color: $nav !important;
+	/*border-color: black !important;*/
+}
+
+.footer-distributed{
+	/*background-color: #e7e7e7;*/
+	/*box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.12);*/
+	box-sizing: border-box;
+	width: 100%;
+	text-align: left;
+	font: bold 10px sans-serif;
+
+	color:  black;
+	margin: 10px 0 12px;
+	padding: 0;
+	
+	padding: 40px;
+}
+
+.panel-default > .panel-heading{
+    background-image: none !important;
+    background-color: gold !important;
+}
+
+// show servidor
+.panel-body > .title {
+  font-size: 20px;
+  font-weight: bold;
+  border-bottom: solid grey 1px;
+  margin-bottom: 10px;
+}
+
+.panel-body > .label {
+  margin: 2px;
+}
+
+// corrigindo alinhamento do LOGO
+.navbar-brand>img {
+    margin-left: 10px;
+}
+
+// persolaize 'tab-pane'
+.tab-content>.tab-pane {
+    background-color: white;
+}
+
+.inverted-icon {
+  background-color: black;
+  color: gold;
+}
+
+// customize li indicators on #slide-tables
+#slide-tables > ol > li {
+  background-color: gold;
+}
+
+// stats
+#stats .panel-body > .img {
+  font-size: 55px;
+}
+#stats .panel-body > .img:hover {
+  // color: gold;
+  transform: scale(1.1);
+}
+#stats .panel-body > small {
+  position: absolute;
+}
+#stats .panel-body > h1 {
+  font-weight: bold;
+}
