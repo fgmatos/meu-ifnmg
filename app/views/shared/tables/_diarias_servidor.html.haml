@@ -1,17 +1,20 @@
 
-- @top10 = FACADE.Diaria.select(:valor).where(:data => "2015-01-01".."2015-12-31").group(:nome).order('sum_valor DESC').limit(10).sum(:valor)
+- @top10 = FACADE.Diaria.select(:valor).where(:data => "2015-01-01".."2015-12-31").group(:nome).order('sum_valor DESC').limit(3).sum(:valor)
 
 .panel.panel-default
   .panel-heading
+    = icon("th")
     %b TOP diárias 2015 - Pessoas
-  .panel-body
-    %table.table.table-striped.table-bordered.table-hover
+    %a.pull-right(data-toggle="collapse" data-target="#pessoas2015")
+      = icon("chevron-down")
+  .panel-body#pessoas2015.collapse.in
+    %table.table.table-condensed.tablesorter#tbtop-servidores
       %thead
         %tr
           %th Nº
           %th Nome
           -# %th Campus
-          %th Equivalente à R$ / dia
+          %th R$ / dia
           %th Diarias Recebidas
         %tbody
           - total_ano = 0
@@ -23,8 +26,8 @@
               %td
                 - @s = FACADE.Servidor.where("nome = ?", nome)
                 - if @s[0].nil?
-                  %a{:href=> root_url + "servidor" }
-                    = nome
+                  -# %a{:href=> root_url + "servidor" }
+                  = nome
                 - else
                   %a{:href=> root_url + "servidor/" + @s[0].id.to_s }
                     = nome
@@ -37,7 +40,7 @@
             %td{ :colspan=> "3"} 
               %b
                 %center 
-                  Total acumulado
+                  TOTAL
             %td
               %b=  number_to_currency(total_ano, unit: "R$ ", separator: ",", delimiter: ".").to_s
                 

@@ -4,7 +4,9 @@
       .modal-header
         %button.close{"aria-label" => "Close", "data-dismiss" => "modal", :type => "button"}
           %span{"aria-hidden" => "true"} ×
-        %h1#modalContactslLabel.modal-title Fale Conosco
+        %h1#modalContactslLabel.modal-title.text-center
+          = image_tag("flat-icons/business/svg/chat", size: "100x60")
+          Fale Conosco
       .modal-body
         Tem alguma dúvida, sugestão ou reclamação? Deixe uma mensagem que ficaremos felizes em ajudá-lo!
         %form{:action => contatos_path, :method => "POST", :role => "form"}
@@ -12,7 +14,7 @@
             .row{:style => "margin-left: -25px;"}
               .col-md-6
                 .panel.panel-default
-                  .panel-heading
+                  .panel-body
                     .form-group
                       %label Nome
                       %input#contact_name.form-control{:name => "contact[nome]", :placeholder => "Nome", :required => "", :type => "text"}/

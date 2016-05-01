@@ -5,10 +5,11 @@
 .container
   .row
     .col-md-12
-      %h2
-        = image_tag("flat-icons/office/svg/contract", size: "100x60") 
-        Contratos
-      %hr
+      .panel
+        .panel-body
+          %h2
+            = image_tag("flat-icons/office/svg/contract", size: "100x60") 
+            Contratos
   .row
     .col-md-12.col-sm-3
       %table#dados-contratos.table.table-hover

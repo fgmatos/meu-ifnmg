@@ -1,0 +1,43 @@
+:ruby
+  t1_valor = FACADE.Diaria.select(:valor).where(:data => '2015-01-01'..'2015-03-30').sum(:valor).to_f.round
+  t2_valor = FACADE.Diaria.select(:valor).where(:data => '2016-01-01'..'2016-03-30').sum(:valor).to_f.round
+  
+  t1_count = FACADE.Diaria.where(:data => '2015-01-01'..'2015-03-30').count
+  t2_count = FACADE.Diaria.where(:data => '2016-01-01'..'2016-03-30').count
+  boxstats = {
+    :box1 => { 
+      :icon => "user",
+      :text => FACADE.Servidor.all.count,
+      :description => "Servidores passaram pelo IFNMG."
+    },
+    
+    :box2 => { 
+      :icon => "duplicate",
+      :text => FACADE.Diaria.all.count,
+      :description => "pedidos de Diarias foram realizados."
+    },
+    
+    :box3 => { 
+      :icon => "usd",
+      :text => "#{(t2_valor - t1_valor)} K",
+      :description => "Economizamos no 1º trimestre 2016 / 2015."
+    },
+    
+    :box4 => { 
+      :icon => "plane",
+      :text => "#{(t2_count - t1_count)}",
+      :description => "viagens no o 1º trimestre 2016 / 2015."
+    }
+  }
+  
+  
+- boxstats.each do |key, options|  
+  .col-sm-6.col-md-3
+    .panel
+      .panel-body
+        .img.pull-right
+          = icon(options[:icon])
+        %h1
+          = options[:text]
+        %small
+          = options[:description]

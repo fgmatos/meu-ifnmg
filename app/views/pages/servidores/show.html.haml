@@ -8,23 +8,23 @@
           "INST.FED DO NORTE DE MG/CAMPUS ARACUAI" => 158441,
           "INST.FED.DO NORTE DE MG/CAMPUS ARINOS" => 158438 }
 
-= stylesheet_link_tag "pages.scss"
-
 .container
   .row
     .col-md-12
-      %h2 
-        %span.badge(style="font-size: 35px; background-color: white; color: #000000;")
-          %span.glyphicon.glyphicon-user
-        = @servidor.nome
-      %hr
+      .panel
+        .panel-body
+          %h2 
+            %span.badge(style="font-size: 35px; background-color: white; color: #000000;")
+              %span.glyphicon.glyphicon-user
+            = @servidor.nome
   .row
     .col-md-4
       .panel.panel-default
-        .panel-heading
-          %b
-            Informações
+        -#.panel-heading
+          
         .panel-body
+          .title
+            Informações
           %b
             CPF:
           = @servidor.cpf
@@ -38,7 +38,7 @@
             Cargo: 
           = @servidor.descricao_cargo
           %label.label.label-success
-            = "classe #{@servidor.classe_cargo} "
+            = "Classe #{@servidor.classe_cargo} "
           %label.label.label-primary
             = @servidor.jornada_de_trabalho
           %br

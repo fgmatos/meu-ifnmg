@@ -4,9 +4,10 @@
 .container
   .row
     .col-md-12
-      %h2
-        = unidade.gsub("-", " ").titleize
-      %hr
+      .panel
+        .panel-body
+          %h2
+            = unidade.gsub("-", " ").titleize
       
   .row
     -# .col-md-3.col-sm-3
@@ -17,7 +18,7 @@
           -# = "notas sobre #{unidade} "
   .row
     .col-md-2
-      .panel.panel-default
+      .panel
         -#.panel-heading
           -#informações
         .panel-body

@@ -1,7 +1,10 @@
 .panel.panel-default
   .panel-heading
+    = icon("search")
     %b Escolha por Unidade
-  .panel-body(style="padding: 0px;")
+    %a.pull-right(data-toggle="collapse" data-target="#map")
+      = icon("chevron-down")
+  .panel-body#map.collapse.in(style="padding: 0px;")
     %center
       
       = stylesheet_link_tag 'mapa', media: 'all', 'data-turbolinks-track' => true

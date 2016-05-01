@@ -2,13 +2,16 @@
 .container
   .row
     .col-md-12
-      
-      %h2
-        = image_tag("flat-icons/business/svg/team", size: "100x60")
-        Servidores
-      %hr
+      .panel
+        .panel-body
+          .col-md-6
+            %h2
+              = image_tag("flat-icons/business/svg/team", size: "100x60")
+              Servidores
+          .col-md-6.pull-right
+            %input#servidor-nome.form-control(placeholder="... Encontre pelo nome ..." style="margin-top: 40px")
   .row
-    .col-md-6.col-sm-3
+    .col-md-12.col-sm-6
    
       -# = render 'pages/servidores/pagination'
       .container.centered
@@ -17,8 +20,8 @@
             %li
               %a{ :href => "##{i}", :data => { :toggle => "tab"} }
                 = i
-                %span.badge
-                  = FACADE.Servidor.select(:nome).where("nome LIKE ?", i+"%").count
+                -# %span.badge
+                  -#= FACADE.Servidor.select(:nome).where("nome LIKE ?", i+"%").count
       
       .tab-content
         - for i in "A".."Z"
@@ -26,7 +29,7 @@
             %table.table.table-hover
               %thead
                 %tr
-                  %th Nome do servidor
+                  %th Nome
               %tbody
                 - @servidores.where("nome LIKE ?", i+"%").each do |s|
                   %tr
@@ -39,6 +42,19 @@
                         -#= @minhas_diarias.all.count
                       %br
               
-%script{:type=>"text/javascript"}
-  $('#A').addClass("active in");
-  $('#lista-servidores > :first-child').addClass("active");
+:javascript
+  $(document).ready(function(){
+    $('#A').addClass("active in");
+    $('#lista-servidores > :first-child').addClass("active");
+
+    var $rows = $("tr");
+    $("#servidor-nome").keyup(function() {
+      var val = $.trim(this.value.toUpperCase());
+      if (val === "")
+        $rows.show();
+      else {
+        $rows.hide();
+        $rows.has("td:contains(" + val + ")").show();
+      }
+    })
+  });
