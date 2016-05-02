@@ -34,9 +34,10 @@
             Matrícula: 
           = @servidor.matricula
           %br
-          %b
-            Cargo: 
-          = @servidor.descricao_cargo
+          -# %b
+            -# Cargo: 
+          %label.label.label-default
+            = @servidor.descricao_cargo
           %label.label.label-success
             = "Classe #{@servidor.classe_cargo} "
           %label.label.label-primary

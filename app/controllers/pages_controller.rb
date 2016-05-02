@@ -17,8 +17,10 @@ class PagesController < ApplicationController
   
   # GET "/unidades/:name" - Retorna informacoes sobre uma Unidade do IFNMG
   def unidade
-    @diarias = FACADE.Diaria.where("nome_unidade like ?", "%#{@unidade}%")
-    @servidores = FACADE.Servidor.where("uorg_lotacao like ?", "%#{@unidade}%")
+    @diarias = FACADE.Diaria.where("nome_unidade like ?", "%#{@unidade.gsub("-", " ").upcase}%")
+    @servidores = FACADE.Servidor.where("uorg_lotacao like ?", "%#{@unidade.gsub("-", " ").upcase}%").order(:nome)
+    @cargos = FACADE.Servidor.where("uorg_lotacao LIKE '%#{@unidade.gsub("-", " ").upcase}%'").group(:descricao_cargo).order("count_all DESC").count
+    @jornada = FACADE.Servidor.where("uorg_lotacao LIKE '%#{@unidade.gsub("-", " ").upcase}%'").group(:jornada_de_trabalho).order("count_all DESC").count
     render "pages/unidades/show", locals: { unidade: @unidade }
   end
   
@@ -79,6 +81,10 @@ class PagesController < ApplicationController
   
   def load_unidade
     @unidade = params[:name]
+  end
+  
+  def validate_unidade
+    
   end
   
 end

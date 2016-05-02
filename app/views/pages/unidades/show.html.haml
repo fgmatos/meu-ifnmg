@@ -10,17 +10,9 @@
             = unidade.gsub("-", " ").titleize
       
   .row
-    -# .col-md-3.col-sm-3
-      -# Destaque
-    -# .col-md-3
-      -# .note-info
-        -# %p
-          -# = "notas sobre #{unidade} "
-  .row
     .col-md-2
+    
       .panel
-        -#.panel-heading
-          -#informações
         .panel-body
           %p
             Servidores
@@ -30,4 +22,37 @@
             Diarias
             %span.label.label-success.pull-right
               = @diarias.count
-            
+      
+    .col-md-10 
+      
+      %ul.nav.nav-tabs#itens-unidade
+        %li
+          %a{ :href => "#u-sevidores", :data => { :toggle => "tab"} }
+            Servidores
+        %li
+          %a{ :href => "#u-stats", :data => { :toggle => "tab"} }
+            Distribuíção de cargos
+      
+      .tab-content
+        .tab-pane.fade#u-sevidores
+          .panel
+            .panel-body#lista
+              = render "pages/servidores/lista_servidores", show: :filtered
+      
+        .tab-pane.fade#u-stats
+          .panel
+            .panel-body
+              .container
+                = pie_chart @jornada
+              .container
+                = pie_chart @cargos
+              
+              
+:javascript
+  $(document).ready(function(){
+    $first = $('#lista-servidores > :first-child');
+    $first.addClass("active");
+    id = $first.find("a").attr("href")
+    $(id).addClass("active in");
+  });
+

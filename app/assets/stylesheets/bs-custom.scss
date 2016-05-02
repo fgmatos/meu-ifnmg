@@ -1,3 +1,10 @@
+.btn-default{
+  background-image: none !important;
+  background-color: gold !important;
+  // &:hover {  background-image: none !important; background-color: red !important;}
+  
+}
+
 .navbar {
     font-family: "Montserrat", "Helvetica Neue", Helvetica, Arial, sans-serif;
     text-transform: uppercase;
@@ -63,16 +70,12 @@
 }
 
 // stats
-#stats .panel-body > .img {
-  font-size: 55px;
-}
-#stats .panel-body > .img:hover {
-  // color: gold;
-  transform: scale(1.1);
-}
-#stats .panel-body > small {
-  position: absolute;
-}
-#stats .panel-body > h1 {
-  font-weight: bold;
+#stats { 
+  .panel-body { 
+    h1 { font-weight: bold; }
+    .img { font-size: 55px;
+      &:hover { transform: scale(1.1); }
+    }
+    small {position: absolute; }
+  }
 }

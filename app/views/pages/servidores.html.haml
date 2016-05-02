@@ -9,38 +9,42 @@
               = image_tag("flat-icons/business/svg/team", size: "100x60")
               Servidores
           .col-md-6.pull-right
-            %input#servidor-nome.form-control(placeholder="... Encontre pelo nome ..." style="margin-top: 40px")
+            %input#servidor-nome.form-control(placeholder="... Encontre pelo nome ou cargo ..." style="margin-top: 40px")
   .row
     .col-md-12.col-sm-6
-   
+      = render "pages/servidores/lista_servidores"
       -# = render 'pages/servidores/pagination'
-      .container.centered
-        %ul.nav.nav-tabs#lista-servidores
-          - for i in "A".."Z"
-            %li
-              %a{ :href => "##{i}", :data => { :toggle => "tab"} }
-                = i
-                -# %span.badge
-                  -#= FACADE.Servidor.select(:nome).where("nome LIKE ?", i+"%").count
-      
-      .tab-content
-        - for i in "A".."Z"
-          .tab-pane.fade{ :id => "#{i}"}
-            %table.table.table-hover
-              %thead
-                %tr
-                  %th Nome
-              %tbody
-                - @servidores.where("nome LIKE ?", i+"%").each do |s|
-                  %tr
-                    %td
-                      %a{ :href => root_url + "servidor/" + s.id.to_s} 
-                        = s.nome
-                      -#%span.badge
-                        -#- @servidor = FACADE.Servidor.find(s.id)
-                        -#- @minhas_diarias = FACADE.Diaria.where("NOME = ?", @servidor.nome)
-                        -#= @minhas_diarias.all.count
-                      %br
+      -# .container.centered
+        -# %ul.nav.nav-tabs#lista-servidores
+          -# - for i in "A".."Z"
+            -# %li
+              -# %a{ :href => "##{i}", :data => { :toggle => "tab"} }
+                -# = i
+                -# -# %span.badge
+                  -# -#= FACADE.Servidor.select(:nome).where("nome LIKE ?", i+"%").count
+-#       
+      -# .tab-content
+        -# - for i in "A".."Z"
+          -# .tab-pane.fade{ :id => "#{i}"}
+            -# %table.table.table-hover
+              -# %thead
+                -# %tr
+                  -# %th Nome
+                  -# %th Cargo
+              -# %tbody
+                -# - @servidores.where("nome LIKE ?", i+"%").each do |s|
+                  -# %tr
+                    -# %td
+                      -# %a{ :href => root_url + "servidor/" + s.id.to_s} 
+                        -# = s.nome
+                    -# %td 
+                      -# %label.label.label-default
+                        -# = s.descricao_cargo
+                      -# -#%span.badge
+                        -# -#- @servidor = FACADE.Servidor.find(s.id)
+                        -# -#- @minhas_diarias = FACADE.Diaria.where("NOME = ?", @servidor.nome)
+                        -# -#= @minhas_diarias.all.count
+                      -# %br
               
 :javascript
   $(document).ready(function(){
