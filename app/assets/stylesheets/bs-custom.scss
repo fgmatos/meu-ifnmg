@@ -71,11 +71,14 @@
 
 // stats
 #stats { 
-  .panel-body { 
-    h1 { font-weight: bold; }
-    .img { font-size: 55px;
-      &:hover { transform: scale(1.1); }
+  .panel {
+    &:hover { transform: scale(1.1) }
+    .panel-body {
+      .top { text-align: center;} 
+      h1 { font-weight: bold; }
+      .img { font-size: 55px;
+      }
+      small {position: absolute; font-size: 10px; }
     }
-    small {position: absolute; }
-  }
+  } 
 }

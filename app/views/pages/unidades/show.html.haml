@@ -27,17 +27,23 @@
       
       %ul.nav.nav-tabs#itens-unidade
         %li
-          %a{ :href => "#u-sevidores", :data => { :toggle => "tab"} }
+          %a{ :href => "#u-servidores", :data => { :toggle => "tab"} }
             Servidores
         %li
           %a{ :href => "#u-stats", :data => { :toggle => "tab"} }
             Distribuíção de cargos
+        %li
+          %a{ :href => "#u-diarias", :data => { :toggle => "tab"} }
+            Histórico de Diárias
       
       .tab-content
-        .tab-pane.fade#u-sevidores
+        .tab-pane.fade#u-servidores
           .panel
             .panel-body#lista
-              = render "pages/servidores/lista_servidores", show: :filtered
+              - if @servidores.count > 0
+                = render "pages/servidores/lista_servidores", show: :filtered
+              - else
+                = "Não foram encontrado Servidores lotados nesta unidade."
       
         .tab-pane.fade#u-stats
           .panel
@@ -46,10 +52,19 @@
                 = pie_chart @jornada
               .container
                 = pie_chart @cargos
+                
+        .tab-pane.fade#u-diarias
+          .panel
+            .panel-body
+              = render "pages/unidades/diarias"
               
               
 :javascript
   $(document).ready(function(){
+    // open tab
+    $('#itens-unidade > :first-child').addClass("active");
+    $("#u-servidores").addClass("active in");
+    
     $first = $('#lista-servidores > :first-child');
     $first.addClass("active");
     id = $first.find("a").attr("href")

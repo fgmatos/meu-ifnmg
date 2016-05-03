@@ -1,0 +1,7 @@
+
+- if @diarias.count > 0
+  = column_chart  @diarias.group(" strftime('%Y', data) ").count
+
+  = column_chart  @diarias.group(" strftime('%Y', data) ").sum(:valor)
+- else
+  = "Não foram encontrados registros de Diárias pagas por esta unidade."

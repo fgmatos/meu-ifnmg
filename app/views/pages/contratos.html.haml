@@ -1,6 +1,10 @@
-- require 'contratos.gov.rb' 
-
-- @contratos = getContratos
+:ruby
+  # require 'transparencia.gov.br.rb'
+  # # require 'contratos.gov.rb' 
+  # l = "http://www3.transparencia.gov.br/TransparenciaPublica/jsp/contratos/"
+  # #@contratos = getContratos
+  # contratos ||= APIGov.new(:contratos)
+  # @contratos ||= contratos.getContratos
 
 .container
   .row
@@ -12,40 +16,47 @@
             Contratos
   .row
     .col-md-12.col-sm-3
-      %table#dados-contratos.table.table-hover
-        %thead
-          %tr
-            %td 
-              %b Nº 
-            %td 
-              %b Nº Contrato
-            %td 
-              %b Modalidade
-            %td 
-              %b Situação
-            %td 
-              %b Contratado
-            %td 
-              %b Unidade
-            %td 
-              %b Objeto
-        %tbody
-          - i = 0
-          - @contratos.each do | num, valores |
-            - i += 1
-            %tr
-              %td 
-                = i
-              %td 
-                = num
-              %td 
-                = valores[:modalidade]
-              %td 
-                = valores[:situacao]
-              %td 
-                = valores[:contratado]
-              %td 
-                = valores[:unidade]
-              %td 
-                = valores[:objeto]
+      .panel
+        .panel-body 
+        
+          %table#dados-contratos.table.table-hover
+            %thead
+              %tr
+                %td 
+                  %b Nº 
+                %td 
+                  %b Nº Contrato
+                %td 
+                  %b Modalidade
+                %td 
+                  %b Situação
+                %td 
+                  %b Contratado
+                %td 
+                  %b Unidade
+                %td 
+                  %b Objeto
+                %td 
+                  %b link
+            %tbody
+              - @contratos.each do | c |
+                %tr
+                  %td 
+                    = c[:ref]
+                  %td 
+                    = c[:numero]
+                  %td 
+                    = c[:modalidade]
+                  %td 
+                    = c[:situacao]
+                  %td 
+                    = c[:contratado]
+                  %td 
+                    = c[:unidade]
+                  %td 
+                    = c[:objeto]
+                  %td 
+                    %a{:href => c[:link], :target=> "_blank"}
+                      = image_tag "transparencia.gif", size:"60x30"
+                    
       

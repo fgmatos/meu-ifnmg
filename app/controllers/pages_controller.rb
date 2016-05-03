@@ -15,9 +15,21 @@ class PagesController < ApplicationController
     # "pages/ranking.html.haml"
   end
   
+  def contratos
+    # "pages/contratos.html.haml"
+    @contratos = FACADE.Contrato.all
+  end
+  
   # GET "/unidades/:name" - Retorna informacoes sobre uma Unidade do IFNMG
   def unidade
-    @diarias = FACADE.Diaria.where("nome_unidade like ?", "%#{@unidade.gsub("-", " ").upcase}%")
+    if @unidade.gsub("-", " ").upcase == 'REITORIA'
+      @diarias = FACADE.Diaria.where("nome_unidade like ?", "%EDUC.,CIENC%")
+    else
+      @diarias = FACADE.Diaria.where("nome_unidade like ?", "%#{@unidade.gsub("-", " ").upcase}%")  
+    end
+    
+    
+    
     @servidores = FACADE.Servidor.where("uorg_lotacao like ?", "%#{@unidade.gsub("-", " ").upcase}%").order(:nome)
     @cargos = FACADE.Servidor.where("uorg_lotacao LIKE '%#{@unidade.gsub("-", " ").upcase}%'").group(:descricao_cargo).order("count_all DESC").count
     @jornada = FACADE.Servidor.where("uorg_lotacao LIKE '%#{@unidade.gsub("-", " ").upcase}%'").group(:jornada_de_trabalho).order("count_all DESC").count

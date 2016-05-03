@@ -2,6 +2,7 @@
 $nav: #ffffff;
 $main-bg-color: gold;
 
+
 @import "notes";
 @import "bs-custom";
 @import "footer";
@@ -22,6 +23,7 @@ $main-bg-color: gold;
 	min-height:100%;
 	background-color: whitesmoke;
 	position:relative;
+	font-family: "Varela Round","Helvetica Neue","Helvetica","Roboto","Arial",sans-serif;
 }
 
 

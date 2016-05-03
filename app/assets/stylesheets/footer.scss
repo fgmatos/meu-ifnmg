@@ -11,7 +11,12 @@
   
   .social-links {
     margin-left: 25px;
-    p { font-size: 15px; font-weight: bold; text-transform: uppercase; }  
+    p { font-size: 15px; font-weight: bold; text-transform: uppercase; }
+    img { 
+      -webkit-filter: grayscale(100%); 
+      // filter: grayscale(100%);
+      &:hover { -webkit-filter: grayscale(0%);  }  
+    }  
   }
   
   

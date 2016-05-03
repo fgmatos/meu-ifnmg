@@ -7,13 +7,14 @@
     = render "pages/index/stats"
 
   .row
-    .col-md-8
+    .col-md-8.col-sm-12
       -# = render 'shared/tables/slide_tables'
       = render 'shared/tables/diarias_servidor'
       = render 'shared/tables/diarias_unidade'
             
     .col-md-4.col-sm-6
       = render 'shared/boxmap'
+    .col-md-4.col-sm-6
       = render 'shared/slide_motivos'
       
       -# = render "shared/rss/reitoria"
