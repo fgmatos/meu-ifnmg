@@ -28,6 +28,10 @@ class Facade
        @contato ||= ::TContato
     end
 
+    def Contrato
+       @contrato ||= ::TContrato
+    end
+    
     # private :new
     private_class_method :new    
 end
