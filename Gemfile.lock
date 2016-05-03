@@ -60,6 +60,8 @@ GEM
     fastercsv (1.5.5)
     globalid (0.3.6)
       activesupport (>= 4.1.0)
+    groupdate (2.5.3)
+      activesupport (>= 3)
     haml (4.0.7)
       tilt
     http-cookie (1.0.2)
@@ -174,6 +176,7 @@ DEPENDENCIES
   chartkick
   coffee-rails (~> 4.1.0)
   csv-mapper
+  groupdate
   haml
   jbuilder (~> 2.0)
   jquery-rails

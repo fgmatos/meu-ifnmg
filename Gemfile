@@ -59,3 +59,5 @@ gem "chartkick"
 
 #fgm - testes: pegando informacoes da web
 gem "mechanize"
+#fgm 03.05.16 - group gem to charts
+gem 'groupdate'
