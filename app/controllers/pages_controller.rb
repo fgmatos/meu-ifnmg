@@ -24,15 +24,15 @@ class PagesController < ApplicationController
   def unidade
     if @unidade.gsub("-", " ").upcase == 'REITORIA'
       @diarias = FACADE.Diaria.where("nome_unidade like ?", "%EDUC.,CIENC%")
+      @contratos = FACADE.Contrato.where("unidade like ?", "%EDUC.,CIENC%")
     else
       @diarias = FACADE.Diaria.where("nome_unidade like ?", "%#{@unidade.gsub("-", " ").upcase}%")  
+      @contratos = FACADE.Contrato.where("unidade like ?", "%#{@unidade.gsub("-", " ").upcase}%")
     end
     
     
     
     @servidores = FACADE.Servidor.where("uorg_lotacao like ?", "%#{@unidade.gsub("-", " ").upcase}%").order(:nome)
-    @cargos = FACADE.Servidor.where("uorg_lotacao LIKE '%#{@unidade.gsub("-", " ").upcase}%'").group(:descricao_cargo).order("count_all DESC").count
-    @jornada = FACADE.Servidor.where("uorg_lotacao LIKE '%#{@unidade.gsub("-", " ").upcase}%'").group(:jornada_de_trabalho).order("count_all DESC").count
     render "pages/unidades/show", locals: { unidade: @unidade }
   end
   

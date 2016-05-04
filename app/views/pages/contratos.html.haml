@@ -11,52 +11,46 @@
     .col-md-12
       .panel
         .panel-body
-          %h2
-            = image_tag("flat-icons/office/svg/contract", size: "100x60") 
-            Contratos
+          .col-md-6
+            %h2
+              = image_tag("flat-icons/business/svg/documentation", size: "100x60") 
+              Contratos
+          .col-md-6.pull-right
+            %input#search-contrato.form-control(placeholder="... Pesquise nos contratos ..." style="margin-top: 40px")
   .row
-    .col-md-12.col-sm-3
+    .col-md-12.col-sm-12
       .panel
         .panel-body 
         
-          %table#dados-contratos.table.table-hover
-            %thead
-              %tr
-                %td 
-                  %b Nº 
-                %td 
-                  %b Nº Contrato
-                %td 
-                  %b Modalidade
-                %td 
-                  %b Situação
-                %td 
-                  %b Contratado
-                %td 
-                  %b Unidade
-                %td 
-                  %b Objeto
-                %td 
-                  %b link
-            %tbody
-              - @contratos.each do | c |
-                %tr
-                  %td 
-                    = c[:ref]
-                  %td 
-                    = c[:numero]
-                  %td 
-                    = c[:modalidade]
-                  %td 
-                    = c[:situacao]
-                  %td 
-                    = c[:contratado]
-                  %td 
-                    = c[:unidade]
-                  %td 
-                    = c[:objeto]
-                  %td 
-                    %a{:href => c[:link], :target=> "_blank"}
-                      = image_tag "transparencia.gif", size:"60x30"
-                    
+          - anos = @contratos.select(:ano).distinct.order("ano ASC")
+          %ul.nav.nav-tabs#lista-contratos  
+            - anos.each do | ano |
+              %li
+                %a{ :href => "#c-#{ano.ano}", :data => { :toggle => "tab"} }
+                  = ano.ano
+        
+          = render "pages/contratos/lista_contratos", lista: anos
+
       
+
+:javascript
+  $(document).ready(function(){
+    // open tab
+    $('#lista-contratos > :last-child').addClass("active");
+    id = $('#lista-contratos > :last-child').find("a").attr("href")
+    $(id).addClass("active in");
+    
+    var $rows = $("tr");
+    $("#search-contrato").keyup(function() {
+      var val = $.trim(this.value);
+      if (val === "")
+        $rows.show();
+      else {
+        $rows.hide();
+        $rows.has("td:contains(" + val.toUpperCase() + ")").show();
+        $rows.has("td:contains(" + val.toLowerCase() + ")").show();
+      }
+    })
+    
+    
+  });

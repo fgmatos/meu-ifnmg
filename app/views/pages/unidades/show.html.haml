@@ -22,6 +22,11 @@
             Diarias
             %span.label.label-success.pull-right
               = @diarias.count
+          
+          %p
+            Contratos
+            %span.label.label-success.pull-right
+              = @contratos.count
       
     .col-md-10 
       
@@ -35,6 +40,9 @@
         %li
           %a{ :href => "#u-diarias", :data => { :toggle => "tab"} }
             Histórico de Diárias
+        %li
+          %a{ :href => "#u-contratos", :data => { :toggle => "tab"} }
+            Contratos
       
       .tab-content
         .tab-pane.fade#u-servidores
@@ -48,15 +56,17 @@
         .tab-pane.fade#u-stats
           .panel
             .panel-body
-              .container
-                = pie_chart @jornada
-              .container
-                = pie_chart @cargos
+              = render "pages/unidades/cargos"
                 
         .tab-pane.fade#u-diarias
           .panel
             .panel-body
               = render "pages/unidades/diarias"
+              
+        .tab-pane.fade#u-contratos
+          .panel
+            .panel-body 
+              = render "pages/unidades/contratos"
               
               
 :javascript

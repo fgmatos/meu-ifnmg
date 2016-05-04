@@ -1,0 +1,10 @@
+
+- if @contratos.count > 0
+  .container
+    = pie_chart @contratos.group(:modalidade).count
+  .container
+    = pie_chart @contratos.group(:situacao).count
+  .container
+    = line_chart @contratos.group(:ano).count
+- else
+  = "Não foram encontrados contratos assinados por esta unidade."

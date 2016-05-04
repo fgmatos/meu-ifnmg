@@ -1,0 +1,8 @@
+
+- if @servidores.count > 0
+  .container
+    = pie_chart @servidores.group(:jornada_de_trabalho).order("count_all DESC").count
+  .container
+    = pie_chart @servidores.group(:descricao_cargo).order("count_all DESC").count
+- else
+  = "Não foram encontrados servidores nesta unidade para mostramos a distribuíção de cargos."

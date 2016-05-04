@@ -1,0 +1,45 @@
+
+
+.tab-content
+  - lista.each do |item|
+    .tab-pane.fade(id = "c-#{item.ano}")
+      .panel
+        %table#dados-contratos.table.table-hover
+          %thead
+            %tr
+              -# %td 
+                -# %b Nº               
+              %td 
+                %b Nº Contrato
+              %td 
+                %b Modalidade
+              %td 
+                %b Situação
+              %td 
+                %b Contratado
+              %td 
+                %b Unidade
+              %td 
+                %b Objeto
+              %td 
+                %b link
+          %tbody
+            - @contratos.where(:ano => item.ano).each do | c |
+              %tr
+                -# %td 
+                  -# = c[:ref]
+                %td 
+                  = c[:numero]
+                %td 
+                  = c[:modalidade]
+                %td 
+                  = c[:situacao]
+                %td 
+                  = c[:contratado]
+                %td 
+                  = c[:unidade]
+                %td.justify 
+                  = c[:objeto]
+                %td 
+                  %a{:href => c[:link], :target=> "_blank"}
+                    = image_tag "transparencia.gif", size:"60x30"

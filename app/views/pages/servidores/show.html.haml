@@ -7,7 +7,8 @@
           "INST.FED.DO NORTE DE MG/CAMPUS PIRAPORA" => 158440,
           "INST.FED DO NORTE DE MG/CAMPUS ARACUAI" => 158441,
           "INST.FED.DO NORTE DE MG/CAMPUS ARINOS" => 158438 }
-
+- link_perfil = "http://www.portaltransparencia.gov.br/servidores/Servidor-ListaServidores.asp?bogus=1&Pagina=1&TextoPesquisa="
+- link2  = "http://www.portaltransparencia.gov.br/servidores/Servidor-DetalhaServidor.asp?IdServidor="
 .container
   .row
     .col-md-12
@@ -47,17 +48,24 @@
             Lotação: 
           = @servidor.uorg_lotacao
           %br
+          %a(href="#{link_perfil}#{@servidor.nome.gsub(' ', '%20')}" target="_blank")
+            Procurar no Portal da Transparencia!
+          
+          %br
+          %a(href="#{link2}#{@servidor.id_servidor_portal}" target="_blank")
+            Servidor on Transparencia!
+            
           -# %b
             -# Jornada de trabalho: 
           -# = @servidor.jornada_de_trabalho
           -# %br
-          %b
-            Data ingresso (função): 
-          = @servidor.data_ingresso_cargofuncao.strftime("%d/%m/%Y")
-          %br
-          %b
-            Data ingresso no Orgão: 
-          = @servidor.data_ingresso_orgao.strftime("%d/%m/%Y") # + " - "
+          -# %b
+            -# Data ingresso (função): 
+          -# = @servidor.data_ingresso_cargofuncao.strftime("%d/%m/%Y")
+          -# %br
+          -# %b
+            -# Data ingresso no Orgão: 
+          -# = @servidor.data_ingresso_orgao.strftime("%d/%m/%Y") # + " - "
           -#= ( ( Date.today - @servidor.data_ingresso_cargofuncao) / 365 ).to_i
         .panel-footer
           .social-share.text-center
