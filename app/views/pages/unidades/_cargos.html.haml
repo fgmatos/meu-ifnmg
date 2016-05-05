@@ -1,8 +1,46 @@
 
 - if @servidores.count > 0
   .container
-    = pie_chart @servidores.group(:jornada_de_trabalho).order("count_all DESC").count
+    = pie_chart @servidores.group(:jornada_de_trabalho).order("count_all DESC").count , |
+      library: { |
+                title: { text: "Distribuição de cargos por Jornada de Trabalho"}, |
+                subtitle: { text: '' }, |
+                tooltip: { |
+                  valuePrefix: " ", |
+                  pointFormat: "Quantidade: <b>{point.y}</b>", |
+                  valueDecimals: 0 |
+                }, |
+                plotOptions: { |
+                  pie: { |
+                    center: true, |
+                    dataLabels: { |
+                      enabled: true , |
+                      valueDecimals: 0, |
+                    }, |
+                    showInLegend: true |
+                  }, |
+                }, |
+              } |
   .container
-    = pie_chart @servidores.group(:descricao_cargo).order("count_all DESC").count
+    = pie_chart @servidores.group(:descricao_cargo).order("count_all DESC").count, |
+      library: { |
+                title: { text: "Distribuição de cargos"}, |
+                subtitle: { text: '' }, |
+                tooltip: { |
+                  valuePrefix: " ", |
+                  pointFormat: "Quantidade: <b>{point.x}</b>", |
+                  valueDecimals: 0 |
+                }, |
+                plotOptions: { |
+                  pie: { |
+                    center: true, |
+                    dataLabels: { |
+                      enabled: true , |
+                      valueDecimals: 0, |
+                    }, |
+                    showInLegend: true |
+                  }, |
+                }, |
+              }
 - else
   = "Não foram encontrados servidores nesta unidade para mostramos a distribuíção de cargos."

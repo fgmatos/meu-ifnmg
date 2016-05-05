@@ -1,10 +1,70 @@
 
 - if @contratos.count > 0
   .container
-    = pie_chart @contratos.group(:modalidade).count
+    = pie_chart @contratos.group(:modalidade).count, |
+      library: { |
+                title: { text: "Quantide de licitações por tipo"}, |
+                subtitle: { text: '' }, |
+                tooltip: { |
+                  valuePrefix: " ", |
+                  pointFormat: "Quantidade: <b>{point.y}</b>", |
+                  valueDecimals: 0 |
+                }, |
+                plotOptions: { |
+                  pie: { |
+                    center: true, |
+                    dataLabels: { |
+                      enabled: true , |
+                      valueDecimals: 0, |
+                    }, |
+                    showInLegend: true |
+                  }, |
+      }, |
+    } |
+
   .container
-    = pie_chart @contratos.group(:situacao).count
+    = pie_chart @contratos.group(:situacao).count, |
+      library: { |
+                title: { text: "Quantide de licitações por situação"}, |
+                subtitle: { text: '' }, |
+                tooltip: { |
+                  valuePrefix: " ", |
+                  pointFormat: "Quantidade: <b>{point.y}</b>", |
+                  valueDecimals: 0 |
+                }, |
+                plotOptions: { |
+                  pie: { |
+                    center: true, |
+                    dataLabels: { |
+                      enabled: true , |
+                      valueDecimals: 0, |
+                    }, |
+                    showInLegend: true |
+                  }, |
+      }, |
+    }
+
   .container
-    = line_chart @contratos.group(:ano).count
+    = line_chart @contratos.group(:ano).count, |
+      library: { |
+                title: { text: "Quantide de licitações por ano"}, |
+                subtitle: { text: '' }, |
+                tooltip: { |
+                  valuePrefix: " ", |
+                  pointFormat: "Quantidade: <b>{point.y}</b>", |
+                  valueDecimals: 0 |
+                }, |
+                plotOptions: { |
+                  line: { |
+                    center: true, |
+                    dataLabels: { |
+                      enabled: true , |
+                      valueDecimals: 0, |
+                    }, |
+                    showInLegend: true |
+                  }, |
+      }, |
+    }
+
 - else
   = "Não foram encontrados contratos assinados por esta unidade."
