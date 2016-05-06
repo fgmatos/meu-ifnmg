@@ -47,8 +47,8 @@
       - unidades.each do |u|
         - str = u.to_s
         - classname = u.mb_chars.normalize(:kd).gsub(/[^\x00-\x7F]/n,'').downcase.gsub(" ", "-")
-        .box( style="width: #{sizes[x][i]};" class="#{classname} cover")
-          %a( href="/unidades/#{classname}")
+        %a( href="/unidades/#{classname}")
+          .box( style="width: #{sizes[x][i]};" class="#{classname} cover")
             %h4
               = u
             - x = x + 1

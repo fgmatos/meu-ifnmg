@@ -1,25 +1,20 @@
-
-.box {
-	background-color: #cccccc;
-	height: 150px;
-	width: 24%;
-	margin: 5px;
-	padding: 0px 0px 0px 0px;
-	float: left;
-}
-.box > a >  h4 {
-	text-align: center;
-	color: #ffffff;
-	background-color: rgba(69, 186, 1, 1);
-	padding: 5px;
-}
-
-/*.box > h3 {
-	margin-top: 75px;
-}*/
-
-.box > a > h4:hover {
-	box-shadow: 0 0 5px #000
+a {
+	.box {
+		background-color: #cccccc;
+		height: 150px;
+		/*width: 24%;*/
+		margin: 5px;
+		padding: 0px 0px 0px 0px;
+		float: left;
+		&:hover { transform: scale(1.1); box-shadow: 0 0 8px #000; }
+		h4 {
+			text-align: center;
+			color: #ffffff;
+			background-color: rgba(69, 186, 1, 1);
+			padding: 6px;
+		}
+	}
+	text-decoration: none;
 }
 
 /*campi images*/

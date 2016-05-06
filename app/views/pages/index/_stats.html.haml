@@ -22,22 +22,22 @@
       :link => "#{root_url}diarias"
     },
     
-    :box3 => { 
-      :top => "1º trimestre 2016 / 2015",
-      :icon => "usd",
-      :text => "#{ number_to_human(t2_valor - t1_valor, separator: ',', units: {unit: 'rs', thousand: 'Mil'} ) }",
-      :description => "Economizamos no gasto com diárias.",
-      :link => "#"
-    },  
-    :box4 => { 
-      :top => "1º trimestre 2016 / 2015",
-      :icon => "plane",
-      :text => "#{(t2_count - t1_count)}",
-      :description => "viagens realizadas.",
-      :link => "#"
-    },
+    # :box3 => { 
+      # :top => "1º trimestre 2016 / 2015",
+      # :icon => "usd",
+      # :text => "#{ number_to_human(t2_valor - t1_valor, separator: ',', units: {unit: 'rs', thousand: 'Mil'} ) }",
+      # :description => "Economizamos no gasto com diárias.",
+      # :link => "#"
+    # },  
+    # :box4 => { 
+      # :top => "1º trimestre 2016 / 2015",
+      # :icon => "plane",
+      # :text => "#{(t2_count - t1_count)}",
+      # :description => "viagens realizadas.",
+      # :link => "#"
+    # },
     :box5 => { 
-      :top => "até 2016",
+      :top => "em 2016 são",
       :icon => "education",
       :text => "12",
       :description => "Unidades em funcionamento.",
@@ -48,7 +48,7 @@
       :top => "2010 à 2016",
       :icon => "list-alt",
       :text => "#{FACADE.Contrato.all.count}",
-      :description => "contratos assinados.",
+      :description => "contratos foram assinados.",
       :link => "#{root_url}contratos"
     }
   }

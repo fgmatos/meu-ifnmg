@@ -35,6 +35,13 @@
 
 :javascript
   $(document).ready(function(){
+  
+    //labelFormatter: 
+    //  function() {
+    //            return '<div style="text-align: left; width:130px;float:left;">' + this.name + '</div><div style="width:40px; float:left;text-align:right;">' + this.y + '%</div>';
+    //      } 
+  
+  
     // open tab
     $('#lista-contratos > :last-child').addClass("active");
     id = $('#lista-contratos > :last-child').find("a").attr("href")
@@ -47,8 +54,7 @@
         $rows.show();
       else {
         $rows.hide();
-        $rows.has("td:contains(" + val.toUpperCase() + ")").show();
-        $rows.has("td:contains(" + val.toLowerCase() + ")").show();
+        $rows.has("td:contains(" + val + ")").show();
       }
     })
     
