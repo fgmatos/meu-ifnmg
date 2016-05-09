@@ -1,27 +1,20 @@
 -# = render 'shared/image_slide'
         
 .container
-  -# %h2
-    -# SEÇÃO CENTRAL 
   .row#stats
     = render "pages/index/stats"
-
   .row
     .col-md-8.col-sm-12
       -# = render 'shared/tables/slide_tables'
-      = render 'shared/tables/diarias_servidor'
-      = render 'shared/tables/diarias_unidade'
-            
+      -# = render 'shared/tables/diarias_servidor'
+      -# = render 'shared/tables/diarias_unidade'
+  .row
+    .col-md-8.col-sm-6
+      = render 'shared/slide_motivos'
     .col-md-4.col-sm-6
       = render 'shared/boxmap'
-    .col-md-4.col-sm-6
-      = render 'shared/slide_motivos'
-      
-      -# = render "shared/rss/reitoria"
-  
   .row
     -# = render "pages/index/infobox"
-          
 
 :javascript
   $(document).ready(function() { 
