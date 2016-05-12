@@ -81,6 +81,7 @@ class PagesController < ApplicationController
     if FACADE.Servidor.exists?(params[:id])
        @servidor = FACADE.Servidor.find(params[:id])
        @minhas_diarias = FACADE.Diaria.where("NOME = ?", @servidor.nome)
+       @minhas_remuneracoes = FACADE.Remuneracao.where("NOME = ?", @servidor.nome)
        render "pages/servidores/show"
     else
       # flash msg's use :danger, :alert or :info       
