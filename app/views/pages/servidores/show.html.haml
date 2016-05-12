@@ -23,13 +23,13 @@
             %a{ :href => "#{link_perfil}#{@servidor.nome.gsub(' ', '%20')}",:target=> "_blank", :title => "Pesquisar", :data => {:toggle => "popover", :trigger =>"hover", :content => "Procura o nome do servidor no portal da transparência.", :placement =>"right" } }
               = @servidor.nome
   .row
-    .col-md-3
+    .col-md-4
       .panel.panel-default
         -#.panel-heading
           
         .panel-body
           .title
-            Informações
+            Informações:
           %b
             CPF:
           = @servidor.cpf
@@ -81,20 +81,19 @@
               -# # padrão
             -# # %label.label.label-warning
               -# # Jornada de trabalho
-    .col-md-9
+    .col-md-8
       .panel.panel-default
-        .panel-heading
-          %b
-            Historico de Remunerações
+        .panel-body
+          .title
+            Historico de Remunerações:
             %span.badge
               = "#{@servidor.quant_salarios} meses"
             .pull-right
               Valor:
               %span.badge
                 = number_to_currency(@servidor.total_salarios, unit: "R$ ", separator: ",", delimiter: ".").to_s
-               
-        .panel-body
 
+          -# UL dos Anos
           %ul.nav.nav-tabs
             - anos = []
             - @teste = @minhas_remuneracoes.clone
@@ -107,84 +106,91 @@
                   %a{:data => {:toggle=>"tab"}, :href=>"#tbr#{data.ano}"}
                     = data.ano
                     %span.badge
-                      = number_to_currency(@servidor.total_salarios(data.ano), unit: "R$ ", separator: ",", delimiter: ".").to_s
+                      = @servidor.quant_salarios(data.ano)
+
 
           .tab-content
-            -#= @minhas_remuneracoes.inspect
-            - @teste.each do |d|
-              %div{ :id => "tbr#{d.ano}", :class=>"tab-pane fade" }
-                %table.table.table-hover
-                  %thead
-                    %tr
-                      %th Mês
-                      %th
-                        %a{ :href => "#", :title => "Entenda", :data => {:toggle => "popover", :trigger =>"hover", :content => "SB+IQ = Salário Base + Incentivo a Qualificação ou Retribuição Titulação", :placement =>"right" } }
-                          SB+IQ
-                      %th
-                        %a{ :href => "#", :title => "Entenda", :data => {:toggle => "popover", :trigger =>"hover", :content => "VI = Verbas Indenizatórias", :placement =>"right" } }
-                          VI
-                      %th
-                        %a{ :href => "#", :title => "Entenda", :data => {:toggle => "popover", :trigger =>"hover", :content => "GN = Gratificação Natalina", :placement =>"right" } }
-                          GN
-                      %th Férias
-                      %th
-                        %a{ :href => "#", :title => "Entenda", :data => {:toggle => "popover", :trigger =>"hover", :content => "ORE = Outras Remunerações Eventuais", :placement =>"right" } }
-                          ORE
-                      %th
-                        %a{ :href => "#", :title => "Entenda", :data => {:toggle => "popover", :trigger =>"hover", :content => "IRPF = Imposto de Renda Retido na Fonte", :placement =>"right" } }
-                          IRPF
-                      %th
-                        %a{ :href => "#", :title => "Entenda", :data => {:toggle => "popover", :trigger =>"hover", :content => "PSS = Plano de Seguridade Social", :placement =>"right" } }
-                          PSS
-                      %th
-                        %a{ :href => "#", :title => "Entenda", :data => {:toggle => "popover", :trigger =>"hover", :content => "DD = Demais Deduções", :placement =>"right" } }
-                          DD
-                      -#%th ATGN
-                      -#%th RAD
-                      %th
-                        %a{ :href => "#", :title => "Entenda", :data => {:toggle => "popover", :trigger =>"hover", :content => "Remuneração Total Liquida", :placement =>"right" } }
-                          Liquido
-                      %th
-                        %a{ :href => "#", :title => "Entenda", :data => {:toggle => "popover", :trigger =>"hover", :content => "Remuneração Total Bruta", :placement =>"right" } }
-                          Bruto
 
-                  %tbody
-                    - @minhas_remuneracoes.where(:ano => d.ano).order('MES ASC').each do |data|
-                      %tr
-                        %td
-                          = data.mes
-                        %td
-                          = data.remuneracao_basica_bruta_rs
-                        %td
-                          = data.verbas_indenizatorias_civil
-                        %td
-                          = data.gratificacao_natalina_rs
-                        %td
-                          = data.ferias
-                        %td
-                          = data.outras_remuneracoes_eventuais
-                        %td
-                          = data.irrf
-                        %td
-                          = data.pss_rpgs
-                        %td
-                          = data.demais_deducoes
-                        -#%td
-                          = data.abate_teto_gratificacao_natalina
-                        -#%td
-                          = number_to_currency(data.remuneracao_apos_deducoes, unit: "R$ ", separator: ",", delimiter: ".").to_s
-                        %td
-                          = number_to_currency( ( data.remuneracao_basica_bruta_rs.to_f + data.verbas_indenizatorias_civil.to_f + data.gratificacao_natalina_rs.to_f + data.ferias.to_f + data.outras_remuneracoes_eventuais.to_f + data.irrf.to_f + data.pss_rpgs.to_f + data.demais_deducoes.to_f  ) , unit: "* R$ ", separator: ",", delimiter: ".").to_s
-                        %td
-                          = number_to_currency( ( data.remuneracao_basica_bruta_rs.to_f + data.verbas_indenizatorias_civil.to_f + data.gratificacao_natalina_rs.to_f + data.ferias.to_f + data.outras_remuneracoes_eventuais.to_f ) , unit: "R$ ", separator: ",", delimiter: ".").to_s
-                    %tr
-                      %td(colspan="11")
-                        * A contribuição sindical dos servidores públicos não é apresentada no portal da transparência, assim a remuneração liquida de alguns servidores poderá ser 1% menor.
+
+            - anos.each do |d|
+
+              %div{ :id => "tbr#{d}", :class=>"tab-pane fade" }
+                %br
+                %span.badge
+                  = "Total recebido no ano: " + number_to_currency(@servidor.total_salarios(d), unit: "R$ ", separator: ",", delimiter: ".").to_s
+                .row
+                  .panel-group(id="remuneracao#{d}")
+                    .panel
+                      - @minhas_remuneracoes.where(:ano => d).order('MES ASC').each do |data|
+                        .col-md-3
+                          .panel-heading
+                            %h4.panel-title
+                              %a{ :href=>"##{d}#{data.mes}", :data =>{:toggle=>"collapse", :parent=>"#remuneracao#{d}"}}
+                                %label.label.label-primary
+                                  = data.mes + " - "
+                                  = " #{number_to_currency( ( data.remuneracao_basica_bruta_rs.to_f + data.verbas_indenizatorias_civil.to_f + data.gratificacao_natalina_rs.to_f + data.ferias.to_f + data.outras_remuneracoes_eventuais.to_f ) , unit: "R$ ", separator: ",", delimiter: ".").to_s}"
+                        .panel-collapse.collapse(id="#{d}#{data.mes}")
+                          .panel-body.justify
+                            %table.table.table-hover
+                              %thead
+                                %tr
+                                  %th(colspan="11")
+                                    %b
+                                      %center
+                                        Detalhamento da remuneração do mês #{data.mes}/ #{d}
+                                %tr
+                                  %th
+                                    %a{ :href => "#", :title => "Entenda", :data => {:toggle => "popover", :trigger =>"hover", :content => "Remuneração Básica + Incentivo a Qualificação ou Retribuição Titulação + Cargo ou Função (FG ou CD)", :placement =>"right" } }
+                                      RB
+                                  %th
+                                    %a{ :href => "#", :title => "Entenda", :data => {:toggle => "popover", :trigger =>"hover", :content => "Verbas Indenizatórias recebidas pelo servidor como Auxílio Alimentação e Ressarcimento de Saúde", :placement =>"right" } }
+                                      VI
+                                  %th
+                                    %a{ :href => "#", :title => "Entenda", :data => {:toggle => "popover", :trigger =>"hover", :content => "Gratificação Natalina", :placement =>"right" } }
+                                      GN
+                                  %th Férias
+                                  %th
+                                    %a{ :href => "#", :title => "Entenda", :data => {:toggle => "popover", :trigger =>"hover", :content => "Outras Remunerações Eventuais", :placement =>"right" } }
+                                      ORE
+                                  %th
+                                    %a{ :href => "#", :title => "Entenda", :data => {:toggle => "popover", :trigger =>"hover", :content => "IImposto de Renda Retido na Fonte", :placement =>"right" } }
+                                      IRPF
+                                  %th
+                                    %a{ :href => "#", :title => "Entenda", :data => {:toggle => "popover", :trigger =>"hover", :content => "Plano de Seguridade Social", :placement =>"right" } }
+                                      PSS
+                                  %th
+                                    %a{ :href => "#", :title => "Entenda", :data => {:toggle => "popover", :trigger =>"hover", :content => "Demais Deduções", :placement =>"right" } }
+                                      DD
+                                  %th Liquido*
+                              %tbody
+                                %td
+                                  = number_to_currency( data.remuneracao_basica_bruta_rs , unit: "", separator: ",", delimiter: ".").to_s
+                                %td
+                                  = number_to_currency( data.verbas_indenizatorias_civil , unit: "", separator: ",", delimiter: ".").to_s
+                                %td
+                                  = number_to_currency( data.gratificacao_natalina_rs, unit: "", separator: ",", delimiter: ".").to_s
+                                %td
+                                  = number_to_currency( data.ferias, unit: "", separator: ",", delimiter: ".").to_s
+                                %td
+                                  = number_to_currency( data.outras_remuneracoes_eventuais, unit: "", separator: ",", delimiter: ".").to_s
+                                %td
+                                  = number_to_currency( data.irrf, unit: "", separator: ",", delimiter: ".").to_s
+                                %td
+                                  = number_to_currency( data.pss_rpgs, unit: "", separator: ",", delimiter: ".").to_s
+                                %td
+                                  = number_to_currency( data.demais_deducoes, unit: "", separator: ",", delimiter: ".").to_s
+                                %td
+                                  = number_to_currency( ( data.remuneracao_basica_bruta_rs.to_f + data.verbas_indenizatorias_civil.to_f + data.gratificacao_natalina_rs.to_f + data.ferias.to_f + data.outras_remuneracoes_eventuais.to_f + data.irrf.to_f + data.pss_rpgs.to_f + data.demais_deducoes.to_f  ) , unit: "", separator: ",", delimiter: ".").to_s
+                              %tr
+                                %td(colspan="11")
+                                  %small
+                                    * A contribuição sindical dos servidores públicos não é apresentada no portal da transparência, assim a remuneração liquida de alguns servidores poderá ser 1% menor.
+
 
       
       .panel.panel-default
-        .panel-heading
-          %b
+        .panel-body
+          .title
             Pedidos de diária:
             %span.badge
               = @minhas_diarias.all.count
@@ -192,11 +198,9 @@
             - @minhas_diarias.each do |diaria|
               - geral += diaria.valor.to_f
             .pull-right
-              Valor recebido:
+              Valor:
               %span.badge
                 = number_to_currency(geral,unit: "R$ ", separator: ",", delimiter: ".").to_s
-               
-        .panel-body
         
           %ul.nav.nav-tabs
             - anos = []
