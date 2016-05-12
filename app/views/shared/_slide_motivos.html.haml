@@ -18,16 +18,17 @@
       
       / slides
       .carousel-inner{:role=> "listbox"}
+        - default_size = "660x265"
         .item.active
-          = image_tag "motivos/motivo01.png", :alt => "Motivo 01", size: "715x265"
+          = image_tag "motivos/motivo01.png", :alt => "Motivo 01", size: default_size
         .item
-          = image_tag "motivos/motivo02.png", :alt => "Motivo 02", size: "715x265"
+          = image_tag "motivos/motivo02.png", :alt => "Motivo 02", size: default_size
         .item
-          = image_tag "motivos/motivo03.png", :alt => "Motivo 03", size: "715x265"
+          = image_tag "motivos/motivo03.png", :alt => "Motivo 03", size: default_size
         .item
-          = image_tag "motivos/motivo04.png", :alt => "Motivo 04", size: "715x265"
+          = image_tag "motivos/motivo04.png", :alt => "Motivo 04", size: default_size
         .item
-          = image_tag "motivos/motivo05.png", :alt => "Motivo 05", size: "715x265"
+          = image_tag "motivos/motivo05.png", :alt => "Motivo 05", size: default_size
           
       / lef and right controls
       %a.left.carousel-control{ :href => "#slide-motivos", :role => "button", :data => { :slide => "prev" } }
