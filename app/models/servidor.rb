@@ -2,13 +2,29 @@ class Servidor < ActiveRecord::Base
   
   # retorna os salarios
   def total_salarios(ano = nil, mes = nil)
+    total = 0.0
     if ano.nil?
-      return ::Remuneracao.where(:nome => self.nome).sum(:remuneracao_apos_deducoes)
+      @remuneracao = ::Remuneracao.where(:nome => self.nome)
+      @remuneracao.each do |data|
+        total += ( data.remuneracao_basica_bruta_rs.to_f + data.verbas_indenizatorias_civil.to_f + data.gratificacao_natalina_rs.to_f + data.ferias.to_f + data.outras_remuneracoes_eventuais.to_f )
+      end
+      return total
+      #return ::Remuneracao.where(:nome => self.nome).sum(:remuneracao_basica_bruta_rs)
     else
       if mes.nil?
-        ::Remuneracao.where(:nome => self.nome, :ano => ano).sum(:remuneracao_apos_deducoes)
+        @remuneracao = ::Remuneracao.where(:nome => self.nome, :ano => ano)
+        @remuneracao.each do |data|
+          total += ( data.remuneracao_basica_bruta_rs.to_f + data.verbas_indenizatorias_civil.to_f + data.gratificacao_natalina_rs.to_f + data.ferias.to_f + data.outras_remuneracoes_eventuais.to_f )
+        end
+        return total
+        #::Remuneracao.where(:nome => self.nome, :ano => ano).sum(:remuneracao_apos_deducoes)
       else
-        ::Remuneracao.where(:nome => self.nome, :ano => ano, :mes => mes).sum(:remuneracao_apos_deducoes)
+          @remuneracao = ::Remuneracao.where(:nome => self.nome, :ano => ano, :mes => mes)
+          @remuneracao.each do |data|
+            total += ( data.remuneracao_basica_bruta_rs.to_f + data.verbas_indenizatorias_civil.to_f + data.gratificacao_natalina_rs.to_f + data.ferias.to_f + data.outras_remuneracoes_eventuais.to_f )
+          end
+          return total
+          #::Remuneracao.where(:nome => self.nome, :ano => ano, :mes => mes).sum(:remuneracao_apos_deducoes)
       end
     end
   end
