@@ -59,3 +59,5 @@ gem "chartkick"
 
 #fgm - testes: pegando informacoes da web
 gem "mechanize"
+
+gem 'owlcarousel-rails'
