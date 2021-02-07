@@ -1,4 +1,4 @@
-
+require 'transparencia.gov.br.rb'
 require "import"
 
 # DataImport.new(type, year_range, month_range, options = nil)
@@ -49,8 +49,8 @@ tasks = {
             :month_range => 01..03
         }
   }
-  
-# to log the execution uncomment the following lines
+#   
+# # to log the execution uncomment the following lines
 started_in = Time.now.strftime("%d-%m-%Y-%H-%M-%S")
 $stdout = File.new("import.log","w")
 $stdout.sync = true
@@ -62,12 +62,48 @@ tasks.each do | task, options |
     # if (choice.upcase == "Y" || choice.upcase == "S")
       import = DataImport.new(options[:type], options[:year_range], options[:month_range], options[:options])
       import.execute
+      # import.log(:nome => "FABIANO GONCALVES MATOS")
       # import.run_test
     # end
 end
 
 # Renomear o arquivo após terminar a importacao
 File.rename("import.log", "import#{started_in}.log")
+
+
+#import-contratos
+# descomentar daqui para baixo para importar contratos. 
+# => PRECISA SER MELHORADO!!!
+
+link_base = "http://www3.transparencia.gov.br/TransparenciaPublica/jsp/contratos/"
+contratos ||= APIGov.new(:contratos)
+@contratos ||= contratos.getContratos
+
+@contratos.each do | num, valores |
+  c = Contrato.new
+  
+  c.numero = valores[:numero]
+  c.ano = valores[:numero].split("/").last
+  c.modalidade = valores[:modalidade]
+  c.situacao = valores[:situacao]
+  c.contratado = valores[:contratado]
+  c.contratado_cnpj = valores[:contratado].split(" - ").first
+  
+  c.contratado_nome = valores[:contratado].gsub(c.contratado_cnpj, "")
+  
+  c.unidade = valores[:unidade]
+  c.unidade_id = valores[:unidade].split(" - ").last
+  c.unidade_nome = valores[:unidade].split(" - ").first
+  
+  c.objeto = valores[:objeto]
+  
+  c.link = (link_base.to_s + valores[:link_detalhes].to_s.split('"').second.gsub("amp;", "") )
+  c.ref = num+1 
+  
+  c.save!
+  
+end
+
 
 # # This file should contain all the record creation needed to seed the database with its default values.
 # # The data can then be loaded with the rake db:seed (or created alongside the db with db:setup).

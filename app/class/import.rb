@@ -96,6 +96,10 @@ class DataImport
     print_debug_info if DEBUG
   end
   
+  def log(params)
+    @filter = params
+  end
+  
   def to_s
     "DataImport: " + @@instances.to_s
   end
@@ -131,6 +135,11 @@ class DataImport
           if belongsIFNMG(data)
             if !@test_mode
               import(data)         
+            end
+            if !@filter.nil?
+              if data[:nome] == @filter[:nome]
+                puts "#{data}"
+              end
             end
             @records_each_file += 1
             @records_imported +=  1     
@@ -240,6 +249,7 @@ class DataImport
           if s.cpf == params[:cpf] && s.nome == params[:nome]
             # atualizamos o rastreio, assim sabemos TODOS os arquivos e linhas que alteraram este registro 
             params[:traking_info] = s.traking_info + ",#{@conf[:file].split("/").last}##{@conf[:line]+2}"
+            # params.compact -> to remove hash values nil
             s.update( params )
             break
           end

@@ -10,3 +10,6 @@ end
 
 class TContato < Contato
 end
+
+class TContrato < Contrato
+end

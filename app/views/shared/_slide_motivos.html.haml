@@ -1,25 +1,41 @@
-#slide-motivos.carousel.slide{ :data=> { :ride => "carousel" } }
-  %ol.carousel-indicators
-    / Indicators
-    %li.active{:data => { :target => "#slide-motivos", :slide => {:to => "0" } } }
-    %li{ :data => { :target => "#slide-motivos", :slide=>{:to=>"1"} } }
-    %li{ :data => { :target => "#slide-motivos", :slide=>{:to=>"2"} } }
-  
-  / slides
-  .carousel-inner{:role=> "listbox"}
-    .item.active
-      = image_tag "motivos/motivo01.png", :alt => "Motivo 01"
-    .item
-      = image_tag "motivos/motivo02.png", :alt => "Motivo 02"
-    .item
-      = image_tag "motivos/motivo03.png", :alt => "Motivo 03"
+.panel.panel-default
+  .panel-heading
+    %a(data-toggle="collapse" data-target="#motivosDados")
+      = icon("question-sign")
+      %b
+        Por que "Dados Abertos?"
+      .pull-right
+        = icon("chevron-down")
+  .panel-body#motivosDados.collapse.in
+    #slide-motivos.carousel.slide{ :data=> { :ride => "carousel" } }
+      %ol.carousel-indicators
+        / Indicators
+        -# %li.active{:data => { :target => "#slide-motivos", :slide => {:to => "0" } } }
+        -# %li{ :data => { :target => "#slide-motivos", :slide=>{:to=>"1"} } }
+        -# %li{ :data => { :target => "#slide-motivos", :slide=>{:to=>"2"} } }
+        -# %li{ :data => { :target => "#slide-motivos", :slide=>{:to=>"3"} } }
+        -# %li{ :data => { :target => "#slide-motivos", :slide=>{:to=>"4"} } }
       
-  / lef and right controls
-  %a.left.carousel-control{ :href => "#slide-motivos", :role => "button", :data => { :slide => "prev" } }
-    %span.glyphicon.glyphicon-chevron-left{ :aria => { :hidden => "true" } }
-    %span.sr-only
-      Previous
-  %a.right.carousel-control{ :href => "#slide-motivos", :role => "button", :data => { :slide => "next" } }
-    %span.glyphicon.glyphicon-chevron-right{ :aria => { :hidden => "true" } }
-    %span.sr-only
-      Next
+      / slides
+      .carousel-inner{:role=> "listbox"}
+        - default_size = "660x265"
+        .item.active
+          = image_tag "motivos/motivo01.png", :alt => "Motivo 01", size: default_size
+        .item
+          = image_tag "motivos/motivo02.png", :alt => "Motivo 02", size: default_size
+        .item
+          = image_tag "motivos/motivo03.png", :alt => "Motivo 03", size: default_size
+        .item
+          = image_tag "motivos/motivo04.png", :alt => "Motivo 04", size: default_size
+        .item
+          = image_tag "motivos/motivo05.png", :alt => "Motivo 05", size: default_size
+          
+      / lef and right controls
+      %a.left.carousel-control{ :href => "#slide-motivos", :role => "button", :data => { :slide => "prev" } }
+        %span.glyphicon.glyphicon-chevron-left{ :aria => { :hidden => "true" } }
+        %span.sr-only
+          Previous
+      %a.right.carousel-control{ :href => "#slide-motivos", :role => "button", :data => { :slide => "next" } }
+        %span.glyphicon.glyphicon-chevron-right{ :aria => { :hidden => "true" } }
+        %span.sr-only
+          Next

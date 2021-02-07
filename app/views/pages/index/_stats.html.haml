@@ -1,0 +1,69 @@
+:ruby
+  t1_valor = FACADE.Diaria.select(:valor).where(:data => '2015-01-01'..'2015-03-30').sum(:valor).to_f.round
+  t2_valor = FACADE.Diaria.select(:valor).where(:data => '2016-01-01'..'2016-03-30').sum(:valor).to_f.round
+  
+  t1_count = FACADE.Diaria.where(:data => '2015-01-01'..'2015-03-30').count
+  t2_count = FACADE.Diaria.where(:data => '2016-01-01'..'2016-03-30').count
+  
+  boxstats = {
+    :box1 => { 
+      :top => "01/2013 à 03/2016",
+      :icon => "user",
+      :text => FACADE.Servidor.all.count,
+      :description => "Servidores passaram pelo IFNMG.",
+      :link => "#{root_url}servidores"
+    },
+    
+    :box2 => {
+      :top => "01/2011 à 03/2016", 
+      :icon => "duplicate",
+      :text => FACADE.Diaria.all.count,
+      :description => "pedidos de Diarias foram executados.",
+      :link => "#{root_url}diarias"
+    },
+    
+    # :box3 => { 
+      # :top => "1º trimestre 2016 / 2015",
+      # :icon => "usd",
+      # :text => "#{ number_to_human(t2_valor - t1_valor, separator: ',', units: {unit: 'rs', thousand: 'Mil'} ) }",
+      # :description => "Economizamos no gasto com diárias.",
+      # :link => "#"
+    # },  
+    # :box4 => { 
+      # :top => "1º trimestre 2016 / 2015",
+      # :icon => "plane",
+      # :text => "#{(t2_count - t1_count)}",
+      # :description => "viagens realizadas.",
+      # :link => "#"
+    # },
+    :box5 => { 
+      :top => "em 2016 são",
+      :icon => "education",
+      :text => "12",
+      :description => "Unidades em funcionamento.",
+      :link => "#{root_url}unidades"
+    },
+    
+    :box6 => { 
+      :top => "2010 à 2016",
+      :icon => "list-alt",
+      :text => "#{FACADE.Contrato.all.count}",
+      :description => "contratos foram assinados.",
+      :link => "#{root_url}contratos"
+    }
+  }
+  
+  
+- boxstats.each do |key, options|  
+  .col-sm-6.col-md-3
+    .panel
+      %a(href="#{options[:link]}")
+        .panel-body
+          %small.top
+            = options[:top]
+          .img.pull-right
+            = icon(options[:icon])
+          %h1
+            = options[:text]
+          %small
+            = options[:description]

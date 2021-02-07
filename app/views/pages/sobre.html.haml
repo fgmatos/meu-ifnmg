@@ -1,67 +1,89 @@
-.container
+.container(style="font-size: 18px")
   .row
     .col-md-12
-      .span9
-        %h1.page-title
-          %i.icon-home
-          Sobre o Meu IFNMG.com         
-        .row
-          .span5
-            .widget
-              .widget-header
-                %i.icon-search
-                -#%h3 Sobre o Site
-              .widget-content
-                O Meu IFNMG é um site sem fins lucrativos, desenvolvido por pesquisadores da área de Ciências da Computação, 
-                que decidiram utilizar os seus conhecimentos para aumentar a transparência e levar à comunidade informações
-                importantes sobre as atividades dos gestores e servidores da nossa instituição.
-                %p
-                O site coleta as informações de bases de dados governamentais, processando as mesmas e apresentando 
-                em um formato mais acessível à população.
-                %br
-                %br
-                Nosso público alvo é comunidade acadêmica, servidores e a população em geral que queira mais informações sobre as ações
-                executadas pelo IFNMG.
-                %br
-                %br
-                O site está em constante desenvolvimento. Contatos sobre mais informações, dúvidas, reclamações, críticas, sugestões, ou
-                solicitação de dados, podem ser enviadas pelo link 
-                %a{:href => root_url + "modalContacts", :data => {:toggle => "modal", :target => "#modalContacts" } }
-                  %br
-                    Fale Conosco
-      
-      
-          .span4
-            .widget
-              .widget-header
-                %i.icon-search
-                %h3 Os Dados
-              .widget-content
-                Todos os dados aqui apresentados são <b>dados abertos</b>, disponibilizados pelo Governo Federal.
-                %br
-                %br
-                %a{:href => "http://www.transparencia.gov.br", :class => "active" }
-                  www.transparencia.gov.br
-                %br
-      
-          
-        .row
-          .span5
-            .widget
-              .widget-header
-                %i.icon-search
-                %h3 Quem Somos
-                .widget-content
-                  %p
-                    %b Equipe
-                    %br
-                    Fabiano Matos
-                    %br
-                    Fabrício Matos
-                    %br
-                    Nelson Cavalcante
-                    %br
-                    Rogério Luiz
+      .panel
+        .panel-body
+          %h2
+            = image_tag("flat-icons/office/svg/pen", size: "100x60") 
+            Sobre
+    .col-md-2
+      .panel
+        .panel-body
+          = image_tag("flat-icons/business/svg/website", size: "100x80")
+    .col-md-10
+      .panel
+        .panel-body
+          %p
+            O portal
+            %b 
+              %i meuIFNMG
+            é um site sem fins lucrativos, desenvolvido por pesquisadores da área de Ciências da Computação, 
+            que decidiram utilizar os seus conhecimentos para aumentar a transparência e levar à comunidade informações
+            importantes sobre as atividades dos gestores e servidores da nossa instituição.
+  .row
+    .col-md-10
+      .panel
+        .panel-body
+          %p
+            O site coleta as informações de bases de dados governamentais, processando as mesmas e apresentando 
+            em um formato mais acessível à população.
+    .col-md-2
+      .panel
+        .panel-body
+          = image_tag("flat-icons/business/svg/magnifying-glass", size: "100x80")
+  .row
+    .col-md-2
+      .panel
+        .panel-body
+          = image_tag("flat-icons/business/svg/target", size:"100x80")
+    .col-md-10
+      .panel
+        .panel-body
+          %p
+            Nosso público alvo é comunidade acadêmica, servidores e a população em geral que queira mais informações sobre as ações
+            executadas pelo IFNMG.
+  .row
+    .col-md-10
+      .panel
+        .panel-body
+          O site está em constante desenvolvimento. Contatos sobre mais informações, dúvidas, reclamações, críticas, sugestões, ou
+          solicitação de dados, podem ser enviadas pelo link 
+          %a{:href => root_url + "modalContacts", :data => {:toggle => "modal", :target => "#modalContacts" } }
+            %br
+              Fale Conosco
+    .col-md-2
+      .panel
+        .panel-body
+          = image_tag("flat-icons/business/svg/chat", size:"100x80")
+  
+  .row
+    .col-md-12
+      .panel
+        .panel-body
+          %h3 Os Dados
+          Todos os dados aqui apresentados são <b>dados abertos</b>, disponibilizados pelo Governo Federal.
+  
+          %a{:href => "http://www.transparencia.gov.br", :class => "active", :target=>"_blank"}
+            www.transparencia.gov.br
+  
+  
+  .row
+  .span5
+  .widget
+    .widget-header
+      %i.icon-search
+      %h3 Quem Somos
+      .widget-content
+        %p
+          %b Equipe
+          %br
+          Fabiano Matos
+          %br
+          Fabrício Matos
+          %br
+          Nelson Cavalcante
+          %br
+          Rogério Luiz
             
             
       

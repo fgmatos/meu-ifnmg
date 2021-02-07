@@ -1,10 +1,11 @@
 .panel.panel-default
   .panel-heading
+    = icon("search")
     %b Escolha por Unidade
-  .panel-body(style="padding: 0px;")
+    %a.pull-right(data-toggle="collapse" data-target="#map")
+      = icon("chevron-down")
+  .panel-body#map.collapse.in(style="padding: 0px;")
     %center
-      /  embedded_svg "mapa_v3.svg"
-      
       
       = stylesheet_link_tag 'mapa', media: 'all', 'data-turbolinks-track' => true
       = render "shared/mapa.html"
@@ -17,11 +18,12 @@
             case "mapa":
               window.location.replace("/unidades");
               break;
-            case "januaria":
-              window.location.replace("/unidades/januaria");
+            case "janaubaporteirinha":
+              window.location.replace("/unidades");
               break;
             default:
-              alert('Voce clicou em ' + name );
+              //alert('Voce clicou em ' + name );
+              window.location.replace("/unidades/" + name.toLowerCase());
               
           }
             

@@ -5,8 +5,10 @@
 }
 
 #municipio svg path:hover{
-    fill:#fdff00;
-    stroke:#fdff00;
+    /*fill:#fdff00;*/
+    /*stroke:#fdff00;*/
+   fill: gold;
+   stroke: black;
 }
 
 #municipio svg text {

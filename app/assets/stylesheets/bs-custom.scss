@@ -1,0 +1,74 @@
+.btn-default{
+  background-image: none !important;
+  background-color: gold !important;
+  // &:hover {  background-image: none !important; background-color: red !important;}
+  
+}
+
+.navbar {
+    font-family: "Montserrat", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    text-transform: uppercase;
+    font-weight: 700;
+}
+
+.navbar-default{
+	background-image: none !important;
+	background-color: $nav !important;
+	/*border-color: black !important;*/
+}
+
+.panel-default > .panel-heading{
+    background-image: none !important;
+    background-color: gold !important;
+}
+
+// show servidor
+.panel-body > .title {
+  font-size: 20px;
+  font-weight: bold;
+  border-bottom: solid grey 1px;
+  margin-bottom: 10px;
+}
+
+.panel-body > .label {
+  margin: 2px;
+}
+
+// corrigindo alinhamento do LOGO
+.navbar-brand>img {
+    margin-left: 10px;
+}
+
+// persolaize 'tab-pane'
+.tab-content>.tab-pane {
+    background-color: white;
+}
+
+.inverted-icon {
+  background-color: black;
+  color: gold;
+}
+
+// customize li indicators on #slide-tables
+#slide-tables > ol > li {
+  background-color: gold;
+}
+
+// stats
+#stats { 
+  .panel {
+    &:hover { transform: scale(1.1);  }
+    .panel-body {
+      .top { text-align: center;} 
+      h1 { font-weight: bold; }
+      .img { 
+        font-size: 55px;
+      }
+      small {position: absolute; font-size: 10px; }
+    }
+    a { 
+      color: black;
+      &:hover { text-decoration: none;}
+      }
+  } 
+}

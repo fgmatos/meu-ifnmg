@@ -15,10 +15,24 @@ class PagesController < ApplicationController
     # "pages/ranking.html.haml"
   end
   
+  def contratos
+    # "pages/contratos.html.haml"
+    @contratos = FACADE.Contrato.all
+  end
+  
   # GET "/unidades/:name" - Retorna informacoes sobre uma Unidade do IFNMG
   def unidade
-    @diarias = FACADE.Diaria.where("nome_unidade like ?", "%#{@unidade}%")
-    @servidores = FACADE.Servidor.where("uorg_lotacao like ?", "%#{@unidade}%")
+    if @unidade.gsub("-", " ").upcase == 'REITORIA'
+      @diarias = FACADE.Diaria.where("nome_unidade like ?", "%EDUC.,CIENC%")
+      @contratos = FACADE.Contrato.where("unidade like ?", "%EDUC.,CIENC%")
+    else
+      @diarias = FACADE.Diaria.where("nome_unidade like ?", "%#{@unidade.gsub("-", " ").upcase}%")  
+      @contratos = FACADE.Contrato.where("unidade like ?", "%#{@unidade.gsub("-", " ").upcase}%")
+    end
+    
+    
+    
+    @servidores = FACADE.Servidor.where("uorg_lotacao like ?", "%#{@unidade.gsub("-", " ").upcase}%").order(:nome)
     render "pages/unidades/show", locals: { unidade: @unidade }
   end
   
@@ -67,6 +81,7 @@ class PagesController < ApplicationController
     if FACADE.Servidor.exists?(params[:id])
        @servidor = FACADE.Servidor.find(params[:id])
        @minhas_diarias = FACADE.Diaria.where("NOME = ?", @servidor.nome)
+       @minhas_remuneracoes = FACADE.Remuneracao.where("NOME = ?", @servidor.nome)
        render "pages/servidores/show"
     else
       # flash msg's use :danger, :alert or :info       
@@ -79,6 +94,10 @@ class PagesController < ApplicationController
   
   def load_unidade
     @unidade = params[:name]
+  end
+  
+  def validate_unidade
+    
   end
   
 end

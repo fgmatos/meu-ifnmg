@@ -4,22 +4,15 @@
 .container
   .row
     .col-md-12
-      %h2
-        = unidade.gsub("-", " ").titleize
-      %hr
+      .panel
+        .panel-body
+          %h2
+            = unidade.gsub("-", " ").titleize
       
   .row
-    -# .col-md-3.col-sm-3
-      -# Destaque
-    -# .col-md-3
-      -# .note-info
-        -# %p
-          -# = "notas sobre #{unidade} "
-  .row
     .col-md-2
-      .panel.panel-default
-        -#.panel-heading
-          -#informações
+    
+      .panel
         .panel-body
           %p
             Servidores
@@ -29,4 +22,62 @@
             Diarias
             %span.label.label-success.pull-right
               = @diarias.count
-            
+          
+          %p
+            Contratos
+            %span.label.label-success.pull-right
+              = @contratos.count
+      
+    .col-md-10 
+      
+      %ul.nav.nav-tabs#itens-unidade
+        %li
+          %a{ :href => "#u-servidores", :data => { :toggle => "tab"} }
+            Servidores
+        %li
+          %a{ :href => "#u-stats", :data => { :toggle => "tab"} }
+            Distribuíção de cargos
+        %li
+          %a{ :href => "#u-diarias", :data => { :toggle => "tab"} }
+            Histórico de Diárias
+        %li
+          %a{ :href => "#u-contratos", :data => { :toggle => "tab"} }
+            Contratos
+      
+      .tab-content
+        .tab-pane.fade#u-servidores
+          .panel
+            .panel-body#lista
+              - if @servidores.count > 0
+                = render "pages/servidores/lista_servidores", show: :filtered
+              - else
+                = "Não foram encontrado Servidores lotados nesta unidade."
+      
+        .tab-pane.fade#u-stats
+          .panel
+            .panel-body
+              = render "pages/unidades/cargos"
+                
+        .tab-pane.fade#u-diarias
+          .panel
+            .panel-body
+              = render "pages/unidades/diarias"
+              
+        .tab-pane.fade#u-contratos
+          .panel
+            .panel-body 
+              = render "pages/unidades/contratos"
+              
+              
+:javascript
+  $(document).ready(function(){
+    // open tab
+    $('#itens-unidade > :first-child').addClass("active");
+    $("#u-servidores").addClass("active in");
+    
+    $first = $('#lista-servidores > :first-child');
+    $first.addClass("active");
+    id = $first.find("a").attr("href")
+    $(id).addClass("active in");
+  });
+

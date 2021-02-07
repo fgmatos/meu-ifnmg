@@ -1,0 +1,34 @@
+
+- if @contratos.count > 0
+  .col-md-12 
+    = pie_chart @contratos.group(:modalidade).count,  width: "100%", height: "400px", |
+          library: pieOptions("Contratos por Modalidade")
+      
+  .col-md-12
+    = pie_chart @contratos.group(:situacao).count, width: "800px", height: "400px", |
+      library: pieOptions("Contratos por Situação")
+
+  .col-md-12
+    = line_chart @contratos.group(:ano).count, width: "800px", height: "400px", |
+      library: { |
+                title: { text: "Contratos por ano"}, |
+                subtitle: { text: '' }, |
+                tooltip: { |
+                  valuePrefix: " ", |
+                  pointFormat: "Quantidade: <b>{point.y} </b>", |
+                  valueDecimals: 0 |
+                }, |
+                plotOptions: { |
+                  line: { |
+                    center: true, |
+                    dataLabels: { |
+                      enabled: true , |
+                      valueDecimals: 0, |
+                    }, |
+                    showInLegend: true |
+                  }, |
+      }, |
+    }
+
+- else
+  = "Não foram encontrados contratos assinados por esta unidade."

@@ -1,0 +1,47 @@
+
+- if @diarias.count > 0
+  = column_chart  @diarias.group(" strftime('%Y', data) ").count , |
+      library: { |
+                title: { text: "Quantidade de pedidos por ano"}, |
+                subtitle: { text: '' }, |
+                tooltip: { |
+                  valuePrefix: " ", |
+                  pointFormat: "Quantidade: <b>{point.y}</b>", |
+                  valueDecimals: 0 |
+                }, |
+                plotOptions: { |
+                  column: { |
+                    center: true, |
+                    dataLabels: { |
+                      enabled: true , |
+                      format: ' {y}', |
+                      valueDecimals: 0, |
+                    }, |
+                    showInLegend: true |
+                  }, |
+                },
+    }
+
+  = column_chart  @diarias.group(" strftime('%Y', data) ").sum(:valor), |
+      library: { |
+                title: { text: "Valor total gasto por ano"}, |
+                subtitle: { text: '' }, |
+                tooltip: { |
+                  valuePrefix: "R$ ", |
+                  pointFormat: "Valor: R$ <b>{point.y}</b>", |
+                  valueDecimals: 2, |
+                }, |
+                plotOptions: { |
+                  column:  { |
+                    center: true, |
+                    dataLabels: { |
+                      enabled: true , |
+                      format: 'R$: {y:.2f}', |
+                      valueDecimals: 2, |
+                    }, |
+                    showInLegend: true |
+                  }, |
+                }, |
+              }
+- else
+  = "Não foram encontrados registros de Diárias pagas por esta unidade."

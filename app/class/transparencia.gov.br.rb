@@ -32,7 +32,7 @@ class APIGov
     @dados[@modulo]
   end
   
-  private
+  # private
   
   def execute
       update_page
@@ -40,7 +40,8 @@ class APIGov
         puts "Existem paginas"
         set_records
         
-        puts paginas = getTotalPages
+        paginas = getTotalPages
+        # puts paginas = getTotalPages
         
         getPageData
         for i in 2..paginas.to_i 
@@ -54,7 +55,7 @@ class APIGov
   #load initial data from module/operation in @page
   def update_page
     form = @page.form_with(:id => 'form')
-    form.field_with(:name => "form:ano").options[2].select
+    form.field_with(:name => "form:ano").options[0].select
     button = form.button_with(:value => "Pesquisar")
     
     @page = @agent.submit(form, button) 
@@ -93,7 +94,7 @@ class APIGov
          unidade = row.css("td[5]").text.strip
          objeto = row.css("td[6]").text.strip
          
-         @dados[@modulo][num] = {
+         @dados[@modulo][@dados[@modulo].length] = {
                               :numero => num, 
                               :link_detalhes => link_detalhes,
                               :modalidade => modalidade,
@@ -126,6 +127,7 @@ class APIGov
     last_link = 0
     pagination = @page.xpath("//span[@id='form:dados:migalha']")
     pagination.css("span > a").each do | link |
+      puts link.text
       last_link = link.text
     end
     return last_link
@@ -135,10 +137,16 @@ class APIGov
     @page.form.inspect
   end
   
+  def getContratos
+   return @dados[@modulo]
+ end
+  
+
 end
 
-contratos = APIGov.new(:contratos)
-
-puts contratos.all(2016)
+# contratos = APIGov.new(:contratos)
+# 
+# contratos.getContratos
 # puts contratos.hasPagination
+# puts contratos.getTotalPages
 # puts contratos.inspect

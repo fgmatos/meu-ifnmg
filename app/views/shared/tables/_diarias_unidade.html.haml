@@ -3,16 +3,20 @@
 
 .panel.panel-default
   .panel-heading
-    %b TOP diárias 2015 - Unidades
-  .panel-body
-    %table.table.table-striped.table-bordered.table-hover
+    %a(data-toggle="collapse" data-target="#unidades2015")
+      = icon("th")
+      %b TOP diárias 2015 - Unidades
+      .pull-right
+        = icon("chevron-down")
+  .panel-body#unidades2015.collapse.in
+    %table.table.table-condensed
       %thead
         %tr
           %th Nº
           %th Nome Unidade
           -# %th Campus
-          %th Equivalente à R$ / dia
-          %th Valor Gasto
+          %th R$ / dia
+          %th Valor
         %tbody
           - total_ano = 0
           - num = 0
@@ -25,11 +29,12 @@
               %td= number_to_currency(valor.to_f/365, unit: "R$ ", separator: ",", delimiter: ".").to_s
               %td= number_to_currency(valor.to_f, unit: "R$ ", separator: ",", delimiter: ".").to_s
               - total_ano = total_ano + valor.to_f
+        %tfoot
           %tr
             %td{ :colspan=> "3"} 
               %b
                 %center 
-                  Total acumulado
+                  TOTAL
             %td
               %b=  number_to_currency(total_ano, unit: "R$ ", separator: ",", delimiter: ".").to_s
                 

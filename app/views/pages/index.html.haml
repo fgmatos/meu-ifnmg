@@ -1,71 +1,22 @@
 -# = render 'shared/image_slide'
         
 .container
-  %h2
-    %center
-      SEÇÃO CENTRAL
-  
+  .row#stats
+    = render "pages/index/stats"
   .row
-    -# .col-sm-6.col-md-3
-      -# .thumbnail
-        -# %br
-        -# %blockquote
-          -# %p TITULO
-          -# %footer
-            -# %br
-            -# %cite DESCRIPTION
-    -# .col-sm-6.col-md-3
-      -# .thumbnail
-        -# %br
-        -# %blockquote
-          -# %p TITULO
-          -# %footer
-            -# %br
-            -# %cite DESCRIPTION
-    -# .col-sm-6.col-md-3
-      -# .thumbnail
-        -# %br
-        -# %blockquote
-          -# %p TITULO
-          -# %footer
-            -# %br
-            -# %cite DESCRIPTION
-    -# .col-sm-6.col-md-3
-      -# .thumbnail
-        -# %br
-        -# %blockquote
-          -# %p TITULO
-          -# %footer
-            -# %br
-            -# %cite DESCRIPTION
-    .col-md-8
-      = render 'shared/tables/diarias_servidor'
-      -# = render 'shared/slide_motivos'
-      
-    .col-md-4
+    .col-md-8.col-sm-12
+      -# = render 'shared/tables/slide_tables'
+      -# = render 'shared/tables/diarias_servidor'
+      -# = render 'shared/tables/diarias_unidade'
+  .row
+    .col-md-8.col-sm-6
+      = render 'shared/slide_motivos'
+    .col-md-4.col-sm-6
       = render 'shared/boxmap'
-      = render 'shared/tables/diarias_unidade'
-  
   .row
-    .col-md-4.text-justify
-      %h2 Titulo
-      %p texto texto texto texto texto texto texto texto texto texto texto texto texto texto
-      %p
-        %a.btn.btn-default{ :href=>"#"}
-          link para »
-          
-    .col-md-4.text-justify
-      %h2 Titulo
-      %p texto texto texto texto texto texto texto texto texto texto texto texto texto texto
-      %p
-        %a.btn.btn-default{ :href=>"#"}
-          link para »
-          
-    .col-md-4.text-justify
-      %h2 Titulo
-      %p texto texto texto texto texto texto texto texto texto texto texto texto texto texto
-      %p
-        %a.btn.btn-default{ :href=>"#"}
-          link para »
-          
+    -# = render "pages/index/infobox"
 
+:javascript
+  $(document).ready(function() { 
+    $("#tbtop-servidores").tablesorter(); 
+  }); 

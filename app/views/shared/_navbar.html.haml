@@ -14,46 +14,28 @@
     .collapse.navbar-collapse#bs-example-navbar-collapse-1
       %ul.nav.navbar-nav
         %li 
-          = link_to t('home'), root_url, :method => :get, class: "active"
+          = link_to t('Início'), root_url, :method => :get, class: "active"
         %li
           = link_to "Unidades", "#{root_url}unidades", class: "active"
         %li
           %a{ :href => root_url + "servidores", :class => "active" }
             Servidores
-            %span.badge
-              = FACADE.Servidor.all.count
+            -# %span.badge
+              -# = FACADE.Servidor.all.count
         %li 
           -# = link_to "Diarias", root_url+"diarias", class: "active"
           %a{ :href => root_url + "diarias", :class => "active" }
             Diarias
-            %span.badge
-              = FACADE.Diaria.all.count
+            -# %span.badge
+              -# = FACADE.Diaria.all.count
         %li
           = link_to "Ranking", "#{root_url}ranking", class: "active"
         %li
           %a{ :href => root_url + "contratos", :class => "active" }
             Contratos
-            = image_tag "beta.gif", :style => "margin-bottom: 10px;"
-        -#%li
-        -#  = link_to "Fale Conosco", "#modalContacts", :data => {:toggle => "modal", :target => "#modalContacts"}
+        %li
+          = link_to "Fale Conosco", "#modalContacts", :data => {:toggle => "modal", :target => "#modalContacts"}
         %li 
           = link_to "Sobre", root_url+"sobre", :class => "active"
-      
-      %form{ :class => "navbar-form navbar-right",  :role => "search" }
-        
-        %ul.nav.navbar-nav
-        
-          .dropdown
-          
-            -#%button{:class => "btn btn-primary dropdown-toggle", :data => { :toggle => "dropdown"} }
-              -#%span.glyphicon.glyphicon-user
-              -#USERNAME
-              -#%span.caret
-                
-            -#%ul.dropdown-menu
-              -#%li
-                -#= link_to "Meu Perfil", "#", :class => "active"
-                -#= link_to "Area Administrativa", "#", :class => "active"
-                -#= link_to "Sair", "#", :method => :delete, :class => "active"
 
   

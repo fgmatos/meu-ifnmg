@@ -1,0 +1,11 @@
+
+- if @servidores.count > 0
+  .container
+    = pie_chart @servidores.group(:jornada_de_trabalho).reorder("count_all DESC").count , |
+      library: pieOptions("Cargos por Jornada de Trabalho")
+  .container
+    = pie_chart @servidores.group(:descricao_cargo).reorder("count_all DESC").count, |
+      library: pieOptions("Cargos na unidade: #{@unidade.upcase} ")
+
+- else
+  = "Não foram encontrados servidores nesta unidade para mostramos a distribuíção de cargos."

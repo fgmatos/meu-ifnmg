@@ -3,26 +3,30 @@
 .container#unidade  
   .row
     .col-md-12
-      %h2 
-        Unidades
-        %span.label.label-success
-          ifnmg
-      %hr
+      .panel
+        .panel-body
+          %h2 
+            = image_tag("flat-icons/office/svg/office", size: "100x60")
+            Unidades
   .row
-    .col-md-6
-      %p
-        O IFNMG é um dos 38 Institutos Federais que fazem parte, juntamente com os CEFET's e escolas técnicas, 
-        da 
-        %a(href="http://institutofederal.mec.gov.br/" target="_blank")
-          Rede Federal de Educação Profissional, Ciêntífica e Tecnológia 
-    .col-md-6
-      .note-alert
-        %p
-          Para mais informações acesso o site do
-          %b IFNMG
-          através do link:
-          %a( href="http://www.ifnmg.edu.br" target="_blank")
-            http://www.ifnmg.edu.br
+    .col-md-5.col-sm-5
+      .panel
+        .panel-body
+          %p
+            O IFNMG é um dos 38 Institutos Federais que fazem parte, juntamente com os CEFET's e escolas técnicas, 
+            da 
+            %a(href="http://institutofederal.mec.gov.br/" target="_blank")
+              Rede Federal de Educação Profissional, Ciêntífica e Tecnológia 
+    .col-md-7.col-sm-7
+      .panel
+        .panel-body
+          .note-info
+            %p
+              Para mais informações acesse o site do
+              %b IFNMG
+              através do link:
+              %a( href="http://www.ifnmg.edu.br" target="_blank")
+                http://www.ifnmg.edu.br
 
   .grid-unidades
     - p = "26%"
@@ -43,8 +47,8 @@
       - unidades.each do |u|
         - str = u.to_s
         - classname = u.mb_chars.normalize(:kd).gsub(/[^\x00-\x7F]/n,'').downcase.gsub(" ", "-")
-        .box( style="width: #{sizes[x][i]};" class="#{classname} cover")
-          %a( href="/unidades/#{classname}")
+        %a( href="/unidades/#{classname}")
+          .box( style="width: #{sizes[x][i]};" class="#{classname} cover")
             %h4
               = u
             - x = x + 1

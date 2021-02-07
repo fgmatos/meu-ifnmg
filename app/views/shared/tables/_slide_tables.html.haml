@@ -1,0 +1,28 @@
+.panel.panel-default
+
+  .panel-body#pnltables.collapse.in
+    #slide-tables.carousel.slide{ :data=> { :ride => "carousel" } }
+      %ol.carousel-indicators
+        / Indicators
+        %li.active{:data => { :target => "#slide-tables", :slide => {:to => "0" } } }
+        %li{ :data => { :target => "#slide-tables", :slide=>{:to=>"1"} } }
+        -# %li{ :data => { :target => "#slide-tables", :slide=>{:to=>"2"} } }
+        -# %li{ :data => { :target => "#slide-tables", :slide=>{:to=>"3"} } }
+        -# %li{ :data => { :target => "#slide-tables", :slide=>{:to=>"4"} } }
+      
+      / slides
+      .carousel-inner{:role=> "listbox"}
+        .item.active
+          = render 'shared/tables/diarias_servidor'
+        .item
+          = render 'shared/tables/diarias_unidade'
+          
+      -# # / lef and right controls
+      -# # %a.left.carousel-control{ :href => "#slide-tables", :role => "button", :data => { :slide => "prev" } }
+        -# # %span.glyphicon.glyphicon-chevron-left{ :aria => { :hidden => "true" } }
+        -# # %span.sr-only
+          -# # Previous
+      -# # %a.right.carousel-control{ :href => "#slide-tables", :role => "button", :data => { :slide => "next" } }
+        -# # %span.glyphicon.glyphicon-chevron-right{ :aria => { :hidden => "true" } }
+        -# # %span.sr-only
+          -# # Next

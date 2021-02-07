@@ -1,0 +1,40 @@
+- show ||= :all
+
+
+%ul.nav.nav-tabs#lista-servidores
+  - for i in "A".."Z"
+    - if show == :filtered 
+      -if @servidores.select(:nome).where("nome LIKE ?", i+"%").count > 0
+        %li
+          %a{ :href => "##{i}", :data => { :toggle => "tab"} }
+            = i
+    - else 
+      %li
+        %a{ :href => "##{i}", :data => { :toggle => "tab"} }
+          = i
+          
+        -# %span.badge
+          -#= FACADE.Servidor.select(:nome).where("nome LIKE ?", i+"%").count
+
+.tab-content
+  - for i in "A".."Z"
+    .tab-pane.fade{ :id => "#{i}"}
+      %table.table.table-hover
+        %thead
+          %tr
+            %th Nome
+            %th Cargo
+        %tbody
+          - @servidores.where("nome LIKE ?", i+"%").each do |s|
+            %tr
+              %td
+                %a{ :href => root_url + "servidor/" + s.id.to_s} 
+                  = s.nome
+              %td 
+                %label.label.label-default
+                  = s.descricao_cargo
+                -#%span.badge
+                  -#- @servidor = FACADE.Servidor.find(s.id)
+                  -#- @minhas_diarias = FACADE.Diaria.where("NOME = ?", @servidor.nome)
+                  -#= @minhas_diarias.all.count
+                %br
